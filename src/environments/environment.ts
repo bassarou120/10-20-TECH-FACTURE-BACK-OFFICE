@@ -4,7 +4,5 @@
 // The list of which env maps to which file can be found in `.angular-cli.json`.
 
 export const environment = {
-  production: true,
-    backend: "http://localhost:8080",
-  expirationTime: 0
+  production: false
 };

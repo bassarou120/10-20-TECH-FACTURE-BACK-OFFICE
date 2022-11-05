@@ -1,9 +1,8 @@
-import { Component, OnInit, ViewChild, AfterViewInit ,Renderer2, Inject } from '@angular/core';
-import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent,DOCUMENT } from '@angular/common';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { Location, LocationStrategy, PathLocationStrategy, PopStateEvent } from '@angular/common';
 import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import PerfectScrollbar from 'perfect-scrollbar';
 import * as $ from "jquery";
-
 import { filter, Subscription } from 'rxjs';
 
 @Component({
@@ -16,13 +15,10 @@ export class AdminLayoutComponent implements OnInit {
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
 
-  constructor( public location: Location, private router: Router, private _renderer2: Renderer2,
-    @Inject(DOCUMENT) private _document: Document) {}
+  constructor( public location: Location, private router: Router) {}
 
   ngOnInit() {
-      
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
-
 
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
           // if we are on windows OS we activate the perfectScrollbar function
@@ -70,11 +66,6 @@ export class AdminLayoutComponent implements OnInit {
           }
 
       }
-
-
-
-
-
 
       $('.fixed-plugin a').click(function(event){
         // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active
@@ -134,13 +125,6 @@ export class AdminLayoutComponent implements OnInit {
               $sidebar_responsive.css('background-image','url("' + new_image + '")');
           }
       });
-
-    //   let script = this._renderer2.createElement('script');
-    //   script.type = `text/javascript`;
-    //   script.src = "./assets/js/init_datatables.js";
-     
-    //   this._renderer2.appendChild(this._document.body, script);
-
   }
   ngAfterViewInit() {
       this.runOnRouteChange();

@@ -5,32 +5,22 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../users/user-profile/user-profile.component';
-import { UsersComponent } from '../../users/users/users.component';
-import { AddUserComponent } from '../../users/add-user/add-user.component';
-import { RegulationsComponent } from '../../regulations-all/regulations/regulations.component';
-import { AddRegulationComponent } from '../../regulations-all/add-regulation/add-regulation.component';
-import { DetailRegulationComponent } from '../../regulations-all/detail-regulation/detail-regulation.component';
+import { UserProfileComponent } from '../../user-profile/user-profile.component';
+import { RegulationsComponent } from '../../regulations/regulations.component';
+import { AddRegulationComponent } from '../../add-regulation/add-regulation.component';
+import { DetailRegulationComponent } from '../../detail-regulation/detail-regulation.component';
 
-import { TrendingsComponent } from '../../trending-all/trendings/trendings.component';
-import { AddTrendingComponent } from '../../trending-all/add-trending/add-trending.component';
-import { DetailTrendingComponent } from '../../trending-all/detail-trending/detail-trending.component';
+import { TrendingsComponent } from '../../trendings/trendings.component';
+import { AddTrendingComponent } from '../../add-trending/add-trending.component';
+import { DetailTrendingComponent } from '../../detail-trending/detail-trending.component';
 
 import { InvestorsComponent } from '../../investors/investors.component';
-import { InfosComponent } from '../../info-all/infos/infos.component';
-import {ComplaintsComponent } from '../../complaints-all/complaints/complaints.component';
-import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/detail-complaint.component';
-
+import { InfosComponent } from '../../infos/infos.component';
+import {ComplaintsComponent } from '../../complaints/complaints.component';
 import { JobsComponent } from '../../jobs/jobs.component';
-import { FaqComponent } from '../../faq-all/faq/faq.component';
+import { FaqComponent } from '../../faq/faq.component';
 import { EditorComponent } from '../../components/editor/editor.component';
  
-import { AddInfoComponent } from '../../info-all/add-info/add-info.component';
-import { DetailInfoComponent } from '../../info-all/detail-info/detail-info.component';
-
-import { CompetionsComponent } from '../../competions-all/competions/competions.component';
-import { AddCompetionComponent } from '../../competions-all/add-competion/add-competion.component';
-import { DetailCompetionComponent } from '../../competions-all/detail-competion/detail-competion.component';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -39,11 +29,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { QuillModule } from 'ngx-quill';
-import { NgxQuillModule } from '@dimpu/ngx-quill';
-
-//  import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -59,15 +44,11 @@ import { NgxQuillModule } from '@dimpu/ngx-quill';
     MatSelectModule,
     MatTooltipModule,
     MatCheckboxModule,
-    MatDatepickerModule,
     
-    NgxQuillModule
-    //DataTablesModule
   ],
   declarations: [
     DashboardComponent,
     UserProfileComponent,
-    AddUserComponent,
     RegulationsComponent,
     AddRegulationComponent,
     DetailRegulationComponent,
@@ -77,16 +58,9 @@ import { NgxQuillModule } from '@dimpu/ngx-quill';
     JobsComponent,
     FaqComponent,
     ComplaintsComponent,
-    DetailComplaintComponent,
     InfosComponent,
     InvestorsComponent,
-    EditorComponent,
-    AddInfoComponent,
-    DetailInfoComponent,
-    UsersComponent,
-    CompetionsComponent,
-    AddCompetionComponent,
-    DetailCompetionComponent,
+    EditorComponent
   ]
 })
 
