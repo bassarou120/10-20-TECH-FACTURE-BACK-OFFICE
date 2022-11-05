@@ -21,6 +21,9 @@ import { JobsComponent } from '../../jobs/jobs.component';
 import { FaqComponent } from '../../faq/faq.component';
 import { EditorComponent } from '../../components/editor/editor.component';
  
+import { AddInfoComponent } from '../../add-info/add-info.component';
+import { DetailInfoComponent } from '../../detail-info/detail-info.component';
+
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -60,7 +63,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ComplaintsComponent,
     InfosComponent,
     InvestorsComponent,
-    EditorComponent
+    EditorComponent,
+    AddInfoComponent,
+    DetailInfoComponent
   ]
 })
 
