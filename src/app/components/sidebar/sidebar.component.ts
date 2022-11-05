@@ -17,11 +17,11 @@ export const ROUTES: RouteInfo[] = [
     { path: '/jobs', title: 'Metiers',  icon:'category', class: '',submenu:{sub_path:'',sub_title:''}  },
     { path: '/regulations', title: 'Reglementations',  icon:'loyalty', class: '' ,submenu:{sub_path:'',sub_title:''} },
     { path: '/trendings', title: 'Tendances',  icon:'library_books', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/infos', title: 'Informations',  icon:'announcement', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/investors', title: 'Investisseurs',  icon:'folder_shared', class: '',submenu:{sub_path:'',sub_title:''} },
+    { path: '/infos', title: 'Comment obtenir ?',  icon:'announcement', class: '',submenu:{sub_path:'',sub_title:''} },
     { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/user-profile', title: 'User Profile',  icon:'person', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/logout', title: 'Deconnexion',  icon:'logout', class: 'active-pro',submenu:{sub_path:'',sub_title:''} },
+    // { path: '/user-profile', title: 'User Profile',  icon:'person', class: '',submenu:{sub_path:'',sub_title:''} },
+    { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '',submenu:{sub_path:'',sub_title:''} },
+    { path: '/users', title: 'Utilisateurs',  icon:'people', class: '',submenu:{sub_path:'',sub_title:''} },
 
 ];
 

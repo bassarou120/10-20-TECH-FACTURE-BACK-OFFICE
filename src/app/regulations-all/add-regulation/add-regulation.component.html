@@ -33,10 +33,45 @@
                             </div>
                         </div>
                         <app-editor></app-editor>
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                        <img src="./assets/img/image_placeholder.jpg" alt="...">
+                                    </div>
+                                    <div>
+                                        <span class="btn btn-outline-secondary btn-file">
+                                        <span class="fileinput-new">Image de mise en avant</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg">
+                                        </span>
+                                        <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput "><span class="fa fa-remove text-danger"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="fileinput fileinput-new input-group" data-provides="fileinput">
+                                    <div class="form-control" data-trigger="fileinput">
+                                        <span class="fileinput-filename"></span>
+                                    </div>
+                                    <span class="input-group-append">
+                                      <span class="input-group-text fileinput-exists" data-dismiss="fileinput">
+                                        <span class="fa fa-remove text-danger"></span>
+                                    </span>
+
+                                    <span class="input-group-text btn-file">
+                                        <span class="fileinput-new">Fichier</span>
+                                    <span class="fileinput-exists">Change</span>
+                                    <input type="file" name="file" accept=".pdf,.PDF">
+                                    </span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="card-footer d-flex justify-content-end">
+                    <div class="card-footer d-flex justify-content-end ">
                         <div>
-                            <a routerLink="/regulations" mat-raised-button="" class="btn btn-fill btn-default mat-raised-button mat-button-base ">
+                            <a routerLink="/regulations " mat-raised-button=" " class="btn btn-fill btn-default mat-raised-button mat-button-base ">
                                 <span class="mat-button-wrapper ">Annuler</span>
                                 <div matripple=" " class="mat-ripple mat-button-ripple ">
                                 </div>

@@ -8,5 +8,8 @@ import {Component,OnInit} from '@angular/core';
 export class FaqComponent implements OnInit  {
     constructor() { }
     ngOnInit() {
+        $('#add_faq_btn').click(function(){
+            alert('alert');
+        })
     }
 }
