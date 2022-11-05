@@ -1,0 +1,28 @@
+<div class=".jobs main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Metiers touristiques</h3>
+                <p class="card-category">Les différents corps du metiers touristiques sont disponibles sur ce panel </p>
+            </div>
+            <div class="card-body">
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5" *ngFor="let jobItem of jobItems">
+                    <div class="card">
+                        <div class="card-header card-header-icon card-header-rose">
+                            <div class="card-icon">
+                                <i class="material-icons">{{jobItem.jobIcon}}</i>
+                            </div>
+                            <h4 class="card-title font-weight-bold">{{jobItem.titre}}</h4>
+                        </div>
+                        <div class="card-body">
+                            {{jobItem.description}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
