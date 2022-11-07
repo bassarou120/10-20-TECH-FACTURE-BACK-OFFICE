@@ -16,43 +16,31 @@
                 <h3 class="card-title">Utilisateurs</h3>
                 <p class="card-category">Ce panel vous permets de gérer les utilisateurs de ce système</p>
             </div>
-
-            {{listUser}}
             <div class="card-body">
                 <div class="row table-responsible">
-                    <table class="table datatable">
+                    <table class="table">
                         <thead class="text-danger">
-                            <tr>
-                                <th style="width:2% !important;">#</th>
-                                <th style="width:25% !important;">Nom d'utilisateur</th>
-                                <th style="width:20% !important;">Email</th>
-                                <th style="width:20% !important;">Rôle</th>
-                                <th style="width:10% !important;">Poste</th>
-                                <th style="width:10% !important;">Afficher</th>
-                                <th style="width:13% !important;" class="td-actions text-right">Actions</th>
-                            </tr>
-
+                            <th style="width:2% !important;">#</th>
+                            <th style="width:25% !important;">Nom d'utilisateur</th>
+                            <th style="width:20% !important;">Email</th>
+                            <th style="width:20% !important;">Rôle</th>
+                            <th style="width:10% !important;">Poste</th>
+                            <th style="width:13% !important;" class="td-actions text-right">Actions</th>
                         </thead>
                         <tbody>
-
-                            <tr *ngFor="let user of listUser "  >
+                            <tr>
                                 <td>1</td>
                                 <td>
                                     <div class="img-container">
                                         <div class="d-flex">
                                             <img src="./assets/img/new_logo.png" alt="...">
-                                            <div class="m-2">{{user.firstName}}</div>
+                                            <div class="m-2">Thomas</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{user.email}}</td>
-                                <td>
-                                    <div *ngFor="let r of user.roles">
-                                        {{r.mane}}
-                                    </div>
-                                   
+                                <td>user@gmail.com</td>
+                                <td>Admin</td>
                                 <td>DSI</td>
-                                <td><span class="badge badge-success">Oui</span></td>
                                 <td class="td-actions text-right">
                                     <a href="#/user-profile" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
@@ -60,16 +48,61 @@
                                     <a href="#" class="btn btn-success btn-link">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <button type="button" rel="tooltip" class="btn btn-info  btn-link">
-                                        <i class="material-icons">settings_power</i>
-                                    </button>
                                     <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>
                             </tr>
-
-
+                          <tr>
+                                <td>1</td>
+                                <td>
+                                    <div class="img-container">
+                                        <div class="d-flex">
+                                            <img src="./assets/img/new_logo.png" alt="...">
+                                            <div class="m-2">Luc</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Luc@gmail.com</td>
+                                <td>Admin</td>
+                                <td>DSI</td>
+                                <td class="td-actions text-right">
+                                    <a href="#/user-profile" rel="tooltip" class="btn btn-info btn-link">
+                                        <i class="material-icons">info</i>
+                                    </a>
+                                    <a href="#" class="btn btn-success btn-link">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                          <tr>
+                                <td>2</td>
+                                <td>
+                                    <div class="img-container">
+                                        <div class="d-flex">
+                                            <img src="./assets/img/new_logo.png" alt="...">
+                                            <div class="m-2">Saliou</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>Saliou@gmail.com</td>
+                                <td>Admin</td>
+                                <td>DSI</td>
+                                <td class="td-actions text-right">
+                                    <a href="#/user-profile" rel="tooltip" class="btn btn-info btn-link">
+                                        <i class="material-icons">info</i>
+                                    </a>
+                                    <a href="#" class="btn btn-success btn-link">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
 
                         </tbody>
                     </table>
