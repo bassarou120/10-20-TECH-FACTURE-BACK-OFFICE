@@ -17,7 +17,9 @@ import { DetailTrendingComponent } from '../../trending-all/detail-trending/deta
 
 import { InvestorsComponent } from '../../investors/investors.component';
 import { InfosComponent } from '../../info-all/infos/infos.component';
-import {ComplaintsComponent } from '../../complaints/complaints.component';
+import {ComplaintsComponent } from '../../complaints-all/complaints/complaints.component';
+import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/detail-complaint.component';
+
 import { JobsComponent } from '../../jobs/jobs.component';
 import { FaqComponent } from '../../faq-all/faq/faq.component';
 import { EditorComponent } from '../../components/editor/editor.component';
@@ -62,6 +64,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     JobsComponent,
     FaqComponent,
     ComplaintsComponent,
+    DetailComplaintComponent,
     InfosComponent,
     InvestorsComponent,
     EditorComponent,

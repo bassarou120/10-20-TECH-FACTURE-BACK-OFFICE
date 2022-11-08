@@ -19,7 +19,8 @@ import { InfosComponent } from '../../info-all/infos/infos.component';
 import { AddInfoComponent } from '../../info-all/add-info/add-info.component';
 import { DetailInfoComponent } from '../../info-all/detail-info/detail-info.component';
 
-import {ComplaintsComponent } from '../../complaints/complaints.component';
+import {ComplaintsComponent } from '../../complaints-all/complaints/complaints.component';
+import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/detail-complaint.component';
 import { JobsComponent } from '../../jobs/jobs.component';
 import { FaqComponent } from '../../faq-all/faq/faq.component';
 
@@ -33,6 +34,7 @@ export const AdminLayoutRoutes: Routes = [
    
     //complaints
     { path: 'complaints',     component: ComplaintsComponent },
+    { path: 'complaints/:id', component: DetailComplaintComponent },
 
     { path: 'infos',     component: InfosComponent },
     { path: 'info/add',   component: AddInfoComponent }, 
