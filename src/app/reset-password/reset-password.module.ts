@@ -1,17 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FaqComponent} from './faq.component';
+import {ResetPasswordComponent} from './reset-password.component';
 
 // @NgModule({
 //     imports: [
-//         CommonModule,
-//         DataTablesModule
+//         CommonModule
 //     ],
 //     declarations: [
-//        // FaqComponent
+//         ResetPasswordComponent
 //     ],
 //     exports: [
-//        // FaqComponent
+//         ResetPasswordComponent
 //     ]
 // })
-export class FaqModule {}
+export class ResetPasswordModule {}

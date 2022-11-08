@@ -35,6 +35,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+// import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -50,7 +51,6 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSelectModule,
     MatTooltipModule,
     MatCheckboxModule,
-    
   ],
   declarations: [
     DashboardComponent,
@@ -71,6 +71,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AddInfoComponent,
     DetailInfoComponent,
     UsersComponent,
+  
   ]
 })
 

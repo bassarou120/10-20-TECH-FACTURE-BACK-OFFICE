@@ -44,6 +44,8 @@ export class FaqComponent implements OnInit  {
 
      
     ngOnInit() {
+      
+   
         //  $('#add_faq_form').submit(function(e){
         //     e.preventDefault();
         //     $('#sbt_btn').addClass('disabled');

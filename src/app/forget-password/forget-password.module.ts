@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {LoginComponent} from './login.component';
+import {ForgetPasswordComponent} from './forget-password.component';
 
 // @NgModule({
 //     imports: [
 //         CommonModule
 //     ],
 //     declarations: [
-//         LoginComponent
+//         ForgetPasswordComponent
 //     ],
 //     exports: [
-//         LoginComponent
+//         ForgetPasswordComponent
 //     ]
 // })
-export class LoginModule {}
+export class ForgetPasswordModule {}
