@@ -1,1 +1,85 @@
-<div class=".add-user"></div>
+<div class=".add-regulations main-content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-text">
+                    <div class="card-text">
+                        <h4 class="card-title">Ajouter un utilisateur</h4>
+                    </div>
+                </div>
+                <form class="ng-untouched ng-pristine ng-valid">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Nom" type="text" id="lastname">
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Prenom" type="text" id="firstname">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-select placeholder="Role" name="role" ngClass="btn btn-default btn-link simple">
+                                    <mat-option>
+                                        Admin
+                                    </mat-option>
+                                    <mat-option>
+                                        Utilisateur
+                                    </mat-option>
+                                </mat-select>
+                            </div>
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Poste" type="text" id="post" name="post">
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <div class="col-md-6">
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                        <img src="./assets/img/image_placeholder.jpg" alt="...">
+                                    </div>
+                                    <div>
+                                        <span class="btn btn-outline-secondary btn-file">
+                                        <span class="fileinput-new">Profile</span>
+                                        <span class="fileinput-exists">Change</span>
+                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg">
+                                        </span>
+                                        <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput "><span class="fa fa-remove text-danger"></span></a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-end ">
+                        <div>
+                            <a routerLink="/regulations " mat-raised-button=" " class="btn btn-fill btn-default mat-raised-button mat-button-base ">
+                                <span class="mat-button-wrapper ">Annuler</span>
+                                <div matripple=" " class="mat-ripple mat-button-ripple ">
+                                </div>
+                                <div class="mat-button-focus-overlay "></div>
+                            </a>
+                        </div>
+                        <div>
+                            <button mat-raised-button=" " type="submit " class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
+                                <span class="mat-button-wrapper ">Enregistrer</span>
+                                  <div matripple=" " class="mat-ripple mat-button-ripple ">
+                                  </div>
+                                   <div class="mat-button-focus-overlay "></div>
+                             </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES } from '../sidebar/sidebar.component';
+import { ROUTES,HIDE_ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
     private listTitles: any[];
+    private listTitlesHide: any[];
     location: Location;
       mobile_menu_visible: any = 0;
     private toggleButton: any;
@@ -22,6 +23,7 @@ export class NavbarComponent implements OnInit {
 
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
+      this.listTitlesHide = HIDE_ROUTES.filter(listTitleHide => listTitleHide);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
       this.router.events.subscribe((event) => {
@@ -119,7 +121,16 @@ export class NavbarComponent implements OnInit {
           if(this.listTitles[item].path === titlee){
               return this.listTitles[item].title;
           }
+          else{
+            for(var i = 0; i < this.listTitlesHide.length; i++){
+                var p = this.listTitlesHide[i].path ;
+                if(p.split("/")[1]===titlee.split("/")[1]){
+                    return this.listTitlesHide[i].title;
+                }
+              }
+          }
       }
-      return 'Dashboard';
+    
+      return 'Tableau de bord';
     }
 }

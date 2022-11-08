@@ -30,7 +30,7 @@ export const AdminLayoutRoutes: Routes = [
     // users
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',   component: UsersComponent },
-    { path: 'user/Add',   component: AddUserComponent },
+    { path: 'user/add',   component: AddUserComponent },
    
     //complaints
     { path: 'complaints',     component: ComplaintsComponent },

@@ -7,6 +7,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 import { UserProfileComponent } from '../../users/user-profile/user-profile.component';
 import { UsersComponent } from '../../users/users/users.component';
+import { AddUserComponent } from '../../users/add-user/add-user.component';
 import { RegulationsComponent } from '../../regulations-all/regulations/regulations.component';
 import { AddRegulationComponent } from '../../regulations-all/add-regulation/add-regulation.component';
 import { DetailRegulationComponent } from '../../regulations-all/detail-regulation/detail-regulation.component';
@@ -55,6 +56,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
   declarations: [
     DashboardComponent,
     UserProfileComponent,
+    AddUserComponent,
     RegulationsComponent,
     AddRegulationComponent,
     DetailRegulationComponent,
