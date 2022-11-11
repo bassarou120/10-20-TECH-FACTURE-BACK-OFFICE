@@ -28,6 +28,9 @@ import { EditorComponent } from '../../components/editor/editor.component';
 import { AddInfoComponent } from '../../info-all/add-info/add-info.component';
 import { DetailInfoComponent } from '../../info-all/detail-info/detail-info.component';
 
+import { CompetionsComponent } from '../../competions-all/competions/competions.component';
+import { AddCompetionComponent } from '../../competions-all/add-competion/add-competion.component';
+import { DetailCompetionComponent } from '../../competions-all/detail-competion/detail-competion.component';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -36,7 +39,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-// import { DataTablesModule } from "angular-datatables";
+import {MatDatepickerModule} from '@angular/material/datepicker';
+
+//  import { DataTablesModule } from "angular-datatables";
 
 
 @NgModule({
@@ -52,6 +57,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatSelectModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatDatepickerModule,
+    //DataTablesModule
   ],
   declarations: [
     DashboardComponent,
@@ -73,7 +80,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     AddInfoComponent,
     DetailInfoComponent,
     UsersComponent,
-  
+    CompetionsComponent,
+    AddCompetionComponent,
+    DetailCompetionComponent,
   ]
 })
 

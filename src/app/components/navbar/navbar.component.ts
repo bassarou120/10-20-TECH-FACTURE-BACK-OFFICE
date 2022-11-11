@@ -117,20 +117,25 @@ export class NavbarComponent implements OnInit {
           titlee = titlee.slice( 1 );
       }
 
+      var find = 0 ; 
       for(var item = 0; item < this.listTitles.length; item++){
           if(this.listTitles[item].path === titlee){
+               find = 1;
               return this.listTitles[item].title;
           }
           else{
-            for(var i = 0; i < this.listTitlesHide.length; i++){
-                var p = this.listTitlesHide[i].path ;
-                if(p.split("/")[1]===titlee.split("/")[1]){
-                    return this.listTitlesHide[i].title;
-                }
-              }
+            find = 0;
           }
       }
     
+      if(find == 0){
+        for(var i = 0; i < this.listTitlesHide.length; i++){
+            var p = this.listTitlesHide[i].path ;
+            if(p.split("/")[1]===titlee.split("/")[1]){
+                return this.listTitlesHide[i].title;
+            }
+          }
+      }
       return 'Tableau de bord';
     }
 }

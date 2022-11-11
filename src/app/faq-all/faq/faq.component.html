@@ -1,8 +1,8 @@
 <div class=".faq main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
-            <button id="add_faq_btn" mat-raised-button="" class="btn mat-raised-button mat-button-base">
-                <span class="mat-button-wrapper"><span class="btn-label">
+            <button id="add_faq_btn" mat-raised-button="" class="btn mat-raised-button mat-button-base" (click)="openModal()">
+                <span class="mat-button-wrapper"><span class="">
                     <i class="material-icons">add</i></span> FAQ </span>
                 <div matripple="" class="mat-ripple mat-button-ripple">
                 </div>
@@ -18,117 +18,119 @@
             </div>
             <div class="card-body">
                 <div class="row table-responsible">
-                    <table class="table">
+                    <table datatable class="table row-border hover datatable" id="faq_datatable">
                         <thead class="text-danger">
-                            <th style="width:2% !important;">#</th>
-                            <th style="width:15% !important;">Métier</th>
-                            <th style="width:40% !important;">Questions</th>
-                            <th style="width:40% !important;">Reponse</th>
-                            <th style="width:10% !important;">Afficher</th>
-                            <th style="width:10% !important;" class="td-actions text-right">Actions</th>
+                            <tr>
+                                <th style="width:2% !important;">#</th>
+                                <th style="width:15% !important;">Métier</th>
+                                <th style="width:40% !important;">Questions</th>
+                                <th style="width:40% !important;">Reponse</th>
+                                <th style="width:10% !important;">Afficher</th>
+                                <th style="width:10% !important;" class="td-actions text-right">Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
                             <tr>
                                 <td>1</td>
-                                <td>Voyage</td>
-                                <td>Q1 comment soummettre emon dossier</td>
-                                <td>Vous pouvez resoumettre votre demande sans payer à nouveau les frais. Pour ce faire, sélectionnez le même document que celui demandé précédemment et remplissez le formulaire. Arrivée à l'étape de la soumission, cliquez sur le texte juste en dessous du montant (Vous avez déjà payé ? Si oui, ...).</td>
+                                <td>VOYAGE</td>
+                                <td>La de isijds isdjisds</td>
+                                <td>Oud-Turnhout</td>
                                 <td><span class="badge badge-success">Oui</span></td>
                                 <td class="td-actions text-right">
-                                    <a href="javascript:void(0)" rel="tooltip" data-id="1" class="btn btn-info btn-link">
+                                    <a href="javascript:void(0)" rel="tooltip" data-id="1" class="btn btn-info btn-link" (click)="openShowModal(1)">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-link" data-id="1">
+                                    <a href="javascript:void(0)" class="btn btn-success btn-link" data-id="1" (click)="openModal(1)">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-info  btn-link" data-id="1">
+                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-info  btn-link" data-id="1" (click)="hideElement(1)">
                                         <i class="material-icons">settings_power</i>
                                     </a>
-                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-danger  btn-link" data-id="1">
+                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-danger  btn-link" data-id="1" (click)="deleteElement(1)">
                                         <i class="material-icons">close</i>
                                     </a>
                                 </td>
                             </tr>
-                           <tr>
-                                <td>2</td>
-                                <td>Voyage</td>
-                                <td>Q2 comment soummettre emon dossier</td>
-                                <td>Vous pouvez resoumettre votre demande sans payer à nouveau les frais. Pour ce faire, sélectionnez le même document que celui demandé précédemment et remplissez le formulaire. Arrivée à l'étape de la soumission, cliquez sur le texte juste en dessous du montant (Vous avez déjà payé ? Si oui, ...).</td>
-                                <td><span class="badge badge-success">Oui</span></td>
-                                <td class="td-actions text-right">
-                                    <a href="javascript:void(0)" rel="tooltip" data-id="1" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-link" data-id="1">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-info  btn-link" data-id="1">
-                                        <i class="material-icons">settings_power</i>
-                                    </a>
-                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-danger  btn-link" data-id="1">
-                                        <i class="material-icons">close</i>
-                                    </a>
-                                </td>
-                            </tr>
-
-                             <tr>
-                                                            <td>2</td>
-                                                            <td>Voyage</td>
-                                                            <td>Q2 comment soummettre emon dossier</td>
-                                                            <td>Vous pouvez resoumettre votre demande sans payer à nouveau les frais. Pour ce faire, sélectionnez le même document que celui demandé précédemment et remplissez le formulaire. Arrivée à l'étape de la soumission, cliquez sur le texte juste en dessous du montant (Vous avez déjà payé ? Si oui, ...).</td>
-                                                            <td><span class="badge badge-success">Oui</span></td>
-                                                            <td class="td-actions text-right">
-                                                                <a href="javascript:void(0)" rel="tooltip" data-id="1" class="btn btn-info btn-link">
-                                                                    <i class="material-icons">info</i>
-                                                                </a>
-                                                                <a href="javascript:void(0)" class="btn btn-success btn-link" data-id="1">
-                                                                    <i class="material-icons">edit</i>
-                                                                </a>
-                                                                <a href="javascript:void(0)" rel="tooltip" class="btn btn-info  btn-link" data-id="1">
-                                                                    <i class="material-icons">settings_power</i>
-                                                                </a>
-                                                                <a href="javascript:void(0)" rel="tooltip" class="btn btn-danger  btn-link" data-id="1">
-                                                                    <i class="material-icons">close</i>
-                                                                </a>
-                                                            </td>
-                                                        </tr>
-
-
                         </tbody>
                     </table>
                 </div>
             </div>
             <!-- Modal -->
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel"></h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                            <h4 class="modal-title" id="modal_title"></h4>
+                            <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
                         </div>
-                        <form action="" id="add_faq_form">
+                        <form [formGroup]="faqForm" (ngSubmit)="onClickSubmit()" novalidate>
                             <div class="modal-body">
                                 <div class="col-sm-12">
                                     <mat-form-field class="example-full-width">
-                                        <input matInput type="text" id="question" name="question" placeholder="Question">
+                                        <input matInput type="text" id="question" name="question" placeholder="Question" formControlName="question">
                                     </mat-form-field>
+                                    <div class="errors">
+                                        <span *ngIf="question && question.invalid && question.touched && faqForm.get('question').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                        <span *ngIf="question && question.invalid && question.touched && faqForm.get('question').errors.minlength" [ngClass]="'error'"> Au moins {{ faqForm.get('question').errors.minlength.requiredLength }} caractères </span>
+                                    </div>
+                                    <!-- <div>{{faqForm.get('question').errors | json}}</div> -->
                                 </div>
                                 <div class="col-sm-12">
-                                    <mat-form-field class="example-full-width" id="answer" name="answer">
-                                        <textarea matInput placeholder="Réponse"></textarea>
+                                    <mat-form-field class="example-full-width">
+                                        <textarea matInput placeholder="Réponse" id="answer" name="answer" formControlName="answer"></textarea>
                                     </mat-form-field>
+                                    <div class="errors">
+                                        <span *ngIf="answer && answer.invalid && answer.touched && faqForm.get('answer').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    </div>
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                <button type="submit" class="btn btn-danger">Enregistrer</button>
+                                <button type="button" class="btn btn-default" (click)="onCloseHandled()">Close</button>
+                                <button type="submit" class="btn btn-danger" id="sbt_btn">
+                                    <span class="fa fa-spinner fa-spin d-none" id="spinner"></span> Enregistrer
+                                    </button>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
+
+            <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':displayShowModal}">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Détail du FAQ</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="onCloseHandledShowModal()"><span aria-hidden="true">&times;</span></button>
+                        </div>
+
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <b>Question:</b>
+                                </div>
+                                <div class="col-md-10">
+                                    <p id="display_question"> pjhjhdhfhdhf djsdsuhdshdushsds ?</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <b>Réponse:</b>
+                                </div>
+                                <div class="col-md-10">
+                                    <p id="display_question">bhfhdfhfs jkjksjdskjdkss kjskjdksdjs sdksjdskds</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" (click)="onCloseHandledShowModal()">Fermer</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
             <div class="col-md-12">
 
             </div>

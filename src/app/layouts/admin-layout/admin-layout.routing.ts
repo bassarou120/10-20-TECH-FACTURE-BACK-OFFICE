@@ -24,6 +24,9 @@ import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/d
 import { JobsComponent } from '../../jobs/jobs.component';
 import { FaqComponent } from '../../faq-all/faq/faq.component';
 
+import { CompetionsComponent } from '../../competions-all/competions/competions.component';
+import { AddCompetionComponent } from '../../competions-all/add-competion/add-competion.component';
+import { DetailCompetionComponent } from '../../competions-all/detail-competion/detail-competion.component';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent },
@@ -44,6 +47,11 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'regulations',component: RegulationsComponent },
     { path: 'regulation/add',   component: AddRegulationComponent },
     { path: 'regulations/:id', component: DetailRegulationComponent },
+
+    { path: 'competions',component: CompetionsComponent },
+    { path: 'competion/add',   component: AddCompetionComponent },
+    { path: 'competions/:id', component: DetailCompetionComponent },
+
     { path: 'jobs',        component: JobsComponent },
     { path: 'faq',        component: FaqComponent }, 
 ];

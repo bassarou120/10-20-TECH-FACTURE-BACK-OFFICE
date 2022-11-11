@@ -1,4 +1,5 @@
-import {Component,OnInit} from '@angular/core';
+import { Component,Renderer2, OnInit, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
     selector: 'app-regulations',
@@ -6,8 +7,18 @@ import {Component,OnInit} from '@angular/core';
     styleUrls: ['./regulations.component.styl']
 })
 export class RegulationsComponent implements OnInit  {
-    constructor() { }
+    //dtOptions: DataTables.Settings = {};
+
+    constructor() {
+        
+     }
     ngOnInit() {
+    
+        // this.dtOptions = {
+        //     pagingType: 'full_numbers',
+        //     pageLength: 5,
+        //     processing: true
+        //   };
     }
 }
 

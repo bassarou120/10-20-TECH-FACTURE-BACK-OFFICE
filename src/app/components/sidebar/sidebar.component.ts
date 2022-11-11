@@ -17,6 +17,7 @@ export const ROUTES: RouteInfo[] = [
     { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
     // { path: '/user-profile', title: 'User Profile',  icon:'person', class: ''},
     { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
+    { path: '/competions', title: 'Concours',  icon:'folder_open', class: '' },
     { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
 
 ];
@@ -30,9 +31,10 @@ export const HIDE_ROUTES: RouteInfo[] = [
   { path: '/trending/add', title: 'Ajouter une tendance',  icon: '', class: '' },
   { path: '/complaints/:id', title: 'Détail de la Plainte ',  icon: '', class: '' },
   { path: '/user/add', title: 'Ajouter un utilisateur',  icon: '', class: '' },
+  { path: '/competion/add', title: 'Ajouter un concours',  icon: '', class: '' },
+  { path: '/competions/:id', title: 'Détail compétition',  icon: '', class: '' },
 
 ];
-
 
 @Component({
   selector: 'app-sidebar',

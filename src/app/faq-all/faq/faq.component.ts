@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import { FuncsService } from '../../services/funcs.services';
+import { FormControl, Validators,FormGroup } from '@angular/forms';
 @Component({
     selector: 'app-faq',
     templateUrl: './faq.component.html',
@@ -10,7 +10,12 @@ export class FaqComponent implements OnInit  {
 
     display = "none";
     displayShowModal = "none";
-     
+  
+     faqForm = new FormGroup({
+      question: new FormControl('',Validators.required),
+      answer: new FormControl('', Validators.required)
+     }); 
+
      openModal(id?: number) {
         if(id){
             $('#modal_title').html("Editer un FAQ");
@@ -44,29 +49,30 @@ export class FaqComponent implements OnInit  {
 
      
     ngOnInit() {
-      
-   
-        //  $('#add_faq_form').submit(function(e){
-        //     e.preventDefault();
-        //     $('#sbt_btn').addClass('disabled');
-        //     $('#spinner').removeClass('d-none')
-        //     setTimeout(function () {
-        //         $('#sbt_btn').removeClass('disabled');
-        //         $('#spinner').addClass('d-none')
-        //     }, 5000);
-        //     this.onCloseHandled();
-        //   })
-    
+  
     }
-    onClickSubmit(data) {
+
+    onClickSubmit(): void {
+      if(!this.faqForm.invalid){
+        console.log('Question:' + this.faqForm.get('question').value);
+        console.log('Answer:' + this.faqForm.get('answer').value);
         $('#sbt_btn').addClass('disabled');
-        $('#spinner').removeClass('d-none')
-      
-        setTimeout(function () {
-            $('#sbt_btn').removeClass('disabled');
-            $('#spinner').addClass('d-none')
-            window['showSuccessNotification']('Enregistrement reussie');
-        }, 5000);
-        //this.onCloseHandled();
-     }
+          $('#spinner').removeClass('d-none')
+        
+          setTimeout(function () {
+              $('#sbt_btn').removeClass('disabled');
+              $('#spinner').addClass('d-none')
+              window['showSuccessNotification']('Enregistrement reussie');
+          }, 5000);
+          //this.onCloseHandled();
+      }
+    } 
+
+    get question(): any {
+      return this.faqForm.get('question');
+    }
+    get answer(): any {
+      return this.faqForm.get('answer');
+    }
+ 
 }
