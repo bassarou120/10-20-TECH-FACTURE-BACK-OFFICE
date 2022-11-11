@@ -14,7 +14,7 @@ import { ResetPasswordComponent } from '../../reset-password/reset-password.comp
         RouterModule.forChild(AuthLayoutRoutes),
     ],
     declarations: [
-        LoginComponent,
+        // LoginComponent,
         ResetPasswordComponent,
         ForgetPasswordComponent,
     ]
