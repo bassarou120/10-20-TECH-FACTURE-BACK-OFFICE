@@ -1,27 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 
 declare const $: any;
-declare interface SubRouteInfo{
-  sub_path: string;
-  sub_title: string;
-}
+
 declare interface RouteInfo {
     path: string;
     title: string;
     icon: string;
     class: string;
-    submenu:SubRouteInfo
 }
 export const ROUTES: RouteInfo[] = [
-    { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/jobs', title: 'Metiers',  icon:'category', class: '',submenu:{sub_path:'',sub_title:''}  },
-    { path: '/regulations', title: 'Reglementations',  icon:'loyalty', class: '' ,submenu:{sub_path:'',sub_title:''} },
-    { path: '/trendings', title: 'Tendances',  icon:'library_books', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/infos', title: 'Informations',  icon:'announcement', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/investors', title: 'Investisseurs',  icon:'folder_shared', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/user-profile', title: 'User Profile',  icon:'person', class: '',submenu:{sub_path:'',sub_title:''} },
-    { path: '/logout', title: 'Deconnexion',  icon:'logout', class: 'active-pro',submenu:{sub_path:'',sub_title:''} },
+    { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+    { path: '/jobs', title: 'Metiers',  icon:'category', class: '' },
+    { path: '/regulations', title: 'Reglementations',  icon:'loyalty', class: ''  },
+    { path: '/trendings', title: 'Tendances',  icon:'library_books', class: '' },
+    { path: '/infos', title: 'Comment obtenir ?',  icon:'announcement', class: '' },
+    { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
+    // { path: '/user-profile', title: 'User Profile',  icon:'person', class: ''},
+    { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
+    { path: '/competions', title: 'Concours',  icon:'folder_open', class: '' },
+    { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
+
+];
+
+export const HIDE_ROUTES: RouteInfo[] = [
+  { path: '/regulations/:id', title: 'Détail Règlementation',  icon: '', class: '' },
+  { path: '/regulation/add', title: 'Ajouter une Règlementation',  icon: '', class: '' },
+  { path: '/infos/:id', title: 'Comment obtenir ??',  icon: '', class: '' },
+  { path: '/info/add', title: 'Ajouter une information',  icon: '', class: '' },
+  { path: '/trendings/:id', title: 'Détail Tendance ',  icon: '', class: '' },
+  { path: '/trending/add', title: 'Ajouter une tendance',  icon: '', class: '' },
+  { path: '/complaints/:id', title: 'Détail de la Plainte ',  icon: '', class: '' },
+  { path: '/user/add', title: 'Ajouter un utilisateur',  icon: '', class: '' },
+  { path: '/competion/add', title: 'Ajouter un concours',  icon: '', class: '' },
+  { path: '/competions/:id', title: 'Détail compétition',  icon: '', class: '' },
 
 ];
 
