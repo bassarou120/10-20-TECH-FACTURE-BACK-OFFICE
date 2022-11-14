@@ -40,6 +40,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { QuillModule } from 'ngx-quill';
+import { NgxQuillModule } from '@dimpu/ngx-quill';
 
 //  import { DataTablesModule } from "angular-datatables";
 
@@ -58,6 +60,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatTooltipModule,
     MatCheckboxModule,
     MatDatepickerModule,
+    
+    NgxQuillModule
     //DataTablesModule
   ],
   declarations: [

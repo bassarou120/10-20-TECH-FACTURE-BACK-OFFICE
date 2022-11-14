@@ -17,6 +17,7 @@ import { ResetPasswordComponent } from '../../reset-password/reset-password.comp
         // LoginComponent,
         ResetPasswordComponent,
         ForgetPasswordComponent,
+
     ]
 })
 export class AuthLayoutModule {}

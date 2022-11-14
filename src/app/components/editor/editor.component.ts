@@ -1,6 +1,9 @@
-import {Component,OnInit} from '@angular/core';
+import {Component,Input,OnInit} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import * as Quill from 'quill';
+import { QuillConfiguration } from './quill-configuration';
 
+/*
 const fullToolbar = [
   [
     {
@@ -60,6 +63,7 @@ const fullToolbar = [
   ['link', 'image', 'video', 'formula'],
   ['clean']
 ];
+*/
 
 @Component({
     selector: 'app-editor',
@@ -68,6 +72,17 @@ const fullToolbar = [
 })
 
 export class EditorComponent  implements OnInit {
+
+  quillConfiguration = QuillConfiguration;
+  @Input() control: FormControl;
+
+
+
+  ngOnInit(): void {
+    this.control = this.control ?? new FormControl();
+   }
+
+      /*
    // private  fullEditor :any ;
     
     // public get editor(): any{
@@ -77,6 +92,8 @@ export class EditorComponent  implements OnInit {
     // public set editor(val:any){
     //   this.fullEditor = val ;
     // }
+    
+ 
 
     constructor() { }
     ngOnInit() {
@@ -101,4 +118,6 @@ export class EditorComponent  implements OnInit {
           // }))
       
     }
+
+    */
 }

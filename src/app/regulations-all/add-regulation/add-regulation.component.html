@@ -4,6 +4,7 @@
             <div class="card">
                 <div class="card-header card-header-rose card-header-text">
                     <div class="card-text">
+                  
                         <h4 class="card-title">Ajouter une régementation</h4>
                     </div>
                 </div>
@@ -37,7 +38,23 @@
                                 </mat-select>
                             </div>
                         </div>
-                        <app-editor></app-editor>
+
+                        <ngx-quill  [formControl]="editorContent" 
+                        
+                            [options]="editorOptions"
+                           
+                            (blur)="onEditorBlured($event)"
+                            (focus)="onEditorFocused($event)"
+                            (ready)="onEditorCreated($event)"
+                            (change)="onContentChanged($event)">
+                        </ngx-quill>
+
+                        <!-- <ngx-quill #editor [(ngModel)]="content" [(modules)]="modules"  (contentChanged)="logChange($event);"></ngx-quill> -->
+                        <!-- <ngx-quill #editor [(ngModel)]="content"  (contentChanged)="logChange($event);"></ngx-quill> -->
+
+                      
+                        <!-- <app-editor  [control]="descriptionRichControl"  ></app-editor> -->
+
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -67,7 +84,7 @@
                                     <span class="input-group-text btn-file">
                                         <span class="fileinput-new">Fichier</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="file" accept=".pdf,.PDF">
+                                    <input type="file"   name="file" accept=".pdf,.PDF">
                                     </span>
                                     </span>
                                 </div>
