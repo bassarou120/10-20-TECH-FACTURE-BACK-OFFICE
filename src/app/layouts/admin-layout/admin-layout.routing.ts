@@ -27,9 +27,13 @@ import { FaqComponent } from '../../faq-all/faq/faq.component';
 import { CompetionsComponent } from '../../competions-all/competions/competions.component';
 import { AddCompetionComponent } from '../../competions-all/add-competion/add-competion.component';
 import { DetailCompetionComponent } from '../../competions-all/detail-competion/detail-competion.component';
+import {AuthGuard} from '../../utils/AuthGuard';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'dashboard',
+        component: DashboardComponent,
+        canActivate: [AuthGuard ]
+        },
     // users
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',   component: UsersComponent },

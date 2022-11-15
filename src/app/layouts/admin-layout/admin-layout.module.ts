@@ -4,34 +4,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
-import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../users/user-profile/user-profile.component';
-import { UsersComponent } from '../../users/users/users.component';
-import { AddUserComponent } from '../../users/add-user/add-user.component';
-import { RegulationsComponent } from '../../regulations-all/regulations/regulations.component';
-import { AddRegulationComponent } from '../../regulations-all/add-regulation/add-regulation.component';
-import { DetailRegulationComponent } from '../../regulations-all/detail-regulation/detail-regulation.component';
-
-import { TrendingsComponent } from '../../trending-all/trendings/trendings.component';
-import { AddTrendingComponent } from '../../trending-all/add-trending/add-trending.component';
-import { DetailTrendingComponent } from '../../trending-all/detail-trending/detail-trending.component';
-
-import { InvestorsComponent } from '../../investors/investors.component';
-import { InfosComponent } from '../../info-all/infos/infos.component';
-import {ComplaintsComponent } from '../../complaints-all/complaints/complaints.component';
-import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/detail-complaint.component';
-
-import { JobsComponent } from '../../jobs/jobs.component';
-import { FaqComponent } from '../../faq-all/faq/faq.component';
-import { EditorComponent } from '../../components/editor/editor.component';
- 
-import { AddInfoComponent } from '../../info-all/add-info/add-info.component';
-import { DetailInfoComponent } from '../../info-all/detail-info/detail-info.component';
-
-import { CompetionsComponent } from '../../competions-all/competions/competions.component';
-import { AddCompetionComponent } from '../../competions-all/add-competion/add-competion.component';
-import { DetailCompetionComponent } from '../../competions-all/detail-competion/detail-competion.component';
-
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
@@ -40,6 +12,30 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
+import { QuillModule } from 'ngx-quill';
+import { NgxQuillModule } from '@dimpu/ngx-quill';
+import {CompetionsComponent} from '../../competions-all/competions';
+import {AddInfoComponent} from '../../info-all/add-info';
+import {InvestorsComponent} from '../../investors';
+import {AddUserComponent} from '../../users/add-user';
+import {EditorComponent} from '../../components/editor';
+import {DetailCompetionComponent} from '../../competions-all/detail-competion';
+import {JobsComponent} from '../../jobs';
+import {AddCompetionComponent} from '../../competions-all/add-competion';
+import {DetailComplaintComponent} from '../../complaints-all/detail-complaint';
+import {DetailInfoComponent} from '../../info-all/detail-info';
+import {UsersComponent} from '../../users/users';
+import {DashboardComponent} from '../../dashboard/dashboard.component';
+import {UserProfileComponent} from '../../users/user-profile/user-profile.component';
+import {AddRegulationComponent} from '../../regulations-all/add-regulation';
+import {ComplaintsComponent} from '../../complaints-all/complaints/complaints.component';
+import {InfosComponent} from '../../info-all/infos';
+import {FaqComponent} from '../../faq-all/faq';
+import {DetailTrendingComponent} from '../../trending-all/detail-trending';
+import {TrendingsComponent} from '../../trending-all/trendings';
+import {AddTrendingComponent} from '../../trending-all/add-trending';
+import {DetailRegulationComponent} from '../../regulations-all/detail-regulation';
+import {RegulationsComponent} from '../../regulations-all/regulations';
 
 //  import { DataTablesModule } from "angular-datatables";
 
@@ -58,6 +54,9 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     MatTooltipModule,
     MatCheckboxModule,
     MatDatepickerModule,
+
+    
+    NgxQuillModule
     //DataTablesModule
   ],
   declarations: [

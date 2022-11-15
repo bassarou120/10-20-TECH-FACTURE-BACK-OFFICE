@@ -23,6 +23,7 @@ export class AdminLayoutComponent implements OnInit {
       
       const isWindows = navigator.platform.indexOf('Win') > -1 ? true : false;
 
+
       if (isWindows && !document.getElementsByTagName('body')[0].classList.contains('sidebar-mini')) {
           // if we are on windows OS we activate the perfectScrollbar function
 
@@ -69,6 +70,11 @@ export class AdminLayoutComponent implements OnInit {
           }
 
       }
+
+
+
+
+
 
       $('.fixed-plugin a').click(function(event){
         // Alex if we click on switch, stop propagation of the event, so the dropdown will not be hide, otherwise we set the  section active

@@ -40,6 +40,7 @@ export class LoginComponent implements OnInit {
 
 
 
+
     ngOnInit(): void {
 
         this.validateForm = this.fb.group({
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit {
     connexion(): void {
 
         if (this.validateForm.valid == true) {
-            
+
             const formData = this.validateForm.value;
             console.log(formData);
 
