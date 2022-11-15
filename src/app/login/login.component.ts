@@ -166,6 +166,8 @@ export class LoginComponent implements OnInit {
         );
     }
 
+
+//fonctionde notification
     notificationForm(type: string, msg: string) {
         this.typeNotificationForm = type;
         this.messageNotificationForm = msg;
