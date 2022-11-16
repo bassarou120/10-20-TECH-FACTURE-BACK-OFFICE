@@ -54,10 +54,9 @@ import {RegulationsComponent} from '../../regulations-all/regulations';
     MatTooltipModule,
     MatCheckboxModule,
     MatDatepickerModule,
-
-    
     NgxQuillModule
     //DataTablesModule
+      //
   ],
   declarations: [
     DashboardComponent,

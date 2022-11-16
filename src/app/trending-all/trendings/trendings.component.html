@@ -26,84 +26,22 @@
                             <th style="width:13% !important;" class="td-actions text-right">Actions</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            <tr *ngFor="let t of trendings; index as i;">
+                                <td>{{ i+1}}</td>
                                 <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/agent-de-voyage.png" alt="..." width="60">
-                                    </div> -->
-                                    VOYAGE
+                                    <a routerLink="/jobs">{{ t.job.name }}</a>
                                 </td>
-                                <td>Comment dffdfdf dfd</td>
+                                <td>{{ t.titre}}</td>
                                 <td class="td-actions text-right">
-                                    <a href="#/trendings/1" rel="tooltip" class="btn btn-info btn-link">
+                                    <a [routerLink]="['/trendings', t.id]" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <!-- <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a> -->
-                                    <a href="#/trending/add" class="btn btn-success btn-link">
+                                    <a href="javascript:void(0)" (click)="edit(t.id)" class="btn btn-success btn-link">
                                         <i class="material-icons">edit</i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/accueil.png" alt="..." width="60">
-                                    </div> -->
-                                    HEBERGEMENT
-                                </td>
-                                <td>Bal kksjkj eijier</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/guide-touristique.png" alt="..." width="60">
-                                    </div> -->
-                                    GUIDE
-                                </td>
-                                <td>sdsdss</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <!-- <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a> -->
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/toque.png" alt="..." width="60">
-                                    </div> -->
-                                    RESTAURANTS
-                                </td>
-                                <td> jf jsdskjdskd gstcd llkjd </td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
+
 
                         </tbody>
                     </table>

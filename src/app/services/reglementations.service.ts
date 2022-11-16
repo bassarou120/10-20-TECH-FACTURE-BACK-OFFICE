@@ -16,9 +16,13 @@ export class ReglementationsService {
 
   constructor(private http: HttpClient) { }
 
-  // Enregistrement des pieces
-  saveFile(id: number, piece: Piece): Observable<Object> {
-    return this.http.post(`${this.url}/save-file/${id}`, piece);
+
+  saveFileUrl(id: number ,url:string): Observable<Object> {
+    return this.http.post(`${this.url}/save-fileUrl/${id}`,url);
+  }
+
+  saveImageUrl(id: number ,url:string): Observable<Object> {
+    return this.http.post(`${this.url}/save-imageUrl/${id}`,url);
   }
 
 

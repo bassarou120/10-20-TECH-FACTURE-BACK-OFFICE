@@ -8,6 +8,7 @@ import { environment } from 'environments/environment';
 import { error } from 'protractor';
 import { filter } from 'rxjs';
 import {EditorComponent} from '../../components/editor/editor.component';
+import {JobService} from '../../services/job.service';
 
 
 declare const $: any;
@@ -111,7 +112,7 @@ export class AddRegulationComponent  implements OnInit {
          },
   };
 
-
+  listJobs:Array<Job>=[];
 
 
   fileToUpload: File = null;
@@ -126,6 +127,7 @@ export class AddRegulationComponent  implements OnInit {
     constructor(
        private fb: FormBuilder,
       private reglementService: ReglementationsService ,
+      private jobService:JobService,
       private http: HttpClient,) {}
   
     regulationForm = new FormGroup
@@ -138,8 +140,8 @@ export class AddRegulationComponent  implements OnInit {
        }); 
 
         ngOnInit() {
-       
 
+            this.getListJobs()
           setTimeout(() => {
             this.editorContent = '<h1>content changed!</h1>';
             console.log('you can use the quill instance object to do something', this.editor);
@@ -147,8 +149,26 @@ export class AddRegulationComponent  implements OnInit {
           }, 2800)
  
             this.types = TYPES.filter(type => type);
-            this.jobs = JOBS.filter(job => job);
+             this.jobs = JOBS.filter(job => job);
           
+        }
+
+
+        getListJobs(){
+
+            this.jobService.list().subscribe(
+                (data )=>{
+                    this.listJobs=data["data"];
+
+                   // alert(JSON.stringify(this.listJobs))
+
+                    console.log( this.listJobs );
+                },
+                (error)=>{
+
+                }
+            )
+
         }
 
     
@@ -168,14 +188,13 @@ export class AddRegulationComponent  implements OnInit {
       get type(): any {
         return this.regulationForm.get('type');
       }
-      get job(): any {
+    get job(): any {
         return this.regulationForm.get('job');
-      }
+    }
     
       onClickSubmit(): void {
         if(this.regulationForm.valid){
 
-           
             // $('#sbt_btn').addClass('disabled');
             // $('#spinner').removeClass('d-none');
 
@@ -183,20 +202,21 @@ export class AddRegulationComponent  implements OnInit {
 
            this.regulation.content=this.editor.root.innerHTML
 
-          // alert(JSON.stringify(this.regulation));
-          // this.reglementService.saveFile
+
 
           this.reglementService.save(this.regulation).subscribe(
             (data:Reglementation)=>{
-
-              alert(JSON.stringify(data));
-
+                alert(JSON.stringify(data));
+                this.submitFormFile(data);
+                // this.submitFormFileImaf(data);
             },
             (error)=>{
               alert(JSON.stringify(error));
 
             }
           );
+
+
 
 
             // setTimeout(function () {
@@ -220,17 +240,18 @@ export class AddRegulationComponent  implements OnInit {
       }
 
 
-      submitFormFile(): void {
+      submitFormFile(reg: Reglementation): void {
 
         if (this.fileToUpload.name != "") {
        //   const formDataDonnee = this.validateFormFile.value;
     
           const formData = new FormData();
-          
           formData.append('Content-Type', 'multipart/form-data');
           formData.append('file', <File>this.fileToUpload);
-    
-          const req = new HttpRequest('POST', this.url + '/piece/uploadFile', formData, {
+
+          // formData.append('file', <File>this.fileToUpload);
+
+          const req = new HttpRequest('POST', this.url + "/filemanager/upload", formData, {
             // reportProgress: true
           });
     
@@ -238,19 +259,15 @@ export class AddRegulationComponent  implements OnInit {
           this.http.request(req).pipe(filter(e => e instanceof HttpResponse))
             .subscribe(
               (data: any) => {
-                let piece: Piece = data.body;
-                console.log(data);
-                piece.namePiece = this.fileToUpload.name;
-                
-                piece.refEmplacement = "formDataDonnee.refEmplacement";
-                piece.refPiece = "formDataDonnee.refPiece";
-    
-                this.reglementService.saveFile(this.regulation.id, piece).subscribe(
-                  (data: Reglementation) => {
-                    // this.filesRequete = data.files;
-                    // this.fileInput.nativeElement.value = '';
-                    // this.validateFormFile.reset();
-                  });
+
+                  if (data.ok==true){
+                      this.reglementService.saveFileUrl(reg.id,data.body.message).subscribe(
+                          (data: Reglementation) => {
+                              alert(JSON.stringify(data));
+                          });
+
+                  }
+
               },
               err => {
     
@@ -265,8 +282,6 @@ export class AddRegulationComponent  implements OnInit {
       }
 
 
-
-
       onEditorBlured(quill ) {
         this.editor = quill;
       // console.log('editor blur!',   quill.getContents(), quill.root.innerHTML );
@@ -278,6 +293,11 @@ export class AddRegulationComponent  implements OnInit {
     
       onEditorCreated(quill) {
         this.editor = quill;
+        // console.log('quill is ready! this is current quill instance object', quill);
+      }
+
+    onContentChanged(quill,) {
+        // this.editor = quill;
         // console.log('quill is ready! this is current quill instance object', quill);
       }
     

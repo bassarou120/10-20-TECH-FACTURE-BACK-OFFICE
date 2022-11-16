@@ -31,7 +31,7 @@
 <div class="container">
     <div class="row">
         <div class="col-lg-4 col-md-6 col-sm-6 ml-auto mr-auto" style="margin-top:10% !important">
-            <form novalidate="" method="" action="" class="form ng-untouched ng-pristine ng-valid">
+            <form [formGroup]="validateForm" (ngSubmit)="connexion()"  class="form ng-untouched ng-pristine ng-valid">
                 <div class="card card-login">
                     <div class="card-header card-header-rose text-center">
                         <h3 class="card-title">Connexion</h3>
@@ -41,36 +41,45 @@
                                     <img src="/assets/img/logo_ministere.png" width="150" />
                                 </div>
                                 <div class="">
-                                    <p>Entrez vous identifiants pour vous connecter !</p>
+                                    <p>Entrez vous identifiants  !</p>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                     <div class="card-body">
-                        <span class="bmd-form-group">
-                     
-                </span>
+
+                        <!-- Alert with rounded corner -->
+                        <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded"
+                             *ngIf="isNotificationForm == true">
+                            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                            <button type="button" class="close" (click)="closeNotificationForm()">
+                                <span>×</span></button>
+                        </div>
+
                         <span class="bmd-form-group">
                     <div class="input-group">
                         <div class="input-group-prepend">
                             <span class="input-group-text"><i class="material-icons">email</i></span>
                     </div>
-                    <input type="email" placeholder="Email..." class="form-control">
+                      <input   type="email" formControlName="usernameOrEmail" placeholder="Email..." class="form-control">
                 </div>
                 </span><span class="bmd-form-group">
         <div class="input-group mt-3">
             <div class="input-group-prepend"><span class="input-group-text"><i class="material-icons">lock_outline</i></span>
         </div>
-        <input type="password" placeholder="Password..." class="form-control">
+       <input type="password"  formControlName="password"  placeholder="Password..." class="form-control">
     </div>
     </span>
 </div>
 <div class="card-footer justify-content-center">
     <div class="d-flex flex-column">
-        <div>
-            <a href="#/dashboard" class="btn btn-rose btn-link btn-lg">Connexion</a>
+        <div class="text-center">
+            <input type="submit" value="Connexion"  class="btn btn-success  btn-sm" >
         </div>
+
+<!--            <a href="#/dashboard" class="btn btn-rose btn-link btn-lg">Connexion</a>-->
+
         <div class="text-center">
             <a href="#/forgetpassword">Mot de passe oublié ?</a>
         </div>

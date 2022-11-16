@@ -1,4 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { Complaints } from 'app/models/complaints';
+import { Job } from 'app/models/job';
+import { ComplaintsService } from '../../services/complaints.service';
+import { JobService } from '../../services/job.service';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
+
 declare var $: any;
 @Component({
   selector: 'app-complaints',
@@ -7,36 +14,128 @@ declare var $: any;
 })
 export class ComplaintsComponent implements OnInit {
 
-  constructor() { }
-  showNotification(from, align){
-      const type = ['','info','success','warning','danger'];
+  constructor(private complaintsService:ComplaintsService,private jobService: JobService) {}
+ 
+  complaints: Array<Complaints> = [];
+  jobs: Array<Job> = [];
+  selected_faq: any;
 
-      const color = Math.floor((Math.random() * 4) + 1);
+  typeNotificationForm: string;
+  messageNotificationForm: string;
+  isNotificationForm: boolean = false;
 
-      $.notify({
-          icon: "notifications",
-          message: "Welcome to <b>Material Dashboard</b> - a beautiful freebie for every web developer."
+  display = "none";
 
-      },{
-          type: type[color],
-          timer: 4000,
-          placement: {
-              from: from,
-              align: align
-          },
-          template: '<div data-notify="container" class="col-xl-4 col-lg-4 col-11 col-sm-4 col-md-4 alert alert-{0} alert-with-icon" role="alert">' +
-            '<button mat-button  type="button" aria-hidden="true" class="close mat-button" data-notify="dismiss">  <i class="material-icons">close</i></button>' +
-            '<i class="material-icons" data-notify="icon">notifications</i> ' +
-            '<span data-notify="title">{1}</span> ' +
-            '<span data-notify="message">{2}</span>' +
-            '<div class="progress" data-notify="progressbar">' +
-              '<div class="progress-bar progress-bar-{0}" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>' +
-            '</div>' +
-            '<a href="{3}" target="{4}" data-notify="url"></a>' +
-          '</div>'
-      });
+  complaintForm = new FormGroup({
+    action: new FormControl('')
+  });
+
+  openModal(id_element?: number) {
+    if (id_element) {
+     
+      var el = this.complaints.find(x => x.id == id_element);
+      this.selected_faq = el;
+
+      this.complaintForm.patchValue({
+        action: el.action
+      }); 
+  
+    }
+    this.display = "block";
   }
+
+
+  getList(): void {
+    this.complaintsService.list().subscribe((data: Array<Complaints>) => {
+      this.complaints = data['data'];
+      // this.selected_faq= data['data'][0];
+      console.log(this.complaints );
+    }, (error: HttpErrorResponse) => {
+      console.log("Error while retrieving data");
+    }
+    )
+  }
+
   ngOnInit() {
+    this.getList();
   }
+
+  deleteElement(id:number){
+    this.complaintsService.delete(id).subscribe(response => {
+      this.notificationForm( "success", "Supression réussi !");
+      this.getList();
+     },(error: HttpErrorResponse)=>{
+      console.log("Error while deleting data");   
+    } )
+ }
+
+  changeStatutElement(id:number){
+    this.complaintsService.changeStatut(id).subscribe(response => {
+      this.notificationForm( "success", "Statut modifier avec succes !");
+      this.getList();
+     },(error: HttpErrorResponse)=>{
+      console.log("Error while hidden data");   
+      this.notificationForm( "danger", "Error de modification du statut !");
+    } )
+  }
+
+  onClickSubmit(): void {
+
+    $('#sbt_btn').removeClass('disabled');
+    $('#spinner').addClass('d-none')
+       const formData = this.complaintForm.value;
+       this.selected_faq =
+   
+       this.complaintsService.edit(
+        new Complaints(
+          this.selected_faq.firstname, 
+          this.selected_faq.lastname, 
+          this.selected_faq.email, 
+          this.selected_faq.phone_number, 
+          this.selected_faq.relative_contact, 
+          this.selected_faq.objet, 
+          this.selected_faq.complaint, 
+          this.selected_faq.actor, 
+          this.selected_faq.statut, 
+          formData.action, 
+          ),
+        this.selected_faq.id,
+      )
+        .subscribe(response => {
+          this.notificationForm(
+            "success",
+            "Modification réussi !"
+          );
+
+          this.getList();
+          this.display = "none";
+        }, (error: HttpErrorResponse) => {
+          console.log("Error while retrieving data");
+        })
+    
+
+    $('#sbt_btn').addClass('disabled');
+    $('#spinner').removeClass('d-none')
+
+    // }
+
+  }
+
+
+  notificationForm(type: string, msg: string) {
+    this.typeNotificationForm = type;
+    this.messageNotificationForm = msg;
+    this.isNotificationForm = true;
+  }
+
+  closeNotificationForm() {
+    this.isNotificationForm = false;
+  }
+
+  onCloseHandled() {
+    this.display = "none";
+  }
+
+
 
 }

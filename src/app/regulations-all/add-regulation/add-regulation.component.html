@@ -6,6 +6,8 @@
                     <div class="card-text">
                   
                         <h4 class="card-title">Ajouter une régementation</h4>
+
+
                     </div>
                 </div>
                 <form class="ng-untouched ng-pristine ng-valid" id="add_regultion_form" [formGroup]="regulationForm" (ngSubmit)="onClickSubmit()" novalidate>
@@ -21,11 +23,14 @@
                                 </div>
                             </div>
                         </div>
+
+
+
                         <div class="row">
                             <div class="col-md-6">
                                 <mat-select placeholder="Métier" name="job" id="job" ngClass="btn btn-default btn-link simple" formControlName="job" (change)="changeJob($event)">
-                                    <mat-option *ngFor="let job of jobs" [value]="job.value">
-                                        {{ job.label }}
+                                    <mat-option *ngFor="let job of listJobs" [value]="job">
+                                        {{ job.name }}
                                     </mat-option>
                                 </mat-select>
                             </div>
@@ -84,7 +89,7 @@
                                     <span class="input-group-text btn-file">
                                         <span class="fileinput-new">Fichier</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file"   name="file" accept=".pdf,.PDF">
+                                    <input type="file" (change)="handleFileInput($event)"  name="file" accept=".pdf,.PDF">
                                     </span>
                                     </span>
                                 </div>
@@ -101,7 +106,7 @@
                             </a>
                         </div>
                         <div>
-                            <button mat-raised-button=" " type="submit" id="sbt_btn" class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
+                            <button type="submit" id="sbt_btn" class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
                                 <span class="fa fa-spinner fa-spin d-none" id="spinner"></span>
                                 <span class="mat-button-wrapper ">Enregistrer</span>
                              </button>
