@@ -21,112 +21,31 @@
                     <table class="table table-responsible">
                         <thead class="text-danger">
                             <th style="width:2% !important;">#</th>
+                            <th style="width:20% !important;">Image</th>
                             <th style="width:15% !important;">Métier</th>
                             <th style="width:50% !important;">Titre</th>
                             <th style="width:13% !important;" class="td-actions text-right">Actions</th>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            <tr *ngFor="let f of infos; index as i;">
+                                <td>{{ i+1 }}</td>
                                 <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/agent-de-voyage.png" alt="..." width="60">
-                                    </div> -->
-                                    VOYAGE
+                                    <div class="img-container">
+                                        <img src="./assets/img/new_logo.png" alt="...">
+                                    </div>
                                 </td>
-                                <td>Comment déposer une demande de création ?</td>
+                                <td> <a routerLink="/jobs">{{ f.job.name }}</a>
+                                </td>
+                                <td>{{ f.titre }}</td>
                                 <td class="td-actions text-right">
-                                    <a href="infos/1" rel="tooltip" class="btn btn-info btn-link">
+                                    <a [routerLink]="['/infos', f.id]" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-
-                                    <a href="info/add" class="btn btn-success btn-link">
+                                    <a href="javascript:void(0)" class="btn btn-success btn-link" (click)="edit(f.id)">
                                         <i class="material-icons">edit</i>
                                     </a>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/accueil.png" alt="..." width="60">
-                                    </div> -->
-                                    HEBERGEMENT
-                                </td>
-                                <td>Comment obtenir une autorisation d’exercer et son classement ?</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <!-- <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a> -->
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/guide-touristique.png" alt="..." width="60">
-                                    </div> -->
-                                    GUIDE
-                                </td>
-                                <td>Comment obtenir une carte professionnelle de guide ?</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <!-- <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a> -->
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/toque.png" alt="..." width="60">
-                                    </div> -->
-                                    RESTAURANT
-                                </td>
-                                <td>Comment obtenir une autorisation d’exercer ?</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <!-- <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a> -->
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>
-                                    <!-- <div class="img-container">
-                                        <img src="./assets/img/faces/toque.png" alt="..." width="60">
-                                    </div> -->
-                                    RESTAURANT
-                                </td>
-                                <td>Comment obtenir un classement ?</td>
-                                <td class="td-actions text-right">
-                                    <a href="#" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="#" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>

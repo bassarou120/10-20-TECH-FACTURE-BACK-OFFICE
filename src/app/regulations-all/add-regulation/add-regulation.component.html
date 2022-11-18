@@ -4,11 +4,14 @@
             <div class="card">
                 <div class="card-header card-header-rose card-header-text">
                     <div class="card-text">
-                  
-                        <h4 class="card-title">Ajouter une régementation</h4>
-
-
+                        <h4 class="card-title">{{ card_header_title}}</h4>
                     </div>
+                </div>
+                <!-- Alert with rounded corner -->
+                <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                    <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                    <button type="button" class="close" (click)="closeNotificationForm()">
+                         <span>×</span></button>
                 </div>
                 <form class="ng-untouched ng-pristine ng-valid" id="add_regultion_form" [formGroup]="regulationForm" (ngSubmit)="onClickSubmit()" novalidate>
                     <div class="card-body">
@@ -23,18 +26,18 @@
                                 </div>
                             </div>
                         </div>
-
-
-
                         <div class="row">
                             <div class="col-md-6">
                                 <mat-select placeholder="Métier" name="job" id="job" ngClass="btn btn-default btn-link simple" formControlName="job" (change)="changeJob($event)">
-                                    <mat-option *ngFor="let job of listJobs" [value]="job">
+                                    <mat-option *ngFor="let job of jobs" [value]="job">
                                         {{ job.name }}
                                     </mat-option>
                                 </mat-select>
+                                <div class="errors">
+                                    <span *ngIf="job && job.invalid && job.touched && regulationForm.get('job').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                </div>
                             </div>
-                            <!-- <div>{{regulationForm.get('type').errors | json}}</div> -->
+                            <!-- <div>{{types | json}}</div> -->
                             <div class="col-md-6">
                                 <mat-select placeholder="Type" name="type" id="type" ngClass="btn btn-default btn-link simple" formControlName="type" (change)="changeType($event)">
                                     <mat-option *ngFor="let type of types" [value]="type.value">
@@ -43,22 +46,10 @@
                                 </mat-select>
                             </div>
                         </div>
-
-                        <ngx-quill  [formControl]="editorContent" 
-                        
-                            [options]="editorOptions"
-                           
-                            (blur)="onEditorBlured($event)"
-                            (focus)="onEditorFocused($event)"
-                            (ready)="onEditorCreated($event)"
-                            (change)="onContentChanged($event)">
+                        <!-- <app-editor formControlName="content"></app-editor> -->
+                        <!-- [formControl]="editorContent" -->
+                        <ngx-quill [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)" (change)="onContentChanged($event)">
                         </ngx-quill>
-
-                        <!-- <ngx-quill #editor [(ngModel)]="content" [(modules)]="modules"  (contentChanged)="logChange($event);"></ngx-quill> -->
-                        <!-- <ngx-quill #editor [(ngModel)]="content"  (contentChanged)="logChange($event);"></ngx-quill> -->
-
-                      
-                        <!-- <app-editor  [control]="descriptionRichControl"  ></app-editor> -->
 
                         <div class="row mt-3">
                             <div class="col-md-6">
@@ -70,7 +61,7 @@
                                         <span class="btn btn-outline-secondary btn-file">
                                         <span class="fileinput-new">Image de mise en avant</span>
                                         <span class="fileinput-exists">Change</span>
-                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg">
+                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg" (change)="handleImgInput($event)">
                                         </span>
                                         <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput "><span class="fa fa-remove text-danger"></span></a>
                                     </div>
@@ -89,7 +80,7 @@
                                     <span class="input-group-text btn-file">
                                         <span class="fileinput-new">Fichier</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" (change)="handleFileInput($event)"  name="file" accept=".pdf,.PDF">
+                                    <input type="file" name="file" accept=".pdf,.PDF" (change)="handleFileInput($event)">
                                     </span>
                                     </span>
                                 </div>
@@ -106,7 +97,7 @@
                             </a>
                         </div>
                         <div>
-                            <button type="submit" id="sbt_btn" class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
+                            <button mat-raised-button=" " type="submit" id="sbt_btn" class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
                                 <span class="fa fa-spinner fa-spin d-none" id="spinner"></span>
                                 <span class="mat-button-wrapper ">Enregistrer</span>
                              </button>

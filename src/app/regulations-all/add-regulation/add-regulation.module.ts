@@ -1,21 +1,20 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {AddRegulationComponent} from './add-regulation.component';
-import { NgxQuillModule } from '@dimpu/ngx-quill';
-import { FormsModule } from '@angular/forms';
+import { RegulationService } from '../../services/regulation.service';
+import { JobService } from 'app/services/job.service';
 
-// @NgModule({
-//     imports: [
-//         CommonModule,
-//         NgxQuillModule,
-//         FormsModule
-//     ],
-//     declarations: [
-//         // AddRegulationComponent
-//     ],
-//     exports: [
-//         // AddRegulationComponent
-//     ]
-// })
+
+@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+       // AddRegulationComponent
+    ],
+    exports: [
+        //AddRegulationComponent
+    ],
+    providers: [RegulationService,JobService],
+})
 export class AddRegulationModule {}
  

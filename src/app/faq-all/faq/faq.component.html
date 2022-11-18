@@ -86,7 +86,7 @@
 
                                         <label id="example-radio-group-label">Selectionnez le metier</label>
                                         <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="job" (change)="changeJob($event)">
-                                            <mat-radio-button class="example-radio-button" *ngFor="let job of jobs" [value]="job.id">
+                                            <mat-radio-button class="example-radio-button" *ngFor="let job of jobs" [value]="job">
                                                 {{ job.name }}
                                             </mat-radio-button>
                                         </mat-radio-group>

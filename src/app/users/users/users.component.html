@@ -1,8 +1,8 @@
 <div class=".regulations main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
-            <a href="#/user/add" mat-raised-button="" class="btn mat-raised-button mat-button-base">
-                <span class="mat-button-wrapper"><span class="btn-label">
+            <a routerLink="/user/add" mat-raised-button="" class="btn mat-raised-button mat-button-base">
+                <span class="mat-button-wrapper"><span class="">
                     <i class="material-icons">add</i></span> Utilisateur </span>
                 <div matripple="" class="mat-ripple mat-button-ripple">
                 </div>
@@ -16,8 +16,6 @@
                 <h3 class="card-title">Utilisateurs</h3>
                 <p class="card-category">Ce panel vous permets de gérer les utilisateurs de ce système</p>
             </div>
-
-            {{listUser}}
             <div class="card-body">
                 <div class="row table-responsible">
                     <table class="table datatable">
@@ -34,30 +32,25 @@
 
                         </thead>
                         <tbody>
-
-                            <tr *ngFor="let user of listUser "  >
+                            <tr>
                                 <td>1</td>
                                 <td>
                                     <div class="img-container">
                                         <div class="d-flex">
                                             <img src="./assets/img/new_logo.png" alt="...">
-                                            <div class="m-2">{{user.firstName}}</div>
+                                            <div class="m-2">Thomas</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{{user.email}}</td>
-                                <td>
-                                    <div *ngFor="let r of user.roles">
-                                        {{r.mane}}
-                                    </div>
-                                   
+                                <td>user@gmail.com</td>
+                                <td>Admin</td>
                                 <td>DSI</td>
                                 <td><span class="badge badge-success">Oui</span></td>
                                 <td class="td-actions text-right">
-                                    <a href="#/user-profile" rel="tooltip" class="btn btn-info btn-link">
+                                    <a routerLink="/user-profile" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <a href="#" class="btn btn-success btn-link">
+                                    <a routerLink="/user/add" class="btn btn-success btn-link">
                                         <i class="material-icons">edit</i>
                                     </a>
                                     <button type="button" rel="tooltip" class="btn btn-info  btn-link">
@@ -68,9 +61,6 @@
                                     </button>
                                 </td>
                             </tr>
-
-
-
                         </tbody>
                     </table>
                 </div>

@@ -62,7 +62,7 @@ export class ComplaintsComponent implements OnInit {
 
   deleteElement(id:number){
     this.complaintsService.delete(id).subscribe(response => {
-      this.notificationForm( "success", "Supression réussi !");
+      this.notificationForm( "successsuccess", "Supression réussi !");
       this.getList();
      },(error: HttpErrorResponse)=>{
       console.log("Error while deleting data");   

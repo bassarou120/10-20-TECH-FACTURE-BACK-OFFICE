@@ -2,7 +2,7 @@ import {Component,OnInit} from '@angular/core';
 import { Trending } from 'app/models/trending';
 import { TrendingService } from '../../services/trending.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router'; 
 
 
 
@@ -12,7 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
     styleUrls: ['./trendings.component.styl']
 })
 export class TrendingsComponent implements OnInit  {
-    constructor(private trendingService:TrendingService,private router: Router,) {}
+    constructor(private trendingService:TrendingService,private router: Router) {}
     
     trendings: Array<Trending> = [];
    

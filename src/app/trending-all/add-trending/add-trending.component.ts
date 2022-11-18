@@ -7,6 +7,66 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Job } from 'app/models/job';
 import { ActivatedRoute } from '@angular/router';
 
+const fullToolbar = [
+  [
+    {
+      font: []
+    },
+    {
+      size: []
+    }
+  ],
+  ['bold', 'italic', 'underline', 'strike'],
+  [
+    {
+      color: []
+    },
+    {
+      background: []
+    }
+  ],
+  [
+    {
+      script: 'super'
+    },
+    {
+      script: 'sub'
+    }
+  ],
+  [
+    {
+      header: '1'
+    },
+    {
+      header: '2'
+    },
+    'blockquote',
+    'code-block'
+  ],
+  [
+    {
+      list: 'ordered'
+    },
+    {
+      list: 'bullet'
+    },
+    {
+      indent: '-1'
+    },
+    {
+      indent: '+1'
+    }
+  ],
+  [
+    'direction',
+    {
+      align: []
+    }
+  ],
+  ['link', 'image', 'video', 'formula'],
+  ['clean']
+];
+
 @Component({
     selector: 'add-trending',
     templateUrl: './add-trending.component.html',
@@ -21,7 +81,18 @@ export class AddTrendingComponent  implements OnInit {
     messageNotificationForm: string;
     isNotificationForm: boolean = false;
     id_trending :number ;
+    fileToUpload: File = null;
+    imgToUpload: File = null;
 
+    public editor;
+  
+    public editorOptions = {
+      placeholder: "Insert content...",
+      modules: {
+        formula: true,
+        toolbar: fullToolbar
+      },
+    };
 
     constructor(
       private trendingService:TrendingService,
@@ -31,10 +102,8 @@ export class AddTrendingComponent  implements OnInit {
   
     trendingForm = new FormGroup({
         titre: new FormControl('',Validators.required),
-        job: new FormControl('', Validators.required),
-        content: new FormControl('', Validators.required),
-        img: new FormControl(''),
-        file: new FormControl(''),
+      //  job: new FormControl('', Validators.required),
+      //  content: new FormControl('', Validators.required)
        });
 
     getJobList(): void {
@@ -49,18 +118,13 @@ export class AddTrendingComponent  implements OnInit {
     getTrending(id:number): void {
       this.trendingService.getById(id).subscribe((data: Array<Trending>) => {
         this.trending = data['data'];
-        console.log( this.trending.titre,this.trending.job.id );
-        // this.trendingForm.setValue({
-        //   titre:  this.trending.titre, 
-        //   job:  this.trending.job.id
-        // }); 
+
         this.trendingForm.patchValue({
           titre:  this.trending.titre, 
-          job:  this.trending.job.id
+        //  job:  this.trending.job
         }); 
-        
-        // this.titre.reset({ value: this.trending.titre })
-        // this.job.reset({ value:this.trending.job.id})
+        this.editor.root.innerHTML = this.trending.content;
+
       }, (error: HttpErrorResponse) => {
         console.log("Error while retrieving data");
       }
@@ -80,14 +144,28 @@ export class AddTrendingComponent  implements OnInit {
     }
 
     onClickSubmit(): void {
-       // if(!this.trendingForm.invalid){
+       if(!this.trendingForm.invalid){
             $('#sbt_btn').addClass('disabled');
             $('#spinner').removeClass('d-none')
           
             const formData =  this.trendingForm.value ;
 
+            // console.log(formData);
+      
+            const data = new FormData();
+            data.append('Content-Type', 'multipart/form-data');
+            if(this.fileToUpload){
+              data.append('file', <File>this.fileToUpload);
+            }
+            if(this.imgToUpload){
+              data.append('image', <File>this.imgToUpload);
+            }
+            data.append('titre', formData.titre);
+            data.append('content', this.editor.root.innerHTML);
+           // data.append('job', formData.job.id);
+
             this.trendingService.edit(
-              new Trending(formData.titre, formData.content, true),
+               data,
               this.id_trending,
             )
               .subscribe(response => {
@@ -104,14 +182,16 @@ export class AddTrendingComponent  implements OnInit {
                 );
               })
         
+              $('#sbt_btn').addClass('disabled');
+              $('#spinner').removeClass('d-none')
+              
               $('html,body').animate({
                 scrollTop: $("#top").offset().top
             }, 'slow');
 
-             $('#sbt_btn').addClass('disabled');
-             $('#spinner').removeClass('d-none')
           
-       // }
+          
+       }
       } 
    
       get titre(): any {
@@ -133,4 +213,28 @@ export class AddTrendingComponent  implements OnInit {
       closeNotificationForm() {
         this.isNotificationForm = false;
       }
+      onEditorBlured(quill) {
+        this.editor = quill;
+      }
+    
+      onEditorFocused(quill) {
+      }
+    
+      onEditorCreated(quill) {
+        this.editor = quill;
+      }
+    
+      onContentChanged({ quill, html, text }) {
+      }
+
+      handleFileInput(event) {
+        this.fileToUpload = event.target.files[0];
+        console.log(this.fileToUpload.name);
+      }
+    
+      handleImgInput(event) {
+        this.imgToUpload = event.target.files[0];
+        console.log(this.imgToUpload.name);
+      }
+    
 };

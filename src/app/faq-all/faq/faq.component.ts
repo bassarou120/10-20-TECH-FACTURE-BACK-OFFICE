@@ -48,7 +48,7 @@ export class FaqComponent implements OnInit {
       this.faqForm.patchValue({
         question: el.question, 
         answer: el.content,
-        job: el.job.id,
+        job: el.job,
       }); 
   
     }
@@ -134,9 +134,9 @@ export class FaqComponent implements OnInit {
     $('#sbt_btn').removeClass('disabled');
     $('#spinner').addClass('d-none')
     const formData = this.faqForm.value;
-
+       console.log(formData.job)
     if (this.action == 'add') {
-      this.faqService.save(new Faq(formData.question, formData.answer, true), formData.job)
+      this.faqService.save(new Faq(formData.question, formData.answer, true,formData.job), formData.job.id)
         .subscribe(response => {
           this.notificationForm(
             "success",
@@ -154,7 +154,7 @@ export class FaqComponent implements OnInit {
     }
     else {
       this.faqService.edit(
-        new Faq(formData.question, formData.answer, this.selected_faq.isDisplayed),
+        new Faq(formData.question, formData.answer, this.selected_faq.isDisplayed,formData.job.id),
         this.selected_faq.id,
       )
         .subscribe(response => {
@@ -162,8 +162,8 @@ export class FaqComponent implements OnInit {
             "success",
             "Modification réussi !"
           );
-
           this.getList();
+          this.faqForm.reset();
           this.display = "none";
         }, (error: HttpErrorResponse) => {
           console.log("Error while retrieving data");

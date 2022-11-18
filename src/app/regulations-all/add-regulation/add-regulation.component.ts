@@ -1,38 +1,26 @@
-import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
-import {Component,OnInit, ViewChild} from '@angular/core';
-import { FormControl, Validators,FormGroup, FormBuilder } from '@angular/forms';
-import { Piece } from 'app/models/Piece';
-import { Reglementation } from 'app/models/Reglementation';
-import { ReglementationsService } from 'app/services/reglementations.service';
-import { environment } from 'environments/environment';
-import { error } from 'protractor';
-import { filter } from 'rxjs';
-import {EditorComponent} from '../../components/editor/editor.component';
-import {JobService} from '../../services/job.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { Job } from 'app/models/job';
+import { Regulation } from 'app/models/regulation';
+import { EditorComponent } from '../../components/editor/editor.component';
+import { RegulationService } from '../../services/regulation.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { JobService } from 'app/services/job.service';
 
 
 declare const $: any;
 declare interface Type {
-    value: string;
-    label: string;
+  value: string;
+  label: string;
 }
 export const TYPES: Type[] = [
-    { value: 'Decret', label: 'Decret' },
-    { value: 'Arrete', label: 'Arreté' },
-    { value: 'Loi', label: 'Loi' },
-    { value: 'Article', label: 'Article' },
+  { value: 'Decret', label: 'Decret' },
+  { value: 'Arrete', label: 'Arreté' },
+  { value: 'Loi', label: 'Loi' },
+  { value: 'Article', label: 'Article' },
 ];
 
-declare interface Job {
-    value: string;
-    label: string;
-}
-export const JOBS: Job[] = [
-    { value: 'Voyage', label: 'agence de voyage' },
-    { value: 'Hebergement', label: 'Hebergement touristique' },
-    { value: 'Restoration', label: 'Etablissement de restauration' },
-    { value: 'Guide', label: 'Guide touristique' },
-];
 const fullToolbar = [
   [
     {
@@ -94,215 +82,194 @@ const fullToolbar = [
 ];
 
 @Component({
-    selector: 'add-regulation',
-    templateUrl: './add-regulation.component.html',
-    styleUrls: ['./add-regulation.component.styl']
+  selector: 'add-regulation',
+  templateUrl: './add-regulation.component.html',
+  styleUrls: ['./add-regulation.component.styl']
 })
-export class AddRegulationComponent  implements OnInit {
-  
+export class AddRegulationComponent implements OnInit {
+
+  types: any[];
+  regulation: Regulation;
+  jobs: Array<Job> = [];
+  action: string = "add";
+  typeNotificationForm: string;
+  messageNotificationForm: string;
+  isNotificationForm: boolean = false;
+  id: number;
+  card_header_title: string = 'Ajouter une règlementation'
+  fileToUpload: File = null;
+  imgToUpload: File = null;
+
   public editor;
 
   public editorContent = `<h3>I am Example content</h3>`;
-  
+
   public editorOptions = {
     placeholder: "insert content...",
-      modules: {
-       formula: true,
-          toolbar: fullToolbar
-         },
+    modules: {
+      formula: true,
+      toolbar: fullToolbar
+    },
   };
 
-  listJobs:Array<Job>=[];
 
+  constructor(private regulationService: RegulationService, private activatedRoute: ActivatedRoute, private jobService: JobService) { }
+  reg: Regulation;
 
-  fileToUpload: File = null;
-  pieceInfo: Piece = null;
-  url = environment.backend;
-  regulation: Reglementation;
+  regulationForm = new FormGroup({
+    titre: new FormControl('', Validators.required),
+    type: new FormControl('', Validators.required),
+    job: new FormControl('', Validators.required)
+  });
 
- 
-    types: any[];
-    jobs: any[];
- 
-    constructor(
-       private fb: FormBuilder,
-      private reglementService: ReglementationsService ,
-      private jobService:JobService,
-      private http: HttpClient,) {}
-  
-    regulationForm = new FormGroup
-    ({
-        titre: new FormControl('',Validators.required),
-        type: new FormControl('', Validators.required),
-        job: new FormControl('', Validators.required),
-        img: new FormControl(''),
-        file: new FormControl(''),
-       }); 
-
-        ngOnInit() {
-
-            this.getListJobs()
-          setTimeout(() => {
-            this.editorContent = '<h1>content changed!</h1>';
-            console.log('you can use the quill instance object to do something', this.editor);
-            // this.editor.disable();
-          }, 2800)
- 
-            this.types = TYPES.filter(type => type);
-             this.jobs = JOBS.filter(job => job);
-          
-        }
-
-
-        getListJobs(){
-
-            this.jobService.list().subscribe(
-                (data )=>{
-                    this.listJobs=data["data"];
-
-                   // alert(JSON.stringify(this.listJobs))
-
-                    console.log( this.listJobs );
-                },
-                (error)=>{
-
-                }
-            )
-
-        }
-
-    
-      changeJob(e: any) {
-        this.job?.setValue(e.target.value, {
-          onlySelf: true,
-        });
-      }
-      changeType(e: any) {
-        this.type?.setValue(e.target.value, {
-          onlySelf: true,
-        });
-      }
-      get titre(): any {
-        return this.regulationForm.get('titre');
-      }
-      get type(): any {
-        return this.regulationForm.get('type');
-      }
-    get job(): any {
-        return this.regulationForm.get('job');
+  getJobList(): void {
+    this.jobService.list().subscribe((data: Array<Job>) => {
+      this.jobs = data['data'];
+    }, (error: HttpErrorResponse) => {
+      console.log("Error while retrieving data");
     }
-    
-      onClickSubmit(): void {
-        if(this.regulationForm.valid){
+    )
+  }
+  getRegulation(id: number): void {
+    this.regulationService.getById(id).subscribe((data: Array<Job>) => {
+      this.regulation = data['data'];
+      this.regulationForm.patchValue({
+        titre: this.regulation.titre,
+        job: this.regulation.job,
+        type: this.regulation.type
+      });
+      this.editor.root.innerHTML = this.regulation.content;
+    }, (error: HttpErrorResponse) => {
+      console.log("Error while retrieving data");
+    }
+    )
+  }
 
-            // $('#sbt_btn').addClass('disabled');
-            // $('#spinner').removeClass('d-none');
-
-           this.regulation =this.regulationForm.value;
-
-           this.regulation.content=this.editor.root.innerHTML
-
-
-
-          this.reglementService.save(this.regulation).subscribe(
-            (data:Reglementation)=>{
-                alert(JSON.stringify(data));
-                this.submitFormFile(data);
-                // this.submitFormFileImaf(data);
-            },
-            (error)=>{
-              alert(JSON.stringify(error));
-
-            }
-          );
-
-
-
-
-            // setTimeout(function () {
-            //     $('#sbt_btn').removeClass('disabled');
-            //     $('#spinner').addClass('d-none')
-            //     window['showSuccessNotification']('Enregistrement reussie');
-            // }, 5000);
-            //this.onCloseHandled();
-
-
-
-            
-        }
-      
-    
+  ngOnInit() {
+    this.types = TYPES.filter(type => type);
+    this.getJobList()
+    this.activatedRoute.params.subscribe(params => {
+      const id = params['id'];
+      console.log('Url Id: ', id);
+      this.card_header_title = "Editer une règlementation"
+      if (id) {
+        this.action = 'edit';
+        this.id = id;
+        this.getRegulation(id);
       } 
+    })
+  }
 
-      handleFileInput(event) {
-        this.fileToUpload = event.target.files[0];
-        console.log(this.fileToUpload.name);
+  changeJob(e: any) {
+    this.job?.setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+  changeType(e: any) {
+    this.type?.setValue(e.target.value, {
+      onlySelf: true,
+    });
+  }
+
+  get titre(): any {
+    return this.regulationForm.get('titre');
+  }
+  get type(): any {
+    return this.regulationForm.get('type');
+  }
+  get job(): any {
+    return this.regulationForm.get('job');
+  }
+
+  notificationForm(type: string, msg: string) {
+    this.typeNotificationForm = type;
+    this.messageNotificationForm = msg;
+    this.isNotificationForm = true;
+  }
+
+  closeNotificationForm() {
+    this.isNotificationForm = false;
+  }
+
+  handleFileInput(event) {
+    this.fileToUpload = event.target.files[0];
+    console.log(this.fileToUpload.name);
+  }
+
+  handleImgInput(event) {
+    this.imgToUpload = event.target.files[0];
+    console.log(this.imgToUpload.name);
+  }
+
+  onClickSubmit(): void {
+    if (!this.regulationForm.invalid) {
+      $('#sbt_btn').removeClass('disabled');
+      $('#spinner').addClass('d-none')
+      const formData = this.regulationForm.value;
+      // console.log(formData);
+
+      const data = new FormData();
+      data.append('Content-Type', 'multipart/form-data');
+      data.append('file', <File>this.fileToUpload);
+      data.append('image', <File>this.imgToUpload);
+      data.append('titre', formData.titre);
+      data.append('content', this.editor.root.innerHTML);
+      data.append('type', formData.type);
+      data.append('job', formData.job.id);
+
+      if (this.action == 'add') {
+        this.regulationService.saveWithInmageAndFile(data, formData.job.id)
+          .subscribe(response => {
+            this.notificationForm(
+              "success",
+              "Enregistrement réussi !"
+            );
+            console.log(response);
+            this.regulationForm.reset();
+          }, (error: HttpErrorResponse) => {
+            console.log("Error while saving data");
+            this.notificationForm(
+              "danger",
+              "Erreur lors de l'enregistrement !"
+            );
+          })
+
       }
-
-
-      submitFormFile(reg: Reglementation): void {
-
-        if (this.fileToUpload.name != "") {
-       //   const formDataDonnee = this.validateFormFile.value;
-    
-          const formData = new FormData();
-          formData.append('Content-Type', 'multipart/form-data');
-          formData.append('file', <File>this.fileToUpload);
-
-          // formData.append('file', <File>this.fileToUpload);
-
-          const req = new HttpRequest('POST', this.url + "/filemanager/upload", formData, {
-            // reportProgress: true
-          });
-    
-          
-          this.http.request(req).pipe(filter(e => e instanceof HttpResponse))
-            .subscribe(
-              (data: any) => {
-
-                  if (data.ok==true){
-                      this.reglementService.saveFileUrl(reg.id,data.body.message).subscribe(
-                          (data: Reglementation) => {
-                              alert(JSON.stringify(data));
-                          });
-
-                  }
-
-              },
-              err => {
-    
-                // this.fileInput.nativeElement.value = '';
-                // this.message.error('Chargement du fichier échoué.');
-              });
-    
-        } else {
-          alert('error Formulaire invalide ! \n pas de fic')
-        //  this.createMessage('error', 'Formulaire invalide !');
-        }
+      else {
+        this.regulationService.edit(data, this.id)
+          .subscribe(response => {
+            this.notificationForm(
+              "success",
+              "Modification réussi !"
+            );
+          }, (error: HttpErrorResponse) => {
+            console.log("Error while retrieving data");
+          })
       }
+      $('#sbt_btn').addClass('disabled');
+      $('#spinner').removeClass('d-none');
 
-
-      onEditorBlured(quill ) {
-        this.editor = quill;
-      // console.log('editor blur!',   quill.getContents(), quill.root.innerHTML );
-      }
-    
-      onEditorFocused(quill) {
-        // console.log('editor focus!', quill);
-      }
-    
-      onEditorCreated(quill) {
-        this.editor = quill;
-        // console.log('quill is ready! this is current quill instance object', quill);
-      }
-
-    onContentChanged(quill,) {
-        // this.editor = quill;
-        // console.log('quill is ready! this is current quill instance object', quill);
-      }
-    
-
-
-    
    
+      $('html,body').animate({
+        scrollTop: $("#top").offset().top
+      }, 'slow');
+    }
+  }
+
+
+  onEditorBlured(quill) {
+    this.editor = quill;
+  }
+
+  onEditorFocused(quill) {
+  }
+
+  onEditorCreated(quill) {
+    this.editor = quill;
+  }
+
+  onContentChanged({ quill, html, text }) {
+  }
+
+
 };

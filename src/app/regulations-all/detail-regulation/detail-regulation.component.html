@@ -3,15 +3,22 @@
         <div _ngcontent-aik-c8="" class="col-md-12">
             <div _ngcontent-aik-c8="" class="card card-profile">
                 <div _ngcontent-aik-c8="" class="card-avatar">
-                    <a _ngcontent-aik-c8="" href="javascript:void(0)">
-                        <img _ngcontent-aik-c8="" class="img" src="./assets/img/faces/agent-de-voyage.png">
+                    <a *ngIf="reg.img; else elseBlock" _ngcontent-aik-c8="" href="javascript:void(0)">
+                        <img _ngcontent-aik-c8="" class="img" [src]="reg.img">
                     </a>
+                    <ng-template #elseBlock>
+                        <a _ngcontent-aik-c8="" href="javascript:void(0)">
+                            <img _ngcontent-aik-c8="" class="img" src="./assets/img/faces/agent-de-voyage.png">
+                        </a>
+                    </ng-template>
+
                 </div>
                 <div _ngcontent-aik-c8="" class="card-body">
-                    <h6 _ngcontent-aik-c8="" class="card-category text-gray">decret</h6>
-                    <h4 _ngcontent-aik-c8="" class="card-title">Titre titre</h4>
-                    <p _ngcontent-aik-c8="" class="card-description"> Don't be scared of the truth because we need to restart the human foundation in truth And I love you like Kanye loves Kanye I love Rick Owens’ bed design but the back is... </p><a _ngcontent-aik-c8="" class="btn btn-danger btn-round"
-                        href="regulations">OK</a></div>
+                    <h6 _ngcontent-aik-c8="" class="card-category text-gray">{{ reg.type}}</h6>
+                    <span _ngcontent-aik-c8="" class="card-category text-gray"><span class="badge badge-info">{{ reg.job.name}}</span> </span>
+                    <h4 _ngcontent-aik-c8="" class="card-title">{{ reg.titre}}</h4>
+                    <p _ngcontent-aik-c8="" class="card-description"> {{ reg.content}}</p>
+                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/regulations">OK</a></div>
             </div>
         </div>
     </div>

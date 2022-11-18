@@ -25,10 +25,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <!-- <div class="row">
                             <div class="col-md-6">
                                 <mat-select placeholder="Métier" name="job" ngClass="btn btn-default btn-link simple" formControlName="job">
-                                    <mat-option *ngFor="let job of jobs" [value]="job.id">
+                                    <mat-option *ngFor="let job of jobs" [value]="job">
                                         {{ job.name }}
                                     </mat-option>
                                 </mat-select>
@@ -37,8 +37,11 @@
                                 </div>
                             </div>
 
-                        </div>
-                        <app-editor></app-editor>
+                        </div> -->
+                        <!-- <app-editor></app-editor> -->
+                        <!-- [formControl]="editorContent" -->
+                        <ngx-quill [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)" (change)="onContentChanged($event)">
+                        </ngx-quill>
                         <div class="row mt-3">
                             <div class="col-md-6">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -49,7 +52,7 @@
                                         <span class="btn btn-outline-secondary btn-file">
                                         <span class="fileinput-new">Image de mise en avant</span>
                                         <span class="fileinput-exists">Change</span>
-                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg">
+                                        <input type="file" name="img" id="img" accept="image/png, image/gif, image/jpeg" (change)="handleImgInput($event)">
                                         </span>
                                         <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput "><span class="fa fa-remove text-danger"></span></a>
                                     </div>
@@ -68,7 +71,7 @@
                                     <span class="input-group-text btn-file">
                                         <span class="fileinput-new">Fichier</span>
                                     <span class="fileinput-exists">Change</span>
-                                    <input type="file" name="file" accept=".pdf,.PDF">
+                                    <input type="file" name="file" accept=".pdf,.PDF" (change)="handleFileInput($event)">
                                     </span>
                                     </span>
                                 </div>

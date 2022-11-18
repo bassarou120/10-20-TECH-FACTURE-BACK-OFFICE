@@ -31,64 +31,44 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
+                            <tr *ngFor="let f of regs; index as i;">
+                                <td>{{ i+1 }}</td>
                                 <td>
                                     <div class="img-container">
-                                        <img src="./assets/img/new_logo.png" alt="...">
+<!--                                        <img src="./assets/img/new_logo.png" alt="...">-->
+                                        <img src="{{f.image }}" width="100" alt="...">
+
                                     </div>
                                 </td>
-                                <td>Décret</td>
-                                <td>La de isijds isdjisds</td>
-                                <td>Oud-Turnhout</td>
-                                <td><span class="badge badge-success">Oui</span></td>
+                                <td>{{ f.type }}</td>
+                                <td>{{ f.titre }}</td>
+                                <td> <a routerLink="/jobs">{{ f.job.name }}</a>
+                                </td>
+                                <td>
+                                    <span *ngIf="f.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                                    <ng-template #elseBlock>
+                                        <span class="badge badge-danger">Non</span>
+                                    </ng-template>
+                                </td>
                                 <td class="td-actions text-right">
-                                    <a href="regulations/1" rel="tooltip" class="btn btn-info btn-link">
+                                    <a [routerLink]="['/regulations', f.id]" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <a href="#" rel="tooltip" class="btn btn-warning btn-link">
+                                    <a href="{{f.file }}" rel="tooltip" class="btn btn-warning btn-link">
                                         <i class="material-icons">download</i>
                                     </a>
-                                    <a href="regulation/add" class="btn btn-success btn-link">
+                                    <a href="javascript:void(0)" class="btn btn-success btn-link" (click)="edit(f.id)">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <button type="button" rel="tooltip" class="btn btn-info  btn-link">
+                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-info  btn-link" (click)="hideElement(f.id)">
                                         <i class="material-icons">settings_power</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
+                                    </a>
+                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(f.id)">
                                         <i class="material-icons">close</i>
                                     </button>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>
-                                    <div class="img-container">
-                                        <img src="./assets/img/new_logo.png" alt="...">
-                                    </div>
-                                </td>
-                                <td>Arreté</td>
-                                <td>La de isijds isdjisds</td>
-                                <td>Oud-Turnhout</td>
-                                <td><span class="badge badge-success">Oui</span></td>
-                                <td class="td-actions text-right">
-                                    <a href="regulations/1" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="#" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a>
-                                    <a href="regulation/add" class="btn btn-success btn-link">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                    <button type="button" rel="tooltip" class="btn btn-info  btn-link">
-                                        <i class="material-icons">settings_power</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
+
                         </tbody>
                     </table>
                 </div>
