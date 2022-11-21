@@ -38,7 +38,6 @@ import { MatInputModule } from '@angular/material/input/input-module';
     BrowserAnimationsModule,
     NoopAnimationsModule,
     FormsModule,
-    HttpClientModule,
     MatFormFieldModule,
     ReactiveFormsModule,
     NgxQuillModule

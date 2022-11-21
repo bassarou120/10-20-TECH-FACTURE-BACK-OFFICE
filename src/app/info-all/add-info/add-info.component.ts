@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Infos } from 'app/models/infos';
 import { JobService } from 'app/services/job.service';
-
+import { InfosService } from '../../services/infos.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Job } from 'app/models/job';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import {InfosService} from '../../services/infos.service';
 
 
 const fullToolbar = [
@@ -113,7 +112,6 @@ export class AddInfoComponent implements OnInit {
     )
   }
 
-
   getInfo(id: number): void {
     this.infoService.getById(id).subscribe((data: Array<Job>) => {
       this.info = data['data'];
@@ -177,8 +175,8 @@ export class AddInfoComponent implements OnInit {
           );
         })
 
-      $('#sbt_btn').addClass('disabled');
-      $('#spinner').removeClass('d-none')
+        $('#sbt_btn').removeClass('disabled');
+        $('#spinner').addClass('d-none')
 
       $('html,body').animate({
         scrollTop: $("#top").offset().top

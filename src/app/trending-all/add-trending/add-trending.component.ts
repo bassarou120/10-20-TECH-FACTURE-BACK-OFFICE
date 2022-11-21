@@ -182,8 +182,8 @@ export class AddTrendingComponent  implements OnInit {
                 );
               })
         
-              $('#sbt_btn').addClass('disabled');
-              $('#spinner').removeClass('d-none')
+              $('#sbt_btn').removeClass('disabled');
+              $('#spinner').addClass('d-none')
               
               $('html,body').animate({
                 scrollTop: $("#top").offset().top

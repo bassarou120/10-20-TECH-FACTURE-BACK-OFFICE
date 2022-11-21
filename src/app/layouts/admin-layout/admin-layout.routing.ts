@@ -19,9 +19,12 @@ import {AddCompetitionComponent} from '../../competitions-all/add-competition';
 import {DashboardComponent} from '../../dashboard/dashboard.component';
 import {ComplaintsComponent} from '../../complaints-all/complaints/complaints.component';
 import {CompetitionsComponent} from '../../competitions-all/competions';
+import {AuthGuard} from '../../utils/AuthGuard';
 
 export const AdminLayoutRoutes: Routes = [
-    { path: 'dashboard',      component: DashboardComponent },
+    { path: 'dashboard',      component: DashboardComponent,
+    canActivate:   [ AuthGuard]
+    },
     // users
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',   component: UsersComponent },

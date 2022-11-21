@@ -62,7 +62,7 @@ export class ComplaintsComponent implements OnInit {
 
   deleteElement(id:number){
     this.complaintsService.delete(id).subscribe(response => {
-      this.notificationForm( "successsuccess", "Supression réussi !");
+      this.notificationForm( "success", "Supression réussi !");
       this.getList();
      },(error: HttpErrorResponse)=>{
       console.log("Error while deleting data");   
@@ -114,8 +114,8 @@ export class ComplaintsComponent implements OnInit {
         })
     
 
-    $('#sbt_btn').addClass('disabled');
-    $('#spinner').removeClass('d-none')
+        $('#sbt_btn').removeClass('disabled');
+        $('#spinner').addClass('d-none')
 
     // }
 

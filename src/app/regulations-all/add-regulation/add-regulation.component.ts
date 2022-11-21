@@ -220,11 +220,17 @@ export class AddRegulationComponent implements OnInit {
       if (this.action == 'add') {
         this.regulationService.saveWithInmageAndFile(data, formData.job.id)
           .subscribe(response => {
+
             this.notificationForm(
               "success",
               "Enregistrement réussi !"
             );
             console.log(response);
+          
+            $('#sbt_btn').addClass('disabled');
+            $('#spinner').removeClass('d-none');
+           
+
             this.regulationForm.reset();
           }, (error: HttpErrorResponse) => {
             console.log("Error while saving data");
@@ -248,14 +254,13 @@ export class AddRegulationComponent implements OnInit {
       }
       $('#sbt_btn').addClass('disabled');
       $('#spinner').removeClass('d-none');
-
+    
    
       $('html,body').animate({
         scrollTop: $("#top").offset().top
       }, 'slow');
     }
   }
-
 
   onEditorBlured(quill) {
     this.editor = quill;

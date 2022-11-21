@@ -15,8 +15,8 @@
                 <div _ngcontent-aik-c8="" class="card-body">
                     <h6 _ngcontent-aik-c8="" class="card-category text-gray">Information</h6>
                     <h4 _ngcontent-aik-c8="" class="card-title">{{ info.titre}}</h4>
-                    <p _ngcontent-aik-c8="" class="card-description"> {{ info.content }}</p>
-                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/infos">OK</a>
+                    <div [innerHTML]="info.content"></div>
+                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/infos">Retour</a>
                 </div>
             </div>
         </div>

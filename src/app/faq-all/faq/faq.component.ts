@@ -170,8 +170,8 @@ export class FaqComponent implements OnInit {
         })
     }
 
-    $('#sbt_btn').addClass('disabled');
-    $('#spinner').removeClass('d-none')
+    $('#sbt_btn').removeClass('disabled');
+    $('#spinner').addClass('d-none')
 
     // }
 

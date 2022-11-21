@@ -55,7 +55,7 @@
                                         <i class="material-icons ">edit</i>
                                     </a>
 
-                                    <button *ngIf="c.statut=='Non Traitee'" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
+                                    <button *ngIf="c.statut=='Non Traitee' || c.statut ==null" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
                                         <i class="material-icons">check</i>
                                     </button>
                                     <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">

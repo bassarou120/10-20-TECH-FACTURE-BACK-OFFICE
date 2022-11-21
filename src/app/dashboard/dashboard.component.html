@@ -8,7 +8,7 @@
                             <i class="material-icons">notifications</i>
                         </div>
                         <p class="card-category">Plaintes</p>
-                        <h3 class="card-title">50</h3>
+                        <h3 class="card-title">{{ complaints_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -24,7 +24,7 @@
                             <i class="material-icons">store</i>
                         </div>
                         <p class="card-category">Reglementations</p>
-                        <h3 class="card-title">35</h3>
+                        <h3 class="card-title">{{ regulations_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -39,8 +39,8 @@
                         <div class="card-icon">
                             <i class="material-icons">store</i>
                         </div>
-                        <p class="card-category">Reglementations</p>
-                        <h3 class="card-title">35</h3>
+                        <p class="card-category">Concours</p>
+                        <h3 class="card-title">{{ competitions_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
@@ -62,20 +62,20 @@
                     <div class="card-body table-responsive">
                         <table class="table table-hover" style="width:100% !important">
                             <thead class=" text-warning ">
-                                <th style="width:30% !important ">Personne</th>
-                                <th style="width:15% !important ">Téléphone</th>
-                                <th style="width:30% !important ">Plainte</th>
-                                <th style="width:15% !important ">Date</th>
+                            <th style="width:30% !important ">Personne</th>
+                            <th style="width:15% !important ">Téléphone</th>
+                            <th style="width:30% !important ">Plainte</th>
+                            <th style="width:15% !important ">Date</th>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <a href="#/complaints/1">Dakota JOHNSON</a>
-                                    </td>
-                                    <td>66234518</td>
-                                    <td>Ola la la </td>
-                                    <td>05 Nov 2022 12:23:10</td>
-                                </tr>
+                            <tr *ngFor="let c of complaints; index as i;">
+                                <td>
+                                    <a routerLink="['/complaints', c.id]">{{ c.firstname }} {{ c.lastname }}</a>
+                                </td>
+                                <td>{{ c.phonenumber ==null ? '-' : c.phonenumber }}</td>
+                                <td>{{ c.objet}}</td>
+                                <td>{{ c.created_at }}</td>
+                            </tr>
 
                             </tbody>
                         </table>

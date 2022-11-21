@@ -8,6 +8,7 @@
                     </a>
                     <ng-template #elseBlock>
                         <a _ngcontent-aik-c8="" href="javascript:void(0)">
+<!--                            <img _ngcontent-aik-c8="" class="img" src="{{reg.img}}">-->
                             <img _ngcontent-aik-c8="" class="img" src="./assets/img/faces/agent-de-voyage.png">
                         </a>
                     </ng-template>
@@ -17,8 +18,8 @@
                     <h6 _ngcontent-aik-c8="" class="card-category text-gray">{{ reg.type}}</h6>
                     <span _ngcontent-aik-c8="" class="card-category text-gray"><span class="badge badge-info">{{ reg.job.name}}</span> </span>
                     <h4 _ngcontent-aik-c8="" class="card-title">{{ reg.titre}}</h4>
-                    <p _ngcontent-aik-c8="" class="card-description"> {{ reg.content}}</p>
-                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/regulations">OK</a></div>
+                     <div [innerHTML]="reg.content"></div>
+                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/regulations">Retour</a></div>
             </div>
         </div>
     </div>
