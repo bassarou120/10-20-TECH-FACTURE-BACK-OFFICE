@@ -17,10 +17,12 @@ export class DashboardComponent implements OnInit {
 
   constructor(private competitionService: CompetitionService,private complaintsService: ComplaintsService,private regulationService:RegulationService) { }
 
-  complaints_count: number;
+  complaints_count_oK: number;
+  complaints_count_no: number;
   regulations_count: number;
   competitions_count: number;
   complaints: Array<Complaints> = [];
+    complaints_counts:Array<any>=[]
 
   getRegCount(): void {
     this.regulationService.total_reglementation().subscribe((data: Array<Regulation>) => {
@@ -34,6 +36,7 @@ export class DashboardComponent implements OnInit {
   getComCount(): void {
     this.competitionService.total_competition().subscribe((data: Array<Regulation>) => {
           this.competitions_count = data['data'];
+
         }, (error: HttpErrorResponse) => {
           console.log("Error while retrieving data");
         }
@@ -42,7 +45,14 @@ export class DashboardComponent implements OnInit {
 
   getComplCount(): void {
     this.complaintsService.total_complaints().subscribe((data: Array<Regulation>) => {
-          this.complaints_count = data['data'];
+
+        // console.log(data);
+          this.complaints_count_oK = (data['data'][0] - data['data'][1]);
+          this.complaints_count_no =data['data'][1];
+
+         // alert(JSON.stringify(  this.complaints_counts))
+
+
         }, (error: HttpErrorResponse) => {
           console.log("Error while retrieving data");
         }

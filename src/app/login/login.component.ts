@@ -126,11 +126,20 @@ export class LoginComponent implements OnInit {
                     if (this.tokenStorage.saveCurrentUser(JSON.stringify(data)) == true) {
                         this.user = JSON.parse(this.tokenStorage.getCurrentUser());
                         console.log(this.user.roles[0].name);
-                        location.href = "/dashboard";
+                        // location.href = "/dashboard";
+
+                        if (this.user.roles[0].name == "ROLE_ADMIN") {
+                            location.href = "/admin";
+                        }
+                        if (this.user.roles[0].name == "ROLE_USER_EXTERNE") {
+                            location.href = "/admin";
+                        }else {
+                            location.href = "/admin";
+                        }
 
                         if(this.user.firstLogin == false) {
                             if (this.user.roles[0].name == "ROLE_ADMIN") {
-                                location.href = "/dashboard";
+                                location.href = "/admin/dashboard";
                             }
                             if (this.user.roles[0].name == "ROLE_USER_EXTERNE") {
                                 location.href = "/admin";

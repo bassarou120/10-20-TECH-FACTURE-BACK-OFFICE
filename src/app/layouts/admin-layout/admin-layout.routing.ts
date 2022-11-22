@@ -31,10 +31,12 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'user/add',   component: AddUserComponent },
    
     //complaints
-    { path: 'complaints',     component: ComplaintsComponent },
+    { path: 'complaints',     component: ComplaintsComponent,
+        canActivate:   [ AuthGuard]},
     { path: 'complaints/:id', component: DetailComplaintComponent },
 
-    { path: 'infos',     component: InfosComponent },
+    { path: 'infos',     component: InfosComponent,
+        canActivate:   [ AuthGuard]},
     { path: 'info/add',   component: AddInfoComponent }, 
     { path: 'infos/:id',   component: DetailInfoComponent }, 
     { path: 'trendings',          component: TrendingsComponent },
@@ -45,7 +47,8 @@ export const AdminLayoutRoutes: Routes = [
     
     { path: 'regulations/:id', component: DetailRegulationComponent },
 
-    { path: 'competitions',component: CompetitionsComponent },
+    { path: 'competitions',component: CompetitionsComponent ,
+        canActivate:   [ AuthGuard]},
     { path: 'competition/add',   component: AddCompetitionComponent },
     { path: 'competitions/:id', component: DetailCompetitionComponent },
 
