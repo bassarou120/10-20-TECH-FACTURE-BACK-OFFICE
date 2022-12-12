@@ -35,6 +35,7 @@ export class LoginComponent implements OnInit {
         private loginRequestService: LoginRequestService,
         // private modalService: NzModalService,
 
+
     ) {
         // this.loginRequestService.header.next(this.h);
     }
@@ -52,8 +53,7 @@ export class LoginComponent implements OnInit {
 
 
         this.tokenStorage.signOut();
-        this.loginRequestService.setIsConnectedUser();
-        this.loginRequestService.setCurrentUserConnected();
+
     }
 
 
@@ -61,6 +61,7 @@ export class LoginComponent implements OnInit {
     connexion(): void {
 
         if (this.validateForm.valid == true) {
+            $('#spinner').removeClass('d-none');
 
             const formData = this.validateForm.value;
             console.log(formData);
@@ -129,20 +130,25 @@ export class LoginComponent implements OnInit {
                         // location.href = "/dashboard";
 
                         if (this.user.roles[0].name == "ROLE_ADMIN") {
-                            location.href = "/admin";
+                            // location.href = "/dashboard";
+                            this.router.navigate(['/dashboard']);
                         }
                         if (this.user.roles[0].name == "ROLE_USER_EXTERNE") {
-                            location.href = "/admin";
+                            // location.href = "/dashboard";
+                            this.router.navigate(['/dashboard']);
                         }else {
-                            location.href = "/admin";
+                            // location.href = "/dashboard";
+                            this.router.navigate(['/dashboard']);
                         }
 
                         if(this.user.firstLogin == false) {
                             if (this.user.roles[0].name == "ROLE_ADMIN") {
-                                location.href = "/admin/dashboard";
+                                // location.href = "dashboard";
+                                this.router.navigate(['/dashboard']);
                             }
                             if (this.user.roles[0].name == "ROLE_USER_EXTERNE") {
-                                location.href = "/admin";
+                                // location.href = "/dashboard";
+                                this.router.navigate(['/dashboard']);
                             }
 
                         } else {

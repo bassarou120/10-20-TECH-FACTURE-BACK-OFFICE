@@ -7,12 +7,12 @@
                         <div class="card-icon">
                             <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category">Plaintes non traitée(s)</p>
-                        <h3 class="card-title">{{ complaints_count_no}}</h3>
+                        <p class="card-category">Plaintes</p>
+                        <h3 class="card-title">{{ complaints_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Dernières 24 heures
+                            <i class="material-icons">date_range</i>   
                         </div>
                     </div>
                 </div>
@@ -23,12 +23,12 @@
                         <div class="card-icon">
                             <i class="material-icons">store</i>
                         </div>
-                        <p class="card-category">Plaintes traitée(s) </p>
-                        <h3 class="card-title">{{ complaints_count_oK}}</h3>
+                        <p class="card-category">Reclamations</p>
+                        <h3 class="card-title">{{ reclamation_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Dernières 24 heures
+                            <i class="material-icons">date_range</i>   
                         </div>
                     </div>
                 </div>
@@ -39,17 +39,67 @@
                         <div class="card-icon">
                             <i class="material-icons">store</i>
                         </div>
-                        <p class="card-category">Concours</p>
+                        <p class="card-category">Concours as venir</p>
                         <h3 class="card-title">{{ competitions_count}}</h3>
                     </div>
                     <div class="card-footer">
                         <div class="stats">
-                            <i class="material-icons">date_range</i> Dernières 24 heures
+                            <i class="material-icons">date_range</i>   
                         </div>
                     </div>
                 </div>
             </div>
 
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">notifications</i>
+                        </div>
+                        <p class="card-category">Plaintes non   traitée(s) </p>
+                        <h3 class="card-title">{{ complaint_untreated_count}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <p class="card-category">Reclamations non   traitée(s) </p>
+                        <h3 class="card-title">{{ reclamation_untreated_count}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i>   
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">store</i>
+                        </div>
+                        <p class="card-category">Concours en cours</p>
+                        <h3 class="card-title">{{ competitions_count}}</h3>
+                    </div>
+                    <div class="card-footer">
+                        <div class="stats">
+                            <i class="material-icons">date_range</i>   
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="row">
@@ -63,9 +113,9 @@
                         <table class="table table-hover" style="width:100% !important">
                             <thead class=" text-warning ">
                             <th style="width:30% !important ">Personne</th>
+                            <th style="width:25% !important;">Type</th>
                             <th style="width:15% !important ">Téléphone</th>
                             <th style="width:30% !important ">Plainte</th>
-                            <th style="width:30% !important ">Staut</th>
                             <th style="width:15% !important ">Date</th>
                             </thead>
                             <tbody>
@@ -73,14 +123,14 @@
                                 <td>
                                     <a routerLink="['/complaints', c.id]">{{ c.firstname }} {{ c.lastname }}</a>
                                 </td>
-                                <td>{{ c.phonenumber ==null ? '-' : c.phonenumber }}</td>
-                                <td>{{ c.objet}}</td>
                                 <td>
-                                    <span *ngIf="c.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
+                                    <span *ngIf="c.type=='Plainte'; else elseBlock" class="badge badge-danger">Plainte</span>
                                     <ng-template #elseBlock>
-                                        <span class="badge badge-danger">Non Traitée</span>
+                                        <span class="badge badge-warning">Reclamation</span>
                                     </ng-template>
                                 </td>
+                                <td>{{ c.phonenumber ==null ? '-' : c.phonenumber }}</td>
+                                <td>{{ c.objet}}</td>
                                 <td>{{ c.created_at }}</td>
                             </tr>
 

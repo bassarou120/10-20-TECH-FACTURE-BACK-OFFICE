@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { Users } from 'app/models/users';
 import { UsersService } from '../../services/users.service';
 
@@ -7,7 +7,24 @@ import { UsersService } from '../../services/users.service';
     templateUrl: './users.component.html',
     styleUrls: ['./users.component.styl']
 })
-export class UsersComponent {
+export class UsersComponent implements  OnInit{
     constructor(private usersService:UsersService) {}
-    user: Users=[];  
+    users: Users=[];
+
+    ngOnInit(): void {
+       this.getUser();
+    }
+
+    getUser(){
+        this.usersService.list().subscribe(
+            (data:any)=>{
+
+                this.users=data
+                // alert(JSON.stringify(data))
+            },
+            (error)=>{}
+        );
+
+    }
+
 }

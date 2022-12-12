@@ -5,6 +5,8 @@
 
 export const environment = {
   production: true,
-    backend: "http://localhost:8080/api/v1",
+  // backend: "https://toursime-app-api.herokuapp.com/api/v1",
+  // backend: "http://localhost:8080/api/v1",
+  backend: "https://tourisme-benin-api-production.up.railway.app/api/v1",
   expirationTime: 0
 };

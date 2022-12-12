@@ -19,7 +19,6 @@ import { DetailTrendingComponent } from '../../trending-all/detail-trending/deta
 import { InvestorsComponent } from '../../investors/investors.component';
 import { InfosComponent } from '../../info-all/infos/infos.component';
 import {ComplaintsComponent } from '../../complaints-all/complaints/complaints.component';
-import {DetailComplaintComponent } from '../../complaints-all/detail-complaint/detail-complaint.component';
 
 import { JobsComponent } from '../../jobs/jobs.component';
 import { FaqComponent } from '../../faq-all/faq/faq.component';
@@ -42,6 +41,9 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatRadioModule} from '@angular/material/radio';
 import { NgxQuillModule } from '@dimpu/ngx-quill';
+import {ReclamationsComponent} from '../../reclamations-all/reclamations';
+import {DetailReclamationComponent} from '../../reclamations-all/detail-reclamation';
+import {DetailComplaintComponent} from '../../complaints-all/detail-complaint';
 
 //  import { DataTablesModule } from "angular-datatables";
 
@@ -78,6 +80,8 @@ import { NgxQuillModule } from '@dimpu/ngx-quill';
     FaqComponent,
     ComplaintsComponent,
     DetailComplaintComponent,
+    ReclamationsComponent,
+    DetailReclamationComponent,
     InfosComponent,
     InvestorsComponent,
     EditorComponent,

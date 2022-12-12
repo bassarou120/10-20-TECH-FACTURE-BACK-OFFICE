@@ -26,6 +26,7 @@ export class TokenStorage {
     window.sessionStorage.removeItem(TOKEN_KEY);
     window.sessionStorage.removeItem(CURRENT_USER);
     window.sessionStorage.clear();
+    // window.location.href="/login"
   }
 
   public saveUserRole(role: string){

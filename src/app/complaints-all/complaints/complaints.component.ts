@@ -8,133 +8,143 @@ import { HttpErrorResponse } from '@angular/common/http';
 
 declare var $: any;
 @Component({
-  selector: 'app-complaints',
-  templateUrl: './complaints.component.html',
-  styleUrls: ['./complaints.component.css']
+    selector: 'app-complaints',
+    templateUrl: './complaints.component.html',
+    styleUrls: ['./complaints.component.css']
 })
 export class ComplaintsComponent implements OnInit {
 
-  constructor(private complaintsService:ComplaintsService,private jobService: JobService) {}
- 
-  complaints: Array<Complaints> = [];
-  jobs: Array<Job> = [];
-  selected_faq: any;
+    constructor(private complaintsService:ComplaintsService,private jobService: JobService) {}
 
-  typeNotificationForm: string;
-  messageNotificationForm: string;
-  isNotificationForm: boolean = false;
+    complaints: Array<Complaints> = [];
+    jobs: Array<Job> = [];
+    selected_faq: any;
+    type:string = 'plainte';
 
-  display = "none";
+    typeNotificationForm: string;
+    messageNotificationForm: string;
+    isNotificationForm: boolean = false;
 
-  complaintForm = new FormGroup({
-    action: new FormControl('')
-  });
+    display = "none";
 
-  openModal(id_element?: number) {
-    if (id_element) {
-     
-      var el = this.complaints.find(x => x.id == id_element);
-      this.selected_faq = el;
+    complaintForm = new FormGroup({
+        action: new FormControl('')
+    });
 
-      this.complaintForm.patchValue({
-        action: el.action
-      }); 
-  
+
+    ngOnInit() {
+        this.getList();
     }
-    this.display = "block";
-  }
+    openModal(id_element?: number) {
+        if (id_element) {
 
+            var el = this.complaints.find(x => x.id == id_element);
+            this.selected_faq = el;
 
-  getList(): void {
-    this.complaintsService.list().subscribe((data: Array<Complaints>) => {
-      this.complaints = data['data'];
-      // this.selected_faq= data['data'][0];
-      console.log(this.complaints );
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
+            this.complaintForm.patchValue({
+                action: el.action
+            });
+
+        }
+        this.display = "block";
     }
-    )
-  }
 
-  ngOnInit() {
-    this.getList();
-  }
 
-  deleteElement(id:number){
-    this.complaintsService.delete(id).subscribe(response => {
-      this.notificationForm( "success", "Supression réussi !");
-      this.getList();
-     },(error: HttpErrorResponse)=>{
-      console.log("Error while deleting data");   
-    } )
- }
+    getList(): void {
 
-  changeStatutElement(id:number){
-    this.complaintsService.changeStatut(id).subscribe(response => {
-      this.notificationForm( "success", "Statut modifier avec succes !");
-      this.getList();
-     },(error: HttpErrorResponse)=>{
-      console.log("Error while hidden data");   
-      this.notificationForm( "danger", "Error de modification du statut !");
-    } )
-  }
+        // alert("heloo")
+        this.complaintsService.list(this.type).subscribe((data: Array<Complaints>) => {
 
-  onClickSubmit(): void {
 
-    $('#sbt_btn').removeClass('disabled');
-    $('#spinner').addClass('d-none')
-       const formData = this.complaintForm.value;
-       this.selected_faq =
-   
-       this.complaintsService.edit(
-        new Complaints(
-          this.selected_faq.firstname, 
-          this.selected_faq.lastname, 
-          this.selected_faq.email, 
-          this.selected_faq.phone_number, 
-          this.selected_faq.relative_contact, 
-          this.selected_faq.objet, 
-          this.selected_faq.complaint, 
-          this.selected_faq.actor, 
-          this.selected_faq.statut, 
-          formData.action, 
-          ),
-        this.selected_faq.id,
-      )
-        .subscribe(response => {
-          this.notificationForm(
-            "success",
-            "Modification réussi !"
-          );
+                this.complaints = data['data'];
+                // this.selected_faq= data['data'][0];
 
-          this.getList();
-          this.display = "none";
-        }, (error: HttpErrorResponse) => {
-          console.log("Error while retrieving data");
-        })
-    
+
+                console.log(this.complaints );
+            }, (error: HttpErrorResponse) => {
+                console.log("Error while retrieving data");
+            }
+        )
+    }
+
+
+
+    deleteElement(id:number){
+        this.complaintsService.delete(id).subscribe(response => {
+            this.notificationForm( "success", "Supression réussi !");
+            this.getList();
+        },(error: HttpErrorResponse)=>{
+            console.log("Error while deleting data");
+        } )
+    }
+
+    changeStatutElement(id:number){
+        this.complaintsService.changeStatut(id).subscribe(response => {
+            this.notificationForm( "success", "Statut modifier avec succes !");
+            this.getList();
+        },(error: HttpErrorResponse)=>{
+            console.log("Error while hidden data");
+            this.notificationForm( "danger", "Error de modification du statut !");
+        } )
+    }
+
+    onClickSubmit(): void {
+
+        $('#sbt_btn').removeClass('disabled');
+        $('#spinner').addClass('d-none')
+        const formData = this.complaintForm.value;
+        this.selected_faq =
+
+            this.complaintsService.edit(
+                new Complaints(
+                    this.selected_faq.type,
+                    this.selected_faq.firstname,
+                    this.selected_faq.lastname,
+                    this.selected_faq.email,
+                    this.selected_faq.phone_number,
+                    this.selected_faq.relative_contact,
+                    this.selected_faq.objet,
+                    this.selected_faq.complaint,
+                    this.selected_faq.actor,
+                    this.selected_faq.statut,
+                    formData.action,
+                ),
+                this.selected_faq.id,
+            )
+                .subscribe(response => {
+                    this.notificationForm(
+                        "success",
+                        "Modification réussi !"
+                    );
+
+                    this.getList();
+                    this.display = "none";
+                }, (error: HttpErrorResponse) => {
+                    console.log("Error while retrieving data");
+                })
+
 
         $('#sbt_btn').removeClass('disabled');
         $('#spinner').addClass('d-none')
 
-    // }
+        // }
 
-  }
+    }
 
 
-  notificationForm(type: string, msg: string) {
-    this.typeNotificationForm = type;
-    this.messageNotificationForm = msg;
-    this.isNotificationForm = true;
-  }
+    notificationForm(type: string, msg: string) {
+        this.typeNotificationForm = type;
+        this.messageNotificationForm = msg;
+        this.isNotificationForm = true;
+    }
 
-  closeNotificationForm() {
-    this.isNotificationForm = false;
-  }
+    closeNotificationForm() {
+        this.isNotificationForm = false;
+    }
 
-  onCloseHandled() {
-    this.display = "none";
-  }
+    onCloseHandled() {
+        this.display = "none";
+    }
 
 
 
