@@ -12,25 +12,29 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class DetailComplaintComponent {
     constructor(private complaintsService:ComplaintsService,private jobService: JobService,private activatedRoute: ActivatedRoute) {}
-
+ 
     complaints: Complaints;
     id:number;
+    
 
     getComplaint(id:number): void {
         this.complaintsService.getById(id).subscribe((data: Array<Complaints>) => {
-                this.complaints = data['data'];
-            }, (error: HttpErrorResponse) => {
-                console.log("Error while retrieving data");
-            }
+          this.complaints = data['data'];
+        }, (error: HttpErrorResponse) => {
+          console.log("Error while retrieving data");
+        }
         )
-    }
-
+      }
+      formatDate(date:string){
+        const d = date.split("T");
+        return d[0]+' '+d[1].substr(0, 8);
+      }
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];
             if(id){
-                this.getComplaint(id);
+              this.getComplaint(id);
             }
         })
-    }
+      }
 }

@@ -19,8 +19,7 @@
                     <h6 _ngcontent-aik-c8="" class="card-category text-gray">Ajouter le : {{ trending.created_at }}</h6>
                     <h6 _ngcontent-aik-c8="" class="card-category text-gray">Mise à jour le : {{ trending.updated_at }}</h6>
                     <h4 _ngcontent-aik-c8="" class="card-title">{{ trending.titre }}</h4>
-                    <div [innerHTML]="trending.content"></div>
-                    <a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/trendings">Retour</a></div>
+                    <p _ngcontent-aik-c8="" class="card-description"> {{ trending.content }} </p><a _ngcontent-aik-c8="" class="btn btn-danger btn-round" routerLink="/trendings">OK</a></div>
             </div>
         </div>
     </div>

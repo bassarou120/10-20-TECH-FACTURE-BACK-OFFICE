@@ -1,0 +1,78 @@
+<div class=".competions main-content">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end">
+            <a routerLink="/competition/add" mat-raised-button="" class="btn mat-raised-button mat-button-base">
+                <span class=""><span class="">
+                    <i class="material-icons">add</i></span> Concour </span>
+                <div matripple="" class="mat-ripple mat-button-ripple">
+                </div>
+                <div class="mat-button-focus-overlay">
+                </div>
+            </a>
+        </div>
+        <!-- Alert with rounded corner -->
+        <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+         <span>×</span></button>
+        </div>
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Concours</h3>
+                <p class="card-category">Ce panel vous permets de gérer le contenu informationel lié aux concours</p>
+            </div>
+            <div class="card-body">
+                <div class="row table-responsible">
+                    <table class="table datatable" id="reg_table">
+                        <thead class="text-danger">
+                            <tr>
+                                <th style="width:2% !important;">#</th>
+                                <th style="width:45% !important;">Titre</th>
+                                <th style="width:10% !important;">Debut</th>
+                                <th style="width:10% !important;">Fin</th>
+                                <th style="width:10% !important;">Afficher</th>
+                                <th style="width:13% !important;" class="td-actions text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr *ngFor="let c of competitions; index as i;">
+                                <td>{{ i+1}}</td>
+
+                                <td>{{ c.titre}}</td>
+                                <td>{{ c.startDate }}</td>
+                                <td>{{ c.endDate }}</td>
+                                <td>
+                                    <span *ngIf="c.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                                    <ng-template #elseBlock>
+                                        <span class="badge badge-danger">Non</span>
+                                    </ng-template>
+                                </td>
+                                <td class="td-actions text-right">
+                                    <a [routerLink]="['/competitions', c.id]" rel="tooltip" class="btn btn-info btn-link">
+                                        <i class="material-icons">info</i>
+                                    </a>
+                                    <a routerLink="#" rel="tooltip" class="btn btn-warning btn-link">
+                                        <i class="material-icons">download</i>
+                                    </a>
+                                    <a href="javascript:void(0)" class="btn btn-success btn-link" (click)="edit(c.id)">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a href="javascript:void(0)" class="btn btn-info  btn-link" (click)="hideElement(c.id)">
+                                        <i class="material-icons">settings_power</i>
+                                    </a>
+                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+            </div>
+        </div>
+    </div>
+</div>

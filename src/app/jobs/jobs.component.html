@@ -19,6 +19,22 @@
                         <div class="card-body">
                             {{jobItem.description}}
                         </div>
+                        <div class="card-footer">
+
+                            <div class="d-flex flex-column">
+                                <div>
+                                    <h4>Demandes</h4>
+                                </div>
+                                <div class="">
+                                    <div class="text-success ">
+                                        <h5>Traitées : {{ jobItem.dt}}</h5>
+                                    </div>
+                                    <div class="text-danger">
+                                        <h5>Non traitée : {{ jobItem.dnt}}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

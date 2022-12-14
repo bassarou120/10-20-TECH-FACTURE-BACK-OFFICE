@@ -8,7 +8,7 @@
                     </div>
                 </div>
                 <!-- Alert with rounded corner -->
-                <div  class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
                     <i class="ti-info-alt"></i> {{messageNotificationForm}}
                     <button type="button" class="close" (click)="closeNotificationForm()">
                          <span>×</span></button>
@@ -43,7 +43,7 @@
                         <ngx-quill [options]="editorOptions" (blur)="onEditorBlured($event)" (focus)="onEditorFocused($event)" (ready)="onEditorCreated($event)" (change)="onContentChanged($event)">
                         </ngx-quill>
                         <div class="row mt-3">
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <div class="fileinput fileinput-new" data-provides="fileinput">
                                     <div class="fileinput-preview img-thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
                                         <img src="./assets/img/image_placeholder.jpg" alt="...">
@@ -57,7 +57,7 @@
                                         <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput "><span class="fa fa-remove text-danger"></span></a>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-md-6 ">
                                 <div class="fileinput fileinput-new input-group" data-provides="fileinput">
                                     <div class="form-control" data-trigger="fileinput">

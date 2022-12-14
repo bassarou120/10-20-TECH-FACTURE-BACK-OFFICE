@@ -13,17 +13,17 @@
                 <h3 class="card-title">Réclamations</h3>
                 <p class="card-category">Ce panel vous permets de gérer tous les réclamations demander par les acteurs touristiques</p>
             </div>
-
-
             <div class="card-body">
                 <div class="row table-responsible">
-                    <table class="table datatable">
-                        <thead class="text-danger">
+                    <table datatable class="table datatable table-responsible">
+                        <thead class="text-danger" style="width:100% !important">
                             <tr>
                                 <th style="width:2% !important;">#</th>
-                                <th style="width:25% !important;">Personne</th>
-<!--                                <th style="width:10% !important;">Compagnie ou Entreprise</th>-->
+                                <th style="width:20% !important;">Plaignant</th>
+                                <th style="width:20% !important;">Email</th>
+                                <th style="width:10% !important;">Secteur d'activité</th>
                                 <th style="width:45% !important;">Objet</th>
+                                <th style="width:55% !important;">Plainte</th>
                                 <th style="width:5% !important;">Statut</th>
                                 <th style="width:13% !important;" class="td-actions text-right">Actions</th>
                             </tr>
@@ -41,8 +41,10 @@
                                         </div>
                                     </div>
                                 </td>
-<!--                                <td>{{ c.actor }}</td>-->
-                                <td>{{ c.objet }}</td>
+                                <td>{{ c.email }}</td>
+                                <td>{{ c.job.name}}</td>
+                                <td>{{ (c.objet.length>50)? (c.objet | slice:0:50)+'...':(c.objet) }}</td>
+                                <td> {{ (c.complaint.length>50)? (c.complaint | slice:0:50)+'...':(c.complaint) }}</td>
                                 <td>
                                     <span *ngIf="c.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
                                     <ng-template #elseBlock>
@@ -53,10 +55,9 @@
                                     <a [routerLink]="['/reclamations', c.id]" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <a href="javascript:void(0) " class="btn btn-success btn-link " (click)="openModal(c.id) ">
-                                        <i class="material-icons ">edit</i>
+                                    <a *ngIf="c.file" [href]="c.file" rel="tooltip" class="btn btn-warning btn-link">
+                                        <i class="material-icons">download</i>
                                     </a>
-
                                     <button *ngIf="c.statut=='Non Traitee' || c.statut ==null" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
                                         <i class="material-icons">check</i>
                                     </button>

@@ -3,33 +3,29 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category">Plaintes</p>
-                        <h3 class="card-title">{{ complaints_count}}</h3>
+                        <p class="card-category">Plaintes traitées</p>
+                        <h3 class="card-title">{{ complaints_count-complaint_untreated_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category">Reclamations</p>
-                        <h3 class="card-title">{{ reclamation_count}}</h3>
+                        <p class="card-category">Reclamations traitées</p>
+                        <h3 class="card-title ">{{ reclamation_count -reclamation_untreated_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -37,15 +33,13 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">folder</i>
                         </div>
-                        <p class="card-category">Concours as venir</p>
+                        <p class="card-category">Concours en cours</p>
                         <h3 class="card-title">{{ competitions_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -54,33 +48,31 @@
         <div class="row">
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
+                    <div class="card-header card-header-success card-header-icon">
                         <div class="card-icon">
                             <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category">Plaintes non   traitée(s) </p>
-                        <h3 class="card-title">{{ complaint_untreated_count}}</h3>
+                        <p class="card-category text-danger">Plaintes non traitée </p>
+                        <h3 class="card-title text-danger">{{ complaint_untreated_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6 col-sm-6">
                 <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
+                    <div class="card-header card-header-warning card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category">Reclamations non   traitée(s) </p>
-                        <h3 class="card-title">{{ reclamation_untreated_count}}</h3>
+                        <p class="card-category text-danger">Reclamations non traitée </p>
+                        <h3 class="card-title text-danger">{{ reclamation_untreated_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+                        <!-- <div class="stats">
+                            <i class="material-icons">date_range</i> Last 24 Hours
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -88,15 +80,15 @@
                 <div class="card card-stats">
                     <div class="card-header card-header-info card-header-icon">
                         <div class="card-icon">
-                            <i class="material-icons">store</i>
+                            <i class="material-icons">folder</i>
                         </div>
-                        <p class="card-category">Concours en cours</p>
-                        <h3 class="card-title">{{ competitions_count}}</h3>
+                        <p class="card-category text-danger ">Concours cloturée</p>
+                        <h3 class="card-title text-danger">{{ competitions_passed_count}}</h3>
                     </div>
                     <div class="card-footer">
-                        <div class="stats">
-                            <i class="material-icons">date_range</i>   
-                        </div>
+                        <!-- <div class="stats">
+                            <i class="material-icons">date_range</i> Last 24 Hours
+                        </div> -->
                     </div>
                 </div>
             </div>
@@ -112,27 +104,47 @@
                     <div class="card-body table-responsive">
                         <table class="table table-hover" style="width:100% !important">
                             <thead class=" text-warning ">
-                            <th style="width:30% !important ">Personne</th>
-                            <th style="width:25% !important;">Type</th>
-                            <th style="width:15% !important ">Téléphone</th>
-                            <th style="width:30% !important ">Plainte</th>
-                            <th style="width:15% !important ">Date</th>
+                                <th style="width:30% !important ">Plaignant</th>
+                                <th style="width:25% !important;">Type</th>
+                                <th style="width:30% !important ">Plainte</th>
+                                <th style="width:15% !important ">Date</th>
                             </thead>
                             <tbody>
-                            <tr *ngFor="let c of complaints; index as i;">
-                                <td>
-                                    <a routerLink="['/complaints', c.id]">{{ c.firstname }} {{ c.lastname }}</a>
-                                </td>
-                                <td>
-                                    <span *ngIf="c.type=='Plainte'; else elseBlock" class="badge badge-danger">Plainte</span>
-                                    <ng-template #elseBlock>
-                                        <span class="badge badge-warning">Reclamation</span>
-                                    </ng-template>
-                                </td>
-                                <td>{{ c.phonenumber ==null ? '-' : c.phonenumber }}</td>
-                                <td>{{ c.objet}}</td>
-                                <td>{{ c.created_at }}</td>
-                            </tr>
+                                <tr *ngFor="let c of complaints; index as i;">
+                                    <td>
+                                        <a *ngIf="c.type=='plainte'; else elseBlock1" href="/complaints/{{c.id }}">
+
+                                            <div class="d-flex flex-column ">
+                                                <div class="">
+                                                    {{ c.lastname }} {{ c.firstname}}
+                                                </div>
+                                                <div class="">
+                                                    <b>  {{ c.phonenumber }} </b>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <ng-template #elseBlock1>
+                                            <a href="/reclamations/{{c.id }}">
+                                                <div class="d-flex flex-column ">
+                                                    <div class="">
+                                                        {{ c.lastname }} {{ c.firstname}}
+                                                    </div>
+                                                    <div class="">
+                                                        <b>  {{ c.phonenumber }} </b>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </ng-template>
+                                    </td>
+                                    <td>
+                                        <span *ngIf="c.type=='plainte'; else elseBlock" class="badge badge-danger">Plainte</span>
+                                        <ng-template #elseBlock>
+                                            <span class="badge badge-warning">Reclamation</span>
+                                        </ng-template>
+                                    </td>
+                                    <td>{{ c.objet}}</td>
+                                    <td>{{ formatDate(c.created_at) }}</td>
+                                </tr>
 
                             </tbody>
                         </table>

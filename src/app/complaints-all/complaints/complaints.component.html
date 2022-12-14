@@ -6,64 +6,66 @@
         <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
             <i class="ti-info-alt"></i> {{messageNotificationForm}}
             <button type="button" class="close" (click)="closeNotificationForm()">
-                <span>×</span></button>
+                             <span>×</span></button>
         </div>
         <div class="card">
             <div class="card-header card-header-danger">
                 <h3 class="card-title">Plaintes</h3>
                 <p class="card-category">Ce panel vous permets de gérer les lois et décret liés à un secteur d'activité touristique</p>
             </div>
-
             <div class="card-body">
                 <div class="row table-responsible">
-                    <table class="table datatable">
-                        <thead class="text-danger">
-                        <tr>
-                            <th style="width:2% !important;">#</th>
-                            <th style="width:25% !important;">Personne</th>
-<!--                            <th style="width:10% !important;">Compagnie ou Entreprise</th>-->
-                            <th style="width:45% !important;">Objet</th>
-                            <th style="width:5% !important;">Statut</th>
-                            <th style="width:13% !important;" class="td-actions text-right">Actions</th>
-                        </tr>
+                    <table datatable class="table datatable table-responsible">
+                        <thead class="text-danger" style="width:100% !important">
+                            <tr>
+                                <th style="width:2% !important;">#</th>
+                                <th style="width:20% !important;">Plaignant</th>
+                                <th style="width:20% !important;">Email</th>
+                                <th style="width:10% !important;">Secteur d'activité</th>
+                                <th style="width:45% !important;">Objet</th>
+                                <th style="width:55% !important;">Plainte</th>
+                                <th style="width:5% !important;">Statut</th>
+                                <th style="width:13% !important;" class="td-actions text-right">Actions</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let c of complaints; index as i;">
-                            <td>{{ i+1 }}</td>
-                            <td>
-                                <div class="d-flex flex-column ">
-                                    <div class="">
-                                        {{ c.lastname }} {{ c.firstname}}
+                            <tr *ngFor="let c of complaints; index as i;">
+                                <td>{{ i+1 }}</td>
+                                <td>
+                                    <div class="d-flex flex-column ">
+                                        <div class="">
+                                            {{ c.lastname }} {{ c.firstname}}
+                                        </div>
+                                        <div class="">
+                                            <b>  {{ c.phonenumber }} </b>
+                                        </div>
                                     </div>
-                                    <div class="">
-                                        <b>  {{ c.phonenumber }} </b>
-                                    </div>
-                                </div>
-                            </td>
-<!--                            <td>{{ c.actor }}</td>-->
-                            <td>{{ c.objet }}</td>
-                            <td>
-                                <span *ngIf="c.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
-                                <ng-template #elseBlock>
-                                    <span class="badge badge-danger">Non Traitée</span>
-                                </ng-template>
-                            </td>
-                            <td class="td-actions text-right">
-                                <a [routerLink]="['/complaints', c.id]" rel="tooltip" class="btn btn-info btn-link">
-                                    <i class="material-icons">info</i>
-                                </a>
-                                <a href="javascript:void(0) " class="btn btn-success btn-link " (click)="openModal(c.id) ">
-                                    <i class="material-icons ">edit</i>
-                                </a>
-
-                                <button *ngIf="c.statut=='Non Traitee' || c.statut ==null" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
-                                    <i class="material-icons">check</i>
-                                </button>
-                                <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">
-                                    <i class="material-icons">close</i>
-                                </button>
-                            </td>
-                        </tr>
+                                </td>
+                                <td>{{ c.email }}</td>
+                                <td>{{ c.job.name}}</td>
+                                <td>{{ (c.objet.length>50)? (c.objet | slice:0:50)+'...':(c.objet) }}</td>
+                                <td> {{ (c.complaint.length>50)? (c.complaint | slice:0:50)+'...':(c.complaint) }}</td>
+                                <td>
+                                    <span *ngIf="c.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
+                                    <ng-template #elseBlock>
+                                        <span class="badge badge-danger">Non Traitée</span>
+                                    </ng-template>
+                                </td>
+                                <td class="td-actions text-right">
+                                    <a [routerLink]="['/complaints', c.id]" rel="tooltip" class="btn btn-info btn-link">
+                                        <i class="material-icons">info</i>
+                                    </a>
+                                    <a *ngIf="c.file" [href]="c.file" rel="tooltip" class="btn btn-warning btn-link">
+                                        <i class="material-icons">download</i>
+                                    </a>
+                                    <button *ngIf="c.statut=='Non Traitee' || c.statut ==null" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
+                                        <i class="material-icons">check</i>
+                                    </button>
+                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">
+                                        <i class="material-icons">close</i>
+                                    </button>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
@@ -91,8 +93,8 @@
                             </div>
                             <div class="modal-footer ">
                                 <button type="submit " class="btn btn-danger " id="sbt_btn ">
-                                    <span class="fa fa-spinner fa-spin d-none " id="spinner "></span> Enregistrer
-                                </button>
+                                        <span class="fa fa-spinner fa-spin d-none " id="spinner "></span> Enregistrer
+                                        </button>
                             </div>
                         </form>
 

@@ -24,7 +24,10 @@ export class DetailReclamationComponent {
         }
         )
       }
-    
+      formatDate(date:string){
+        const d = date.split("T");
+        return d[0]+' '+d[1].substr(0, 8);
+      }
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];

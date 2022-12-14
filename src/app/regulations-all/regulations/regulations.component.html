@@ -22,7 +22,7 @@
                         <thead class="text-danger">
                             <tr>
                                 <th style="width:2% !important;">#</th>
-                                <th style="width:10% !important;">Image</th>
+                                <!-- <th style="width:10% !important;">Image</th> -->
                                 <th style="width:10% !important;">Type</th>
                                 <th style="width:45% !important;">Titre</th>
                                 <th style="width:10% !important;">Métier</th>
@@ -33,11 +33,11 @@
                         <tbody>
                             <tr *ngFor="let f of regs; index as i;">
                                 <td>{{ i+1 }}</td>
-                                <td>
+                                <!-- <td>
                                     <div class="img-container">
-                                        <img width="100" src="{{f.image }}" alt="...">
+                                        <img src="./assets/img/new_logo.png" alt="...">
                                     </div>
-                                </td>
+                                </td> -->
                                 <td>{{ f.type }}</td>
                                 <td>{{ f.titre }}</td>
                                 <td> <a routerLink="/jobs">{{ f.job.name }}</a>
@@ -52,7 +52,8 @@
                                     <a [routerLink]="['/regulations', f.id]" rel="tooltip" class="btn btn-info btn-link">
                                         <i class="material-icons">info</i>
                                     </a>
-                                    <a href="{{f.file }}" rel="tooltip" class="btn btn-warning btn-link">
+
+                                    <a *ngIf="f.file" [href]="f.file" rel="tooltip" class="btn btn-warning btn-link">
                                         <i class="material-icons">download</i>
                                     </a>
                                     <a href="javascript:void(0)" class="btn btn-success btn-link" (click)="edit(f.id)">
