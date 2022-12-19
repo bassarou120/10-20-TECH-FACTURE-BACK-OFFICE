@@ -8,6 +8,8 @@ import { UsersService } from '../../services/users.service';
     styleUrls: ['./add-user.component.styl']
 })
 export class AddUserComponent {
+
+
     constructor(private usersService:UsersService) {}
     user: Users=[];  
   

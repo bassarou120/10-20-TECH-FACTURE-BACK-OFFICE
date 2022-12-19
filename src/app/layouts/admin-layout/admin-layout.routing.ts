@@ -18,14 +18,15 @@ import {DetailInfoComponent} from '../../info-all/detail-info';
 import {AddCompetitionComponent} from '../../competitions-all/add-competition';
 import {DashboardComponent} from '../../dashboard/dashboard.component';
 import {ComplaintsComponent} from '../../complaints-all/complaints/complaints.component';
-import {CompetitionsComponent} from '../../competitions-all/competions';
+
 import {AuthGuard} from '../../utils/AuthGuard';
 import {ReclamationsComponent} from '../../reclamations-all/reclamations';
 import {DetailReclamationComponent} from '../../reclamations-all/detail-reclamation';
+import {CompetitionsComponent} from '../../competitions-all/competions';
 
 export const AdminLayoutRoutes: Routes = [
     { path: 'dashboard',      component: DashboardComponent,
-    // canActivate:   [ AuthGuard]
+    canActivate:   [ AuthGuard]
     },
     // users
     { path: 'user-profile',   component: UserProfileComponent },
@@ -34,12 +35,12 @@ export const AdminLayoutRoutes: Routes = [
    
     //complaints
     { path: 'complaints',     component: ComplaintsComponent,
-        // canActivate:   [ AuthGuard]
+        canActivate:   [ AuthGuard]
     },
     { path: 'complaints/:id', component: DetailComplaintComponent },
 
     { path: 'infos',     component: InfosComponent,
-        // canActivate:   [ AuthGuard]
+        canActivate:   [ AuthGuard]
     },
     { path: 'info/add',   component: AddInfoComponent }, 
     { path: 'infos/:id',   component: DetailInfoComponent }, 
@@ -52,7 +53,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'regulations/:id', component: DetailRegulationComponent },
 
     { path: 'competitions',component: CompetitionsComponent ,
-        // canActivate:   [ AuthGuard]
+        canActivate:   [ AuthGuard]
     },
 
     { path: 'reclamations',     component: ReclamationsComponent },
@@ -62,5 +63,7 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'competitions/:id', component: DetailCompetitionComponent },
 
     { path: 'jobs',        component: JobsComponent },
-    { path: 'faq',        component: FaqComponent }, 
+    { path: 'faq',        component: FaqComponent ,
+        canActivate:   [ AuthGuard]
+    },
 ];
