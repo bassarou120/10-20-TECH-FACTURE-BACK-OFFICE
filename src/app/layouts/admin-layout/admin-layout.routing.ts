@@ -23,11 +23,16 @@ import {AuthGuard} from '../../utils/AuthGuard';
 import {ReclamationsComponent} from '../../reclamations-all/reclamations';
 import {DetailReclamationComponent} from '../../reclamations-all/detail-reclamation';
 import {CompetitionsComponent} from '../../competitions-all/competions';
+import {SsocallbackComponent} from '../../sso-callback/ssocallback.component';
 
 export const AdminLayoutRoutes: Routes = [
+
+
+
     { path: 'dashboard',      component: DashboardComponent,
     canActivate:   [ AuthGuard]
     },
+
     // users
     { path: 'user-profile',   component: UserProfileComponent },
     { path: 'users',   component: UsersComponent },

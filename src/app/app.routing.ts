@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import {AuthLayoutComponent} from './layouts/auth-layout';
 import {AuthGuard} from './utils/AuthGuard';
+import {SsocallbackComponent} from './sso-callback/ssocallback.component';
 
 
 
@@ -15,6 +16,7 @@ const routes: Routes =[
     redirectTo: 'dashboard',
     pathMatch: 'full',
   },
+  {path: 'sso_callback',component : SsocallbackComponent },
   {
     path: '',
     component: AdminLayoutComponent,

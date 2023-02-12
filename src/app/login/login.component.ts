@@ -25,7 +25,6 @@ export class LoginComponent implements OnInit {
     user: UserSystem;
     isFirstLogin: boolean = false;
 
-
     constructor(
         private fb: FormBuilder,
         private router: Router,
@@ -34,7 +33,6 @@ export class LoginComponent implements OnInit {
         private tokenStorage: TokenStorage,
         private loginRequestService: LoginRequestService,
         // private modalService: NzModalService,
-
 
     ) {
         // this.loginRequestService.header.next(this.h);

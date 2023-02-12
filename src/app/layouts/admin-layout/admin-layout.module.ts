@@ -44,6 +44,7 @@ import { NgxQuillModule } from '@dimpu/ngx-quill';
 import {ReclamationsComponent} from '../../reclamations-all/reclamations';
 import {DetailReclamationComponent} from '../../reclamations-all/detail-reclamation';
 import {DetailComplaintComponent} from '../../complaints-all/detail-complaint';
+import {SsocallbackComponent} from '../../sso-callback/ssocallback.component';
 
 //  import { DataTablesModule } from "angular-datatables";
 
@@ -91,6 +92,7 @@ import {DetailComplaintComponent} from '../../complaints-all/detail-complaint';
     CompetitionsComponent,
     AddCompetitionComponent,
     DetailCompetitionComponent,
+
   ]
 })
 

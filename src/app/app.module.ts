@@ -19,6 +19,7 @@ import { NgxQuillModule } from '@dimpu/ngx-quill';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {AuthLayoutComponent} from './layouts/auth-layout';
 import { MatInputModule } from '@angular/material/input/input-module';
+import {SsocallbackComponent} from './sso-callback/ssocallback.component';
 
 
 
@@ -55,10 +56,12 @@ import { MatInputModule } from '@angular/material/input/input-module';
     AdminLayoutComponent,
     AuthLayoutComponent,
     LoginComponent,
-    CreateAdminComponent
+    CreateAdminComponent,
+    SsocallbackComponent
   ],
 
 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
