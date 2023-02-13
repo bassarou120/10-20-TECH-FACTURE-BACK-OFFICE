@@ -111,15 +111,6 @@ export class DashboardComponent implements OnInit {
     )
   }
 
-  getUntreatedComplCount(): void {
-    this.complaintsService.unTreated_complaints().subscribe((data: Array<Regulation>) => {
-      this.complaint_untreated_count = data['data'];
-      this.spinner4= false;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
 
 
   getReclaCount(): void {
@@ -164,7 +155,6 @@ export class DashboardComponent implements OnInit {
     // this.getReclaCount();
     // this.getComplCount();
     this.getList();
-    // this.getUntreatedComplCount();
     // this.getReclaUntreatCount();
     // this.getPendingCompCount();
     // this.getPassedCompCount();
