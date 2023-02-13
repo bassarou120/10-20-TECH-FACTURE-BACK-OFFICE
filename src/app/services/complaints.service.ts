@@ -80,4 +80,10 @@ export class ComplaintsService {
   getById(id: number): Observable<Object> {
     return this.http.get(`${this.url}/${id}`);
   }
+
+   // liste des IDE par id
+   stat(): Observable<Object> {
+    return this.http.get(`${this.url}/plaintes_reclamations_count`);
+  }
+
 }

@@ -54,13 +54,7 @@ export class ComplaintsComponent implements OnInit {
 
         // alert("heloo")
         this.complaintsService.list(this.type).subscribe((data: Array<Complaints>) => {
-
-
                 this.complaints = data['data'];
-                // this.selected_faq= data['data'][0];
-
-
-                console.log(this.complaints );
             }, (error: HttpErrorResponse) => {
                 console.log("Error while retrieving data");
             }

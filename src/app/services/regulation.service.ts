@@ -62,4 +62,5 @@ export class RegulationService {
     return this.http.get(`${this.url}/${id}`);
   }
 
+  
 }
