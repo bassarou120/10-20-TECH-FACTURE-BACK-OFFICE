@@ -18,6 +18,7 @@ export class SsocallbackComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,private http: HttpClient) {}
 
+
     headers = new HttpHeaders({
         'Authorization':  'Basic bXRjYWxpY2VuY2U6bXRjYWxpY2VuY2U=',
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -30,7 +31,9 @@ export class SsocallbackComponent implements OnInit {
 
     this.route.queryParams
         .subscribe(params => {
-              console.log(params.code); // { orderby: "price" }
+              console.log(params.code);
+
+              // { orderby: "price" }
            this.code=params.code;
             }
         );
