@@ -86,7 +86,7 @@
                         <div class="card-icon">
                             <i class="material-icons">notifications</i>
                         </div>
-                        <p class="card-category text-danger">Reclamations non traitée </p>
+                        <p class="card-category text-danger">Réclamations non traitée </p>
                         <h3 class="card-title text-danger">
                             <div class="spinner-border text-success" role="status" *ngIf="loading;else ele">
                                 <span class="sr-only">Loading...</span>
@@ -171,7 +171,7 @@
                                     <td>
                                         <span *ngIf="c.type=='plainte'; else elseBlock" class="badge badge-danger">Plainte</span>
                                         <ng-template #elseBlock>
-                                            <span class="badge badge-warning">Reclamation</span>
+                                            <span class="badge badge-warning">Réclamation</span>
                                         </ng-template>
                                     </td>
                                     <td> {{ (c.objet.length>100)? (c.objet | slice:0:100)+'...':(c.objet) }}</td>

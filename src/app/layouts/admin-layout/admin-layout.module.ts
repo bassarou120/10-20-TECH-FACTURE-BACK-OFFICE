@@ -46,7 +46,10 @@ import {DetailReclamationComponent} from '../../reclamations-all/detail-reclamat
 import {DetailComplaintComponent} from '../../complaints-all/detail-complaint';
 import {SsocallbackComponent} from '../../sso-callback/ssocallback.component';
 
-//  import { DataTablesModule } from "angular-datatables";
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -64,7 +67,12 @@ import {SsocallbackComponent} from '../../sso-callback/ssocallback.component';
     MatCheckboxModule,
     MatDatepickerModule,
     MatRadioModule,
-    NgxQuillModule
+    NgxQuillModule,
+    MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+
     //DataTablesModule
   ],
   declarations: [

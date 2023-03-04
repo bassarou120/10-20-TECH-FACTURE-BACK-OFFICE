@@ -1,3 +1,9 @@
+<style>
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
 <div class=".faq main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
@@ -22,50 +28,96 @@
                 <p class="card-category">Informez de grand public grâce à sur panel sur les questions les plus fréquentes</p>
             </div>
             <div class="card-body">
+                <div class=" m-3 d-flex justify-content-between">
+                    <div class="">
+                        <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                    </div>
+                </div>
                 <div class="row table-responsible">
-                    <table datatable class="table row-border hover datatable" id="faq_datatable">
-                        <thead class="text-danger">
-                            <tr>
-                                <th style="width:2% !important;">#</th>
-                                <th style="width:15% !important;">Métier</th>
-                                <th style="width:40% !important;">Questions</th>
-                                <th style="width:40% !important;">Reponse</th>
-                                <th style="width:10% !important;">Afficher</th>
-                                <th style="width:10% !important;" class="td-actions text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let f of faq; index as i;">
-                                <td>{{ i+1 }}</td>
-                                <td>
-                                    <a routerLink="/jobs">{{ f.job.name }}</a>
-                                </td>
-                                <td>{{ f.question }}</td>
-                                <td>{{ f.content }}</td>
-                                <td>
-                                    <span *ngIf="f.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="m-2" *ngIf="!spinner">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="question">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Question </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 30%'">
+                                    {{ row.question }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="content">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Réponse
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 30%'">
+                                    {{row.content}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="job">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Job
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                    <a routerLink="/jobs">
+                                        <span *ngIf="row.job.name=='Restaurant'" class="">Établissement de restauration</span>
+                                        <span *ngIf="row.job.name=='Voyage'" class="">Agence de voyage</span>
+                                        <span *ngIf="row.job.name=='Hebergement'" class="">Hébergement touristique</span>
+                                        <span *ngIf="row.job.name=='Guide'" class="">Guide de tourisme</span>
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isDisplayed">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 7%'"> Afficher
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 7%'">
+                                    <span *ngIf="row.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
                                     <ng-template #elseBlock>
                                         <span class="badge badge-danger">Non</span>
                                     </ng-template>
-                                </td>
-                                <td class=" td-actions text-right ">
-                                    <a href="javascript:void(0)" rel="tooltip" class="btn btn-info btn-link " (click)="openShowModal(f.id)">
-                                        <i class="material-icons ">info</i>
-                                    </a>
-                                    <a href="javascript:void(0) " class="btn btn-success btn-link " (click)="openModal(f.id) ">
-                                        <i class="material-icons ">edit</i>
-                                    </a>
-                                    <a href="javascript:void(0) " rel="tooltip " class="btn btn-info btn-link " (click)="hideElement(f.id)">
-                                        <i class="material-icons ">settings_power</i>
-                                    </a>
-                                    <a href="javascript:void(0) " rel="tooltip " class="btn btn-danger btn-link " (click)="deleteElement(f.id)">
-                                        <i class="material-icons ">close</i>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 17%'"> Action
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 17%'">
+                                    <div class="d-flex justify-content-end">
+                                        <a (click)="openShowModal(row.id)" rel="tooltip" class="action">
+                                            <i class="material-icons text-info">info</i>
+                                        </a>
+                                        <a href="javascript:void(0)" (click)="openModal(row.id)" rel="tooltip" class="action">
+                                            <i class="material-icons text-success">edit</i>
+                                        </a>
+                                        <a *ngIf="row.statut=='Non Traitee' || row.statut ==null || row.statut ==''" rel="tooltip" class="action" (click)="changeStatutElement(row.id)">
+                                            <i class="material-icons text-success">check</i>
+                                        </a>
+                                        <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                            <i class="material-icons ">close</i>
+                                        </button>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns; ">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+
                 </div>
+            </div>
+            <div class="card-footer justify-content-end">
+                <mat-paginator [pageSizeOptions]=" [5, 10, 25, 100] " [pageSize]="5 " [length]="faq.length "></mat-paginator>
             </div>
             <!-- Modal -->
 
@@ -160,10 +212,6 @@
 
                     </div>
                 </div>
-            </div>
-
-            <div class="col-md-12 ">
-
             </div>
         </div>
     </div>

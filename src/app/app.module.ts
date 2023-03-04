@@ -16,15 +16,15 @@ import {ErrorInterceptor} from './utils/ErrorInterceptor';
 import {CreateAdminComponent} from './create-admin/create-admint.component';
 import { QuillModule } from 'ngx-quill';
 import { NgxQuillModule } from '@dimpu/ngx-quill';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import {AuthLayoutComponent} from './layouts/auth-layout';
-import { MatInputModule } from '@angular/material/input/input-module';
 import {SsocallbackComponent} from './sso-callback/ssocallback.component';
-
-
-
-
-
+// import { MatInputModule } from '@angular/material/input/input-module';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -41,8 +41,11 @@ import {SsocallbackComponent} from './sso-callback/ssocallback.component';
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    NgxQuillModule
-
+    NgxQuillModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule
+    
 ],
   providers: [
     AuthService,

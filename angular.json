@@ -25,6 +25,7 @@
                             "src/assets/scss/material-dashboard.scss",
                             "src/assets/css/demo.css",
                             "node_modules/datatables.net-dt/css/jquery.dataTables.css"
+
                         ],
                         "scripts": [
                             "node_modules/jquery/dist/jquery.js",

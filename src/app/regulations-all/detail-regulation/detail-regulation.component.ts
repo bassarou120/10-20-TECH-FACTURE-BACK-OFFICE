@@ -18,7 +18,6 @@ export class DetailRegulationComponent {
     getTrending(id:number): void {
         this.regulationService.getById(id).subscribe((data: Array<Regulation>) => {
           this.reg = data['data'];
-          console.log(this.regulationService );
         }, (error: HttpErrorResponse) => {
           console.log("Error while retrieving data");
         }

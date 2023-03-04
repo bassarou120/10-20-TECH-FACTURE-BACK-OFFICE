@@ -1,4 +1,36 @@
-<div class=".complaints main-content">
+<style>
+    mat-cell {
+        /* text-align: center !important; */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 2px;
+    }
+    
+    ng-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    mat-cell,
+    mat-header-cell,
+    mat-footer-cell {
+        flex: 1;
+        display: block !important;
+        text-align: start !important;
+    }
+    
+    mat-header-row {
+        min-height: 40px !important;
+    }
+    
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
+<div class="complaints main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
         </div>
@@ -8,71 +40,122 @@
             <button type="button" class="close" (click)="closeNotificationForm()">
                              <span>×</span></button>
         </div>
+
         <div class="card">
             <div class="card-header card-header-danger">
                 <h3 class="card-title">Plaintes</h3>
-                <p class="card-category">Ce panel vous permets de gérer les lois et décret liés à un secteur d'activité touristique</p>
+                <p class="card-category">Ce panel vous permets de gérer les plaintes des utilisateurs.</p>
             </div>
             <div class="card-body">
+                <div class=" m-3 d-flex justify-content-between">
+                    <div class="">
+                        <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                    </div>
+                </div>
                 <div class="row table-responsible">
-                    <table datatable class="table datatable table-responsible">
-                        <thead class="text-danger" style="width:100% !important">
-                            <tr>
-                                <th style="width:2% !important;">#</th>
-                                <th style="width:20% !important;">Plaignant</th>
-                                <th style="width:15% !important;">Email</th>
-                                <th style="width:10% !important;">Secteur d'activité</th>
-                                <th style="width:45% !important;">Objet</th>
-                                <!-- <th style="width:55% !important;">Plainte</th> -->
-                                <th style="width:5% !important;">Statut</th>
-                                <th style="width:13% !important;" class="td-actions text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let c of complaints; index as i;">
-                                <td>{{ i+1 }}</td>
-                                <td>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="m-2" *ngIf="!spinner">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="name">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 18%'"> Plaignant </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 18%'">
                                     <div class="d-flex flex-column ">
                                         <div class="">
-                                            {{ c.lastname }} {{ c.firstname}}
+                                            {{ row.lastname }} {{ row.firstname}}
                                         </div>
                                         <div class="">
-                                            <b>  {{ c.phonenumber }} </b>
+                                            <b>  {{ row.phonenumber }} </b>
                                         </div>
                                     </div>
-                                </td>
-                                <td> {{ (c.email.length>30)? (c.objet | slice:0:30)+'...':(c.email) }}</td>
-                                <td>{{ c.job.name}}</td>
-                                <td>{{ (c.objet.length>50)? (c.objet | slice:0:50)+'...':(c.objet) }}</td>
-                                <!-- <td> {{ (c.complaint.length>50)? (c.complaint | slice:0:50)+'...':(c.complaint) }}</td> -->
-                                <td>
-                                    <span *ngIf="c.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="email">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 15%'"> Email
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 15%'">
+                                    {{row.email}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="job">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Job
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                    <a routerLink="/jobs">
+                                        <span *ngIf="row.job.name=='Restaurant'" class="">Établissement de restauration</span>
+                                        <span *ngIf="row.job.name=='Voyage'" class="">Agence de voyage</span>
+                                        <span *ngIf="row.job.name=='Hebergement'" class="">Hébergement touristique</span>
+                                        <span *ngIf="row.job.name=='Guide'" class="">Guide de tourisme</span>
+                                    </a>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="objet">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 18%'"> Objet
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 18%'">
+                                    {{row.objet}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="statut">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 7%'"> Statut
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 7%'">
+                                    <span *ngIf="row.statut=='Traitee'; else elseBlock" class="badge badge-success">Traitée</span>
                                     <ng-template #elseBlock>
                                         <span class="badge badge-danger">Non Traitée</span>
                                     </ng-template>
-                                </td>
-                                <td class="td-actions text-right">
-                                    <a [routerLink]="['/complaints', c.id]" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a *ngIf="c.file" [href]="c.file" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a>
-                                    <button *ngIf="c.statut=='Non Traitee' || c.statut ==null || c.statut ==''" type="button" rel="tooltip" class="btn btn-success  btn-link" (click)="changeStatutElement(c.id)">
-                                        <i class="material-icons">check</i>
-                                    </button>
-                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 17%'"> Action
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 17%'">
+                                    <div class="d-flex justify-content-end">
+                                        <a [routerLink]="['/complaints', row.id]" rel="tooltip" class="action">
+                                            <i class="material-icons text-info">info</i>
+                                        </a>
+                                        <a *ngIf="row.file" [href]="row.file" rel="tooltip" class="action">
+                                            <i class="material-icons text-warning">download</i>
+                                        </a>
+                                        <a *ngIf="row.statut=='Non Traitee' || row.statut ==null || row.statut ==''" rel="tooltip" class="action" (click)="changeStatutElement(row.id)">
+                                            <i class="material-icons text-success">check</i>
+                                        </a>
+                                        <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                            <i class="material-icons ">close</i>
+                                        </button>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns; ">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+
                 </div>
+            </div>
+            <div class="card-footer justify-content-end">
+                <mat-paginator [pageSizeOptions]=" [5, 10, 25, 100] " [pageSize]="5 " [length]="complaints.length "></mat-paginator>
             </div>
             <!-- Modal -->
 
-            <div class="modal " tabindex="-1 " role="dialog " [ngStyle]="{'display':display} ">
+            <div class="modal " tabindex="-1 " role="dialog " [ngStyle]="{ 'display':display} ">
                 <div class="modal-dialog " role="document ">
                     <div class="modal-content ">
                         <div class="modal-header ">
@@ -84,7 +167,7 @@
                             <div class="modal-body ">
                                 <div class="col-sm-12 ">
                                     <mat-form-field class="example-full-width ">
-                                        <textarea matInput placeholder="Action " id="action " name="action " formControlName="action"></textarea>
+                                        <textarea matInput placeholder="Action " id="action " name="action " formControlName="action "></textarea>
                                     </mat-form-field>
                                     <!-- <div class="errors ">
                                         <span *ngIf="action && answer.invalid && answer.touched && faqForm.get( 'answer').errors.required " [ngClass]=" 'error' ">Renseignez ce champs svp</span>
@@ -102,9 +185,7 @@
                 </div>
             </div>
 
-            <div class="col-md-12">
-
-            </div>
         </div>
+
     </div>
 </div>

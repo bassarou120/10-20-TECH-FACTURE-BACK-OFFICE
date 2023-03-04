@@ -1,3 +1,9 @@
+<style>
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
 <div class=".competions main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
@@ -22,56 +28,94 @@
                 <p class="card-category">Ce panel vous permets de gérer le contenu informationel lié aux concours</p>
             </div>
             <div class="card-body">
+                <div class=" m-3 d-flex justify-content-between">
+                    <div class="">
+                        <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                    </div>
+                </div>
                 <div class="row table-responsible">
-                    <table class="table datatable" id="reg_table">
-                        <thead class="text-danger">
-                            <tr>
-                                <th style="width:2% !important;">#</th>
-                                <th style="width:45% !important;">Titre</th>
-                                <th style="width:10% !important;">Debut</th>
-                                <th style="width:10% !important;">Fin</th>
-                                <th style="width:10% !important;">Afficher</th>
-                                <th style="width:13% !important;" class="td-actions text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="m-2" *ngIf="!spinner">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                            </ng-container>
 
-                            <tr *ngFor="let c of competitions; index as i;">
-                                <td>{{ i+1}}</td>
+                            <ng-container matColumnDef="titre">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> Titre </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{ row.titre }}
+                                </mat-cell>
+                            </ng-container>
 
-                                <td>{{ c.titre}}</td>
-                                <td>{{ c.startDate }}</td>
-                                <td>{{ c.endDate }}</td>
-                                <td>
-                                    <span *ngIf="c.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                            <ng-container matColumnDef="startDate">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> Début
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{row.startDate}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="endDate">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> Fin
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{row.endDate}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="isDisplayed">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 7%'"> Afficher
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 7%'">
+                                    <span *ngIf="row.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
                                     <ng-template #elseBlock>
                                         <span class="badge badge-danger">Non</span>
                                     </ng-template>
-                                </td>
-                                <td class="td-actions text-right">
-                                    <a [routerLink]="['/competitions', c.id]" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a href="{{ c.file }}" rel="tooltip" class="btn btn-warning btn-link">
-                                        <i class="material-icons">download</i>
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-success btn-link" (click)="edit(c.id)">
-                                        <i class="material-icons">edit</i>
-                                    </a>
-                                    <a href="javascript:void(0)" class="btn btn-info  btn-link" (click)="hideElement(c.id)">
-                                        <i class="material-icons">settings_power</i>
-                                    </a>
-                                    <button type="button" rel="tooltip" class="btn btn-danger  btn-link" (click)="deleteElement(c.id)">
-                                        <i class="material-icons">close</i>
-                                    </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 17%'"> Action
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 17%'">
+                                    <div class="d-flex justify-content-end">
+                                        <a [routerLink]="['/competitions', row.id]" rel="tooltip" class="action">
+                                            <i class="material-icons text-info">info</i>
+                                        </a>
+                                        <a *ngIf="row.file" [href]="row.file" rel="tooltip" class="action">
+                                            <i class="material-icons text-warning">download</i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="action" (click)="edit(row.id)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a href="javascript:void(0)" class="action" (click)="hideElement(row.id)">
+                                            <i class="material-icons text-info">settings_power</i>
+                                        </a>
+                                        <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                            <i class="material-icons ">close</i>
+                                        </button>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns; ">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+
                 </div>
             </div>
-            <div class="col-md-12">
-
+            <div class="card-footer justify-content-end">
+                <mat-paginator [pageSizeOptions]=" [5, 10, 25, 100] " [pageSize]="5 " [length]="competitions.length "></mat-paginator>
             </div>
         </div>
     </div>
