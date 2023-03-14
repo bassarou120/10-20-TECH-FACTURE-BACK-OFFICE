@@ -61,6 +61,10 @@ export class DetailDemandVoyageComponent {
      
       ];
    
+    addDecision(id:number){
+        
+    }
+
     getDemand(id: number): void {
         this.demandVoyageService.getById(id).subscribe((data: Array<Demand>) => {
             this.demand = data['data'];
@@ -145,5 +149,24 @@ export class DetailDemandVoyageComponent {
         this.display = "none";
     }
 
+    openModal(id_element: number) {
+        // var el = this.demand.find(x => x.id == id_element);
+        // this.selected_demand = el;
+        this.display = "block";
+        console.log(id_element)
+        switch(id_element) {
+            case 0:
+              // code block
+              break;
+            case 1:
+              // code block
+              break;
+            default:
+              // code block
+          }
+    }
+
+
+ 
    
 }
