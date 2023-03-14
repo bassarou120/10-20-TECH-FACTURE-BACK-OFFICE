@@ -27,6 +27,7 @@ export class NavbarComponent implements OnInit {
         this.tokenStorage.signOut();
         window.location.href="/login"
     }
+   
     ngOnInit(){
       this.listTitles = ROUTES.filter(listTitle => listTitle);
       this.listTitlesHide = HIDE_ROUTES.filter(listTitleHide => listTitleHide);
@@ -41,7 +42,6 @@ export class NavbarComponent implements OnInit {
          }
      });
     }
-
     sidebarOpen() {
         const toggleButton = this.toggleButton;
         const body = document.getElementsByTagName('body')[0];

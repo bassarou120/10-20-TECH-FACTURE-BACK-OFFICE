@@ -1,0 +1,264 @@
+<style>
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
+<div class="list-demand-voyage main-content">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end">
+
+        </div>
+
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Demande E-service</h3>
+                <p class="card-category">Liste des demandes sur les e-services du métier voyage</p>
+            </div>
+            <div class="card-body">
+                <div class=" m-3 d-flex justify-content-between">
+                    <div class="">
+                        <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                    </div>
+                </div>
+                <div class="row table-responsible">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="m-2" *ngIf="!spinner">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="#">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="numDemande">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 15%'"> Demande </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 15%'">
+                                    {{ row.numDemande }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="nom_du_service">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 25%'"> Service
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 25%'">
+                                    {{row.nom_du_service}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="demandeDate">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 15%'"> Date de demande
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 15%'">
+                                    {{ row.demandeDate }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="derniere_mise_a_jour">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Demande mise à jour
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                    {{ row.derniere_mise_a_jour }}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="status">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> Statut
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    <mat-cell *matCellDef="let row">
+                                        <span *ngIf="row.status=='DEMANDE'" class="badge badge-info "> DEMANDE</span>
+                                        <span *ngIf="row.status=='ACCEPTE'" class="badge badge-success "> ACCEPTE</span>
+                                        <span *ngIf="row.status=='REJETE'" class="badge badge-danger "> REJETE </span>
+                                        <span *ngIf="row.status=='ENTRETIEN'" class="badge badge-warning ">ENTRETIEN </span>
+                                        <span *ngIf="row.status=='string'" class="badge bg-warning ">string</span>
+                                    </mat-cell>
+                                </mat-cell>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 10%'"> Action
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    <div class=" ">
+                                        <!-- (click)="openXl(content,row.id)" -->
+                                        <button class="btn btn-sm btn-info" (click)="openModal(row.id)">
+                                            <span class="fa fa-eye" style="font-size: 12px!important;"></span>
+                                        </button>
+                                        <button class="btn btn-sm btn-success" (click)="onRowClicked(row.id)">
+                                            <span class="fa fa-edit" style="font-size: 12px!important;"></span>
+                                        </button>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns; ">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer justify-content-end">
+                <mat-paginator [pageSizeOptions]=" [5, 10, 25, 100] " [pageSize]="10" [length]="demand.length"></mat-paginator>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal" tabindex="-1 " role="dialog " [ngStyle]="{'display':display} ">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <h4 class="modal-title " id="modal_title ">Détail de la demande</h4>
+                    <button type="button " class="close " aria-label="Close " (click)="onCloseHandled() "><span aria-hidden="true ">&times;</span></button>
+                </div>
+
+                <div class="modal-body" *ngIf="selected_demand">
+                    <div class=" d-flex justify-content-center ">
+                        <div class="m-2 ">
+                            <div>
+                                <b>Ref :</b> {{ selected_demand.numDemande }}
+                            </div>
+                            <div>
+                                <b>Demande :</b> {{ selected_demand.demande }}
+                            </div>
+                            <div>
+                                <span *ngIf="selected_demand.status=='DEMANDE' " class="badge badge-info "> DEMANDE</span>
+                                <span *ngIf="selected_demand.status=='ACCEPTE' " class="badge badge-success "> ACCEPTE</span>
+                                <span *ngIf="selected_demand.status=='REJETE' " class="badge badge-danger "> REJETE </span>
+                                <span *ngIf="selected_demand.status=='ENTRETIEN' " class="badge badge-warning ">ENTRETIEN </span>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between m-2 ">
+                        <div>
+                            <b>Service :</b> {{ selected_demand.nom_du_service }}
+                        </div>
+                        <div>
+                            <b>Date de la demande :</b> {{ selected_demand.demandeDate }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between m-2 ">
+                        <div>
+                            <b>Nombre d'étoile :</b> {{ selected_demand.nombre_etoiles }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between m-2 ">
+                        <div>
+                            <b>Date d'agrement :</b> {{ selected_demand.date_agrement }}
+                        </div>
+                        <div>
+                            <b>Date de classement :</b> {{ selected_demand.date_classement }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between m-2 ">
+                        <div>
+                            <b>Date d'expiration :</b> {{ selected_demand.date_expiration }}
+                        </div>
+                        <div>
+                            <b>Dernière mise à jour :</b> {{ selected_demand.derniere_mise_a_jour }}
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between m-2 ">
+                        <div>
+                            <b>Dernière notification :</b> {{ selected_demand.derniere_notification }}
+                        </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-md-3 "></div>
+                        <div class="col-md-6 ">
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Raison sociale :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.raison_sociale }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Metier :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.metier }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Ifu :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.ifu }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>RCCM :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.rccm }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Téléphone :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.telephone }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Email:</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.email }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Type d'établissement :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.type_etablissement }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Departement :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.departement }}
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between ">
+                                <div class=" ">
+                                    <p>Commune :</p>
+                                </div>
+                                <div class=" ">
+                                    {{ selected_demand.commune }}
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-md-3 "></div>
+
+                    </div>
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-default " (click)="onCloseHandled() ">Fermer</button>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+
+</div>

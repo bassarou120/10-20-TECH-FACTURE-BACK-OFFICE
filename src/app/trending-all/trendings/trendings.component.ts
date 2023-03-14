@@ -15,11 +15,12 @@ export class TrendingsComponent implements OnInit  {
     constructor(private trendingService:TrendingService,private router: Router) {}
     
     trendings: Array<Trending> = [];
-   
+   spinner = true ;
 
     getList():void{
         this.trendingService.list().subscribe((data:Array<Trending>)=>{
             this.trendings=data['data'];
+            this.spinner =false ;
         },(error: HttpErrorResponse)=>{
             console.log("Error while retrieving data");   
         } 

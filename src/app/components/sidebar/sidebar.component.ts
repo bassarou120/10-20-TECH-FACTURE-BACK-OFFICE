@@ -12,11 +12,11 @@ declare interface RouteInfo {
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
     { path: '/jobs', title: 'Metiers',  icon:'category', class: '' },
-    { path: '/regulations', title: 'Reglementations',  icon:'loyalty', class: ''  },
+    { path: '/regulations', title: 'Règlementations',  icon:'loyalty', class: ''  },
     { path: '/trendings', title: 'Tendances',  icon:'library_books', class: '' },
     // { path: '/infos', title: 'Comment obtenir ?',  icon:'announcement', class: '' },
     { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
-    { path: '/reclamations', title: 'Reclamations',  icon:'announcement', class: ''},
+    { path: '/reclamations', title: 'Réclamations',  icon:'announcement', class: ''},
     // { path: '/user-profile', title: 'User Profile',  icon:'person', class: ''},
     { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
     { path: '/competitions', title: 'Concours',  icon:'folder_open', class: '' },
@@ -36,6 +36,9 @@ export const HIDE_ROUTES: RouteInfo[] = [
   { path: '/user/add', title: 'Ajouter un utilisateur',  icon: '', class: '' },
   { path: '/competition/add', title: 'Ajouter un concours',  icon: '', class: '' },
   { path: '/competitions/:id', title: 'Détail compétition',  icon: '', class: '' },
+  { path: '/list-demand-voyage', title: 'Liste des demandes du métier voyage',  icon:'', class: '' },
+  { path: '/detail-demand-voyage/:id', title: 'Détail de la demande',  icon:'', class: '' },
+
 
 ];
 
