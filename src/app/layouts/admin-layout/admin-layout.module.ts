@@ -31,6 +31,9 @@ import { CompetitionsComponent } from '../../competitions-all/competions/competi
 import { AddCompetitionComponent } from '../../competitions-all/add-competition/add-competition.component';
 import { DetailCompetitionComponent } from '../../competitions-all/detail-competition/detail-competition.component';
 
+import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
+import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
+
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {MatRippleModule} from '@angular/material/core';
@@ -50,6 +53,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+
 
 
 @NgModule({
@@ -100,6 +104,8 @@ import { MatSortModule } from '@angular/material/sort';
     CompetitionsComponent,
     AddCompetitionComponent,
     DetailCompetitionComponent,
+    ListDemandVoyageComponent,
+    DetailDemandVoyageComponent
 
   ]
 })

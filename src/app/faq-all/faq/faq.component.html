@@ -4,7 +4,7 @@
         width: 10px !important;
     }
 </style>
-<div class=".faq main-content">
+<div class="faq main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
             <button id="add_faq_btn" mat-raised-button="" class="btn mat-raised-button mat-button-base" (click)="openModal()">
@@ -49,7 +49,7 @@
 
                             <ng-container matColumnDef="question">
                                 <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Question </mat-header-cell>
-                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 30%'">
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 40%'">
                                     {{ row.question }}
                                 </mat-cell>
                             </ng-container>

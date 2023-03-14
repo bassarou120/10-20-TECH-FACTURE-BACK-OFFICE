@@ -1,0 +1,155 @@
+<style>
+    .collapse {
+        overflow: hidden;
+        transition: height 250ms ease-in-out;
+    }
+</style>
+<div class="detail-demand-voyage main-content">
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header card-header-rose card-header-text">
+                        <div class="card-text">
+                            <h4 class="card-title">Détail de la demande</h4>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="card-body" *ngIf="!spinner">
+                        <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                            <button type="button" class="close" (click)="closeNotificationForm()">
+                                <span>×</span></button>
+                        </div>
+                        <div class=" d-flex justify-content-center ">
+                            <div class="m-2 ">
+                                <div>
+                                    <b>Ref :</b> {{ demand.numDemande }}
+                                </div>
+                                <div>
+                                    <b>Demande :</b> {{ demand.demande }}
+                                </div>
+                                <div>
+                                    <span *ngIf="demand.status=='DEMANDE' " class="badge badge-info "> DEMANDE</span>
+                                    <span *ngIf="demand.status=='ACCEPTE' " class="badge badge-success "> ACCEPTE</span>
+                                    <span *ngIf="demand.status=='REJETE' " class="badge badge-danger "> REJETE </span>
+                                    <span *ngIf="demand.status=='ENTRETIEN' " class="badge badge-warning ">ENTRETIEN
+                                    </span>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="">
+                            <ul class="timeline">
+                                <li>
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">Demande soumise</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="#" class="float-right">{{ formatDate( demand.demandeDate) }}</a>
+                                            <ol>
+                                                <li *ngFor="let p of data_pieces; index as i;" (click)="getTheUrl($event,p)">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="">
+                                                            <a [href]="p.url" class="">{{ p.nom_fichier }}</a>
+                                                        </div>
+                                                        <div class="fw-bold">
+                                                            <a [href]="p.url" class="btn btn-link btn-sm">
+                                                                <span class="fa fa-download"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+
+                                </li>
+                                <li *ngFor="let t of steps; index as i;">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <div class="card-title">{{ t.title }}</div>
+                                        </div>
+                                        <div class="card-body">
+                                            <a href="#" class="float-right">{{ t.date }}</a>
+                                            <ol {{ t.fichier }}>
+                                                <li *ngFor="let f of t.fichier ; index as y;" (click)="getTheUrl($event,p)">
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="">
+                                                            <a [href]="f.url" class="">{{ f.nom_fichier }}</a>
+                                                        </div>
+                                                        <div class="fw-bold">
+                                                            <a [href]="f.url" class="btn btn-link btn-sm">
+                                                                <span class="fa fa-download"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            </ol>
+
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="float-right">
+                                                <span *ngIf="t.statut" class="text-success"> 
+                                                    <i class="fa fa-info-circle"></i>
+                                                    <small>utilisateur...</small>
+                                                </span>
+                                                <span *ngIf="t.statut" class="text-danger"> 
+                                                    <i class="fa fa-info-circle"></i>
+                                                    <small>utilisateur...</small>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </li>
+
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="row m-2" *ngIf="demand.pieces">
+                            <h4>Liste des fichiers </h4>
+                            <ol class="list-group list-group-numbered">
+                                <li class="list-group-item d-flex justify-content-between align-items-start" *ngFor="let p of data_pieces; index as i;" (click)="getTheUrl($event,p)">
+                                    <a [href]="p">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Pièce{{ i+1 }}</div>
+                                        </div>
+                                    </a>
+                                    <!-- <span class="badge bg-primary rounded-pill">14</span> -->
+                                </li>
+                            </ol>
+
+                            <!-- <ul class="list-group">
+                                <li class="list-group-item" aria-current="true" (click)="getTheUrl($event,'/assets/img/carousel2.jpg')">
+                                    <a href="/assets/img/carousel2.jpg">img</a>
+                                </li>
+                            </ul> -->
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="d-flex justify-content-center ">
+                            <div class="">
+                                <a _ngcontent-aik-c8="" class="btn btn-default " routerLink="/list-demand-voyage">Retour</a>
+                            </div>
+                            <div class="">
+                                <button class="btn btn-success" (click)="accept()">Accepter</button>
+                                <button class="btn btn-danger" (click)="denied()">Rejeter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <iframe [src]="getSafeUrl(the_url)" type="application/pdf" width="100%" height="75%"></iframe>
+            </div>
+        </div>
+
+    </div>
+</div>

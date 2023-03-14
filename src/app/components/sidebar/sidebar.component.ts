@@ -36,6 +36,9 @@ export const HIDE_ROUTES: RouteInfo[] = [
   { path: '/user/add', title: 'Ajouter un utilisateur',  icon: '', class: '' },
   { path: '/competition/add', title: 'Ajouter un concours',  icon: '', class: '' },
   { path: '/competitions/:id', title: 'Détail compétition',  icon: '', class: '' },
+  { path: '/list-demand-voyage', title: 'Liste des demandes du métier voyage',  icon:'', class: '' },
+  { path: '/detail-demand-voyage/:id', title: 'Détail de la demande',  icon:'', class: '' },
+
 
 ];
 

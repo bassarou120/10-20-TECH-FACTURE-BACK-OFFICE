@@ -3,39 +3,41 @@
         <div class="card">
             <div class="card-header card-header-danger">
                 <h3 class="card-title">Metiers touristiques</h3>
-                <p class="card-category">Les différents corps du metiers touristiques sont disponibles sur ce panel </p>
+                <p class="card-category">Les différents corps du métiers touristiques sont disponibles sur ce panel </p>
             </div>
             <div class="card-body">
             </div>
             <div class="row justify-content-center">
                 <div class="col-lg-5" *ngFor="let jobItem of jobItems">
-                    <div class="card">
-                        <div class="card-header card-header-icon card-header-rose">
-                            <div class="card-icon">
-                                <i class="material-icons">{{jobItem.jobIcon}}</i>
+                    <a [routerLink]="[jobItem.link]">
+                        <div class="card">
+                            <div class="card-header card-header-icon card-header-rose">
+                                <div class="card-icon">
+                                    <i class="material-icons">{{jobItem.jobIcon}}</i>
+                                </div>
+                                <h4 class="card-title font-weight-bold">{{jobItem.titre}}</h4>
                             </div>
-                            <h4 class="card-title font-weight-bold">{{jobItem.titre}}</h4>
-                        </div>
-                        <div class="card-body">
-                            {{jobItem.description}}
-                        </div>
-                        <div class="card-footer">
+                            <div class="card-body">
+                                {{jobItem.description}}
+                            </div>
+                            <div class="card-footer">
 
-                            <div class="d-flex flex-column">
-                                <div>
-                                    <h4>Demandes</h4>
-                                </div>
-                                <div class="">
-                                    <div class="text-success ">
-                                        <h5>Traitées : {{ jobItem.dt}}</h5>
+                                <div class="d-flex flex-column">
+                                    <div>
+                                        <h4>Demandes</h4>
                                     </div>
-                                    <div class="text-danger">
-                                        <h5>Non traitée : {{ jobItem.dnt}}</h5>
+                                    <div class="">
+                                        <div class="text-success ">
+                                            <h5>Traitées : {{ jobItem.dt}}</h5>
+                                        </div>
+                                        <div class="text-danger">
+                                            <h5>Non traitée : {{ jobItem.dnt}}</h5>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             </div>
 
