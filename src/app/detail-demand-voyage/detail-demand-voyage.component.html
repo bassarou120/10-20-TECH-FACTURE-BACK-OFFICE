@@ -45,10 +45,16 @@
         height: 20px;
         z-index: 400;
     }
+    
+    .option_border {
+        padding: 25px;
+        border: solid 1px #bfbaba;
+        border-radius: 10px;
+        width: 100%;
+    }
 </style>
 <div class="detail-demand-voyage main-content">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-md-6">
                 <div class="card">
@@ -137,11 +143,11 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="float-right pull-right">
-                                                    <span *ngIf="t.statut " class="text-success"> 
+                                                    <span *ngIf="t.statut " class="text-success">
                                                         <i class="fa fa-info-circle "></i>
                                                         <small>utilisateur...</small>
                                                     </span>
-                                                    <span *ngIf="!t.statut " class="text-danger"> 
+                                                    <span *ngIf="!t.statut " class="text-danger">
                                                         <i class="fa fa-info-circle "></i>
                                                         <small>utilisateur...</small>
                                                     </span>
@@ -171,18 +177,98 @@
                 <iframe [src]="getSafeUrl(the_url) " type="application/pdf " width="100% " height="75% "></iframe>
             </div>
         </div>
-
     </div>
     <div class="modal" tabindex="-1 " role="dialog " [ngStyle]="{'display':display} ">
         <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document ">
             <div class="modal-content ">
                 <div class="modal-header ">
-                    <h4 class="modal-title " id="modal_title ">Décision à cette étape</h4>
-                    <button type="button " class="close " aria-label="Close " (click)="onCloseHandled() "><span aria-hidden="true ">&times;</span></button>
+                    <h4 class="modal-title" id="modal_title">Décision à cette étape</h4>
+                    <button type="button" class="close " aria-label="Close " (click)="onCloseHandled() "><span
+                            aria-hidden="true ">&times;</span></button>
                 </div>
                 <div class="modal-body">
-
-
+                    <form [formGroup]="etap0Form" (ngSubmit)="onClickSubmit(0)" novalidate [ngClass]="{'d-none':!show_modal_0}">
+                        <div class="modal-body">
+                            <div class="">
+                                <h5>Décision</h5>
+                                <div class="">
+                                    <label class="form-check-label option_border" for="statut_spet0_1">
+                                        <input class="form-check-input" type="radio" name="statut_spet0" id="statut_spet0_1"  value="1" required (change)="statut_change($event)" [formControl]="etap0Form.controls['statut_spet0']">
+                                          Accepter
+                                    </label>
+                                </div>
+                                <div class="">
+                                    <label class="form-check-label option_border" for="statut_spet0_2">
+                                        <input class="form-check-input" type="radio" name="statut_spet0" id="statut_spet0_2" value="0" required (change)="statut_change($event)" [formControl]="etap0Form.controls['statut_spet0']">
+                                        Non Accepter
+                                    </label>
+                                </div>
+                                <div class="errors">
+                                    <span *ngIf="statut_spet0 && statut_spet0.invalid && statut_spet0.touched && etap0Form.get('statut_spet0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
+                                </div>
+                            </div>
+                            <div class="mt-2" *ngIf="statut_spet0 && statut_spet0.valid && statut_spet0.value==0">
+                                <h5>Cause</h5>
+                                <div class="">
+                                    <label class="form-check-label option_border" for="cause0_1">
+                                        <input class="form-check-input" type="radio" name="cause00" id="cause0_1"  value="1" required (change)="statut_change($event)" [formControl]="etap0Form.controls['cause0']">
+                                          Non Complet
+                                    </label>
+                                </div>
+                                <div class="">
+                                    <label class="form-check-label option_border" for="cause0_2">
+                                        <input class="form-check-input" type="radio" name="cause0" id="cause0_2" value="0" required (change)="statut_change($event)" [formControl]="etap0Form.controls['cause0']">
+                                        ...
+                                    </label>
+                                </div>
+                                <div class="errors">
+                                    <span *ngIf="cause0 && cause0.invalid && cause0.touched && etap0Form.get('cause0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
+                                </div>
+                            </div>
+                            <div class="">
+                                <button type="submit" class="btn btn-danger" id="sbt_btn">
+                                    <span class="fa fa-spinner fa-spin d-none " id="spinner "></span> Enregistrer
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <form [formGroup]="etap1Form" (ngSubmit)="onClickSubmit(1)" novalidate [ngClass]="{'d-none':!show_modal_1}">
+                        <div class="modal-body ">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label id="example-radio-group-label">Décision prise</label>
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="statut_spet1" (change)="changeRadio($event)">
+                                        <mat-radio-button class="example-radio-button" value="1">Accepter
+                                        </mat-radio-button>
+                                        <mat-radio-button class="example-radio-button" value="0">Non accepter
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <div class="errors">
+                                        <span *ngIf="statut_spet1 && statut_spet1.invalid && statut_spet1.touched && etap0Form.get('statut_spet1').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="statut_spet0.value==0">
+                                <div class="col-md-12">
+                                    <label id="example-radio-group-label">Cause</label>
+                                    <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group" formControlName="cause1">
+                                        <mat-radio-button class="example-radio-button" value="1">Accepter
+                                        </mat-radio-button>
+                                        <mat-radio-button class="example-radio-button" value="0">Non accepter
+                                        </mat-radio-button>
+                                    </mat-radio-group>
+                                    <div class="errors">
+                                        <span *ngIf="cause1 && cause1.invalid && cause1.touched && etap0Form.get('cause1').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-danger" id="sbt_btn">
+                                <span class="fa fa-spinner fa-spin d-none " id="spinner "></span> Enregistrer
+                            </button>
+                        </div>
+                    </form>
                 </div>
                 <div class="modal-footer ">
                     <button type="button " class="btn btn-default " (click)="onCloseHandled() ">Fermer</button>
