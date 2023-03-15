@@ -6,6 +6,20 @@ import { Demand } from 'app/models/demand';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 
+
+import { AbstractControl, ValidationErrors } from '@angular/forms';
+export function requiredIfSpecificValueValidator(controlName: string,mustRequireFieldControlName:string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+
+      const controlValue = control.get(controlName)?.value;
+
+      if(controlValue==0 &&  !mustRequireFieldControlName){
+        return { requiredIfSpecificValue: true };
+      }
+      return null;
+    };
+  }
+
 @Component({
     selector: 'detail-demand-voyage',
     templateUrl: './detail-demand-voyage.component.html',
@@ -25,6 +39,7 @@ export class DetailDemandVoyageComponent {
 
     display = "none";
     spinner = true;
+    submitted= false ;
     show_modal_0 = false;
     show_modal_1 = false;
     show_modal_2 = false;
@@ -68,22 +83,32 @@ export class DetailDemandVoyageComponent {
 
     etap0Form = new FormGroup({
         statut_spet0: new FormControl('', Validators.required),
-        cause0: new FormControl('', Validators.required),
+        cause0: new FormControl(''),
+        motif0: new FormControl(''),
+        file0: new FormControl(''),
+    },{
+        validators: requiredIfSpecificValueValidator('statut_spet0', 'cause0')
     });
 
     etap1Form = new FormGroup({
         statut_spet1: new FormControl('', Validators.required),
         cause1: new FormControl('', Validators.required),
+        motif1: new FormControl(''),
+        file1: new FormControl(''),
     });
 
     etap2Form = new FormGroup({
         statut_spet2: new FormControl('', Validators.required),
         cause2: new FormControl('', Validators.required),
+        motif2: new FormControl(''),
+        file2: new FormControl(''),
     });
 
     etap3Form = new FormGroup({
         statut_spet3: new FormControl('', Validators.required),
         cause3: new FormControl('', Validators.required),
+        motif3: new FormControl(''),
+        file3: new FormControl(''),
     });
 
     addDecision(id: number) {
@@ -143,7 +168,6 @@ export class DetailDemandVoyageComponent {
         console.log(p)
         this.the_url = p;
     }
-
     accept() {
         this.demandVoyageService.accept(this.id).subscribe(response => {
             this.notificationForm("success", "Statut modifier avec succes !");
@@ -210,7 +234,26 @@ export class DetailDemandVoyageComponent {
 
 
     onClickSubmit(step: number) {
-
+        this.submitted = true;
+        switch (step) {
+            case 0:
+                console.log( this.statut_spet0.invalid)
+                console.log( this.cause0.invalid)
+                console.log( this.motif0.invalid)
+                console.log( this.file0.invalid)
+                break;
+            case 1:
+                console.log( this.etap1Form.invalid)
+                break;
+            case 2:
+                console.log( this.etap2Form.invalid)
+                break;
+            case 3:
+                console.log( this.etap1Form.invalid)
+                break;
+            default:
+            // code block
+        }
     }
 
     changeRadio(e){
@@ -222,6 +265,12 @@ export class DetailDemandVoyageComponent {
     }
     get cause0(): any {
         return this.etap0Form.get('cause0');
+    }
+    get motif0(): any {
+        return this.etap0Form.get('motif0');
+    }
+    get file0(): any {
+        return this.etap0Form.get('file0');
     }
 
     get statut_spet1(): any {

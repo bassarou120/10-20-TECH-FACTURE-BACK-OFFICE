@@ -190,7 +190,7 @@
                     <form [formGroup]="etap0Form" (ngSubmit)="onClickSubmit(0)" novalidate [ngClass]="{'d-none':!show_modal_0}">
                         <div class="modal-body">
                             <div class="">
-                                <h5>Décision</h5>
+                                <h5>Décision <small class="text-danger">*</small></h5>
                                 <div class="">
                                     <label class="form-check-label option_border" for="statut_spet0_1">
                                         <input class="form-check-input" type="radio" name="statut_spet0" id="statut_spet0_1"  value="1" required (change)="statut_change($event)" [formControl]="etap0Form.controls['statut_spet0']">
@@ -205,24 +205,40 @@
                                 </div>
                                 <div class="errors">
                                     <span *ngIf="statut_spet0 && statut_spet0.invalid && statut_spet0.touched && etap0Form.get('statut_spet0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
+                                    <span *ngIf="submitted && statut_spet0.invalid  && etap0Form.get('statut_spet0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
                                 </div>
                             </div>
                             <div class="mt-2" *ngIf="statut_spet0 && statut_spet0.valid && statut_spet0.value==0">
-                                <h5>Cause</h5>
+                                <h5>Cause <small class="text-danger">*</small></h5>
                                 <div class="">
                                     <label class="form-check-label option_border" for="cause0_1">
-                                        <input class="form-check-input" type="radio" name="cause00" id="cause0_1"  value="1" required (change)="statut_change($event)" [formControl]="etap0Form.controls['cause0']">
-                                          Non Complet
+                                        <input class="form-check-input" type="radio" name="cause00" id="cause0_1"  value="Incomplet"   [formControl]="etap0Form.controls['cause0']">
+                                          Incomplet
                                     </label>
                                 </div>
                                 <div class="">
                                     <label class="form-check-label option_border" for="cause0_2">
-                                        <input class="form-check-input" type="radio" name="cause0" id="cause0_2" value="0" required (change)="statut_change($event)" [formControl]="etap0Form.controls['cause0']">
-                                        ...
+                                        <input class="form-check-input" type="radio" name="cause0" id="cause0_2" value="Non Conforme"   [formControl]="etap0Form.controls['cause0']">
+                                        Non Conforme
+                                    </label>
+                                </div>
+                                <div class="">
+                                    <label class="form-check-label option_border" for="cause0_2">
+                                        <input class="form-check-input" type="radio" name="cause0" id="cause0_3" value="Autre" required  [formControl]="etap0Form.controls['cause0']">
+                                      Autre
                                     </label>
                                 </div>
                                 <div class="errors">
-                                    <span *ngIf="cause0 && cause0.invalid && cause0.touched && etap0Form.get('cause0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
+                                    <span *ngIf="cause0 && cause0.invalid && cause0.touched && etap0Form.get('cause0').hasError('requiredIfSpecificValue')" [ngClass]="'error' ">Veuillez renseigner la cause svp.</span>
+                                    <span *ngIf="submitted && cause0.invalid  && etap0Form.get('cause0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
+                                </div>
+                            </div>
+                            <div class="mt-3" *ngIf="statut_spet0 && statut_spet0.valid && statut_spet0.value==0">
+                                <label for="motif0" class="form-label">Saisir le motifdu rejet <small class="text-danger">*</small></label>
+                                <textarea class="form-control" id="motif0" rows="3" formControlName="motif0"></textarea>
+                                <div class="errors">
+                                    <!-- <span *ngIf="cause0 && cause0.invalid && cause0.touched && etap0Form.get('cause0').hasError('requiredIfSpecificValue')" [ngClass]="'error' ">Veuillez renseigner la cause svp.</span> -->
+                                    <span *ngIf="submitted && motif0.invalid  && etap0Form.get('motif0').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
                                 </div>
                             </div>
                             <div class="">
