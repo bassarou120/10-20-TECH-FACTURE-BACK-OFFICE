@@ -155,7 +155,6 @@ export class FaqComponent implements OnInit {
     $('#sbt_btn').removeClass('disabled');
     $('#spinner').addClass('d-none')
     const formData = this.faqForm.value;
-       console.log(formData.job)
     if (this.action == 'add') {
       this.faqService.save(new Faq(formData.question, formData.answer, true,formData.job), formData.job.id)
         .subscribe(response => {

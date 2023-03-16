@@ -8,17 +8,17 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 
 
 import { AbstractControl, ValidationErrors } from '@angular/forms';
-export function requiredIfSpecificValueValidator(controlName: string,mustRequireFieldControlName:string) {
+export function requiredIfSpecificValueValidator(controlName: string, mustRequireFieldControlName: string) {
     return (control: AbstractControl): ValidationErrors | null => {
 
-      const controlValue = control.get(controlName)?.value;
+        const controlValue = control.get(controlName)?.value;
 
-      if(controlValue==0 &&  !mustRequireFieldControlName){
-        return { requiredIfSpecificValue: true };
-      }
-      return null;
+        if (controlValue == 0 && !mustRequireFieldControlName) {
+            return { requiredIfSpecificValue: true };
+        }
+        return null;
     };
-  }
+}
 
 @Component({
     selector: 'detail-demand-voyage',
@@ -33,17 +33,25 @@ export class DetailDemandVoyageComponent {
     fileUrl: SafeResourceUrl;
     the_url = '';
     data_pieces = [];
+    etape_de_taitement_de_demande = [];
     typeNotificationForm: string;
     messageNotificationForm: string;
     isNotificationForm: boolean = false;
 
     display = "none";
     spinner = true;
-    submitted= false ;
+    submitted = false;
+
     show_modal_0 = false;
     show_modal_1 = false;
     show_modal_2 = false;
     show_modal_3 = false;
+
+    motif0_error = false;
+    motif1_error = false;
+    motif2_error = false;
+    motif3_error = false;
+    saving = false;
 
     steps = [
         {
@@ -86,29 +94,35 @@ export class DetailDemandVoyageComponent {
         cause0: new FormControl(''),
         motif0: new FormControl(''),
         file0: new FormControl(''),
-    },{
-        validators: requiredIfSpecificValueValidator('statut_spet0', 'cause0')
+    }, {
+        validators: [requiredIfSpecificValueValidator('statut_spet0', 'cause0'), requiredIfSpecificValueValidator('statut_spet0', 'motif0')]
     });
 
     etap1Form = new FormGroup({
         statut_spet1: new FormControl('', Validators.required),
-        cause1: new FormControl('', Validators.required),
+        cause1: new FormControl(''),
         motif1: new FormControl(''),
         file1: new FormControl(''),
+    }, {
+        validators: [requiredIfSpecificValueValidator('statut_spet1', 'cause1'), requiredIfSpecificValueValidator('statut_spet0', 'motif1')]
     });
 
     etap2Form = new FormGroup({
         statut_spet2: new FormControl('', Validators.required),
-        cause2: new FormControl('', Validators.required),
+        cause2: new FormControl(''),
         motif2: new FormControl(''),
         file2: new FormControl(''),
+    }, {
+        validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause2'), requiredIfSpecificValueValidator('statut_spet2', 'motif2')]
     });
 
     etap3Form = new FormGroup({
         statut_spet3: new FormControl('', Validators.required),
-        cause3: new FormControl('', Validators.required),
+        cause3: new FormControl(''),
         motif3: new FormControl(''),
         file3: new FormControl(''),
+    }, {
+        validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause3'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
     });
 
     addDecision(id: number) {
@@ -138,6 +152,19 @@ export class DetailDemandVoyageComponent {
         }
         )
     }
+
+    getDemandeEtape(id: number): void {
+
+        this.demandVoyageService.getDemandeEtape(id).subscribe((data: any) => {
+            this.etape_de_taitement_de_demande = data['data'];
+
+            //Réécrie le timeline comme je pourrais le réutiliser
+            this.spinner = false;
+        }, (error: HttpErrorResponse) => {
+            console.log("Error while retrieving data");
+        }
+        )
+    }
     formatDate(date: string) {
         const d = date.split("T");
         if (d.length > 1) {
@@ -150,6 +177,7 @@ export class DetailDemandVoyageComponent {
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];
+            this.id=id;
             if (id) {
                 this.getDemand(id);
             }
@@ -197,7 +225,7 @@ export class DetailDemandVoyageComponent {
         this.display = "none";
     }
 
-    statut_change(e){
+    statut_change(e) {
         console.log(e.target.value)
     }
     openModal(id_element: number) {
@@ -232,31 +260,79 @@ export class DetailDemandVoyageComponent {
         }
     }
 
+    motif_ipt_change(e: string) {
+        switch (e) {
+            case 'motif0':
+                this.motif0_error = this.motif0.value == '' ? true : false;
+                break;
+            case 'motif1':
+                this.motif1_error = this.motif1.value == '' ? true : false;
+                break;
+            case 'motif2':
+                this.motif2_error = this.motif2.value == '' ? true : false;
+                break;
+            case 'motif3':
+                this.motif3_error = this.motif3.value == '' ? true : false;
+                break;
 
-    onClickSubmit(step: number) {
-        this.submitted = true;
-        switch (step) {
-            case 0:
-                console.log( this.statut_spet0.invalid)
-                console.log( this.cause0.invalid)
-                console.log( this.motif0.invalid)
-                console.log( this.file0.invalid)
-                break;
-            case 1:
-                console.log( this.etap1Form.invalid)
-                break;
-            case 2:
-                console.log( this.etap2Form.invalid)
-                break;
-            case 3:
-                console.log( this.etap1Form.invalid)
-                break;
             default:
             // code block
         }
     }
 
-    changeRadio(e){
+    onClickSubmit(step: number) {
+        this.submitted = true;
+        switch (step) {
+            case 0:
+                // if(this.motif0.value == ''){
+                //     this.motif0_error = true;
+                //     return
+                // }
+                if (!this.statut_spet0.invalid && this.statut_spet0.value == 0 && this.motif0.value == '') {
+                    this.motif0_error = true;
+                    return
+                }
+
+                this.saving = true
+                const formData = this.etap0Form.value;
+                const data = JSON.stringify(formData);
+                this.demandVoyageService.addDemandeEtape({
+                    id_demande:this.id ,
+                    etape:0,
+                    data:data
+                }).subscribe((data: any) => {
+                    this.notificationForm(
+                        "success",
+                        "Enregistrement réussi !"
+                    );
+                    this.getDemandeEtape(this.id);
+                    this.display = "none";
+                }, (error: HttpErrorResponse) => {
+                    console.log("Error while retrieving data");
+                }
+                )
+                this.saving = false
+            
+                break;
+            case 1:
+                console.log(this.etap1Form.invalid)
+                break;
+            case 2:
+                console.log(this.etap2Form.invalid)
+                break;
+            case 3:
+                console.log(this.etap1Form.invalid)
+                break;
+            default:
+                console.log('default')
+
+                $('html,body').animate({
+                    scrollTop: $("#result-alert").offset().top
+                }, 'slow');
+        }
+    }
+
+    changeRadio(e) {
         console.log(e)
     }
 
@@ -274,24 +350,42 @@ export class DetailDemandVoyageComponent {
     }
 
     get statut_spet1(): any {
-        return this.etap0Form.get('statut_spet1');
+        return this.etap1Form.get('statut_spet1');
     }
     get cause1(): any {
-        return this.etap0Form.get('cause1');
+        return this.etap1Form.get('cause1');
     }
-    
+    get motif1(): any {
+        return this.etap1Form.get('motif1');
+    }
+    get file1(): any {
+        return this.etap1Form.get('file1');
+    }
+
     get statut_spet2(): any {
-        return this.etap0Form.get('statut_spet2');
+        return this.etap2Form.get('statut_spet2');
     }
     get cause2(): any {
-        return this.etap0Form.get('cause2');
+        return this.etap2Form.get('cause2');
+    }
+    get motif2(): any {
+        return this.etap2Form.get('motif2');
+    }
+    get file2(): any {
+        return this.etap2Form.get('file2');
     }
 
     get statut_spet3(): any {
-        return this.etap0Form.get('statut_spet3');
+        return this.etap3Form.get('statut_spet3');
     }
     get cause3(): any {
-        return this.etap0Form.get('cause3');
+        return this.etap3Form.get('cause3');
     }
-    
+    get motif3(): any {
+        return this.etap3Form.get('motif3');
+    }
+    get file3(): any {
+        return this.etap3Form.get('file3');
+    }
+
 }
