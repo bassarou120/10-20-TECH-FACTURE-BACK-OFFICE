@@ -46,10 +46,14 @@ export class DemandVoyageService {
   }
 
   getDemandeEtape(id: number): Observable<Object> {
-    return this.http.get(`${this.base_url}/traitement_eservice_demande/get_demande_traitement/${id}`);
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("demande_id",id);
+    // return this.http.get(`${this.base_url}/traitement_eservice_demande/get_demande_traitement/${id}`);
+    return this.http.get(`${this.base_url}/traitement_eservice_demande/get_demande_traitement`,{params:queryParams});
   }
 
   addDemandeEtape(data:any): Observable<Object> {
+    
     return this.http.post(`${this.base_url}/traitement_eservice_demande/addtraitement`,data);
   }
 }

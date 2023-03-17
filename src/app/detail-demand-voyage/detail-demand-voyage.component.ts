@@ -10,16 +10,22 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 export function requiredIfSpecificValueValidator(controlName: string, mustRequireFieldControlName: string) {
     return (control: AbstractControl): ValidationErrors | null => {
-
         const controlValue = control.get(controlName)?.value;
-
         if (controlValue == 0 && !mustRequireFieldControlName) {
             return { requiredIfSpecificValue: true };
         }
         return null;
     };
 }
-
+export function requiredIfSpecificValueEqualToTrueValidator(controlName: string, mustRequireFieldControlName: string) {
+    return (control: AbstractControl): ValidationErrors | null => {
+        const controlValue = control.get(controlName)?.value;
+        if (controlValue == 1 && !mustRequireFieldControlName) {
+            return { requiredIfSpecificValueEqualToTrue: true };
+        }
+        return null;
+    };
+}
 @Component({
     selector: 'detail-demand-voyage',
     templateUrl: './detail-demand-voyage.component.html',
@@ -53,7 +59,8 @@ export class DetailDemandVoyageComponent {
     motif3_error = false;
     saving = false;
 
-    steps = [
+    steps = [];
+    current = [
         {
             id: 0,
             title: 'Vérification de la complétude des pièces',
@@ -80,12 +87,20 @@ export class DetailDemandVoyageComponent {
         },
         {
             id: 3,
-            title: 'Complément de dossier après avis favorable',
+            title: 'Entretien effectué avec succès',
             date: '2016 - 2019',
             statut: false,
             fichier: [],
             display: false
         },
+        {
+            id: 4,
+            title: 'Demande acceptée',
+            date: '2016 - 2019',
+            statut: false,
+            fichier: [],
+            display: false
+        }
 
     ];
 
@@ -100,11 +115,18 @@ export class DetailDemandVoyageComponent {
 
     etap1Form = new FormGroup({
         statut_spet1: new FormControl('', Validators.required),
-        cause1: new FormControl(''),
         motif1: new FormControl(''),
         file1: new FormControl(''),
+        date_entretien: new FormControl(''),
+        heure_entretien: new FormControl(''),
+        lieu_entretien: new FormControl(''),
     }, {
-        validators: [requiredIfSpecificValueValidator('statut_spet1', 'cause1'), requiredIfSpecificValueValidator('statut_spet0', 'motif1')]
+        validators: [
+            requiredIfSpecificValueValidator('statut_spet1', 'motif1'),
+            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'date_entretien'),
+            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'heure_entretien'),
+            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'lieu_entretien'),
+        ]
     });
 
     etap2Form = new FormGroup({
@@ -154,11 +176,111 @@ export class DetailDemandVoyageComponent {
     }
 
     getDemandeEtape(id: number): void {
-
         this.demandVoyageService.getDemandeEtape(id).subscribe((data: any) => {
             this.etape_de_taitement_de_demande = data['data'];
+            var s = [];
+            const a = data['data'];
+            for (let i = 0; i < a.length; i++) {
+                {
+                    if (a[i].etape == 0) {
+                        var title = 'Vérification de la complétude des pièces'
+                    }
+                    else if (a[i].etape == 1) {
+                        var title = 'Examen du dossier et fixation de la date d\'entretien'
+                    }
+                    else if (a[i].etape == 2) {
+                        var title = 'Complément de dossier après avis favorable'
+                    }
+                    else if (a[i].etape == 3) {
+                        var title = 'Entretien effectué avec succès'
+                    }
+                    else if (a[i].etape == 4) {
+                        var title = 'Demande acceptée'
+                    }
 
-            //Réécrie le timeline comme je pourrais le réutiliser
+                    s.push({
+                        id: a[i].id,
+                        title: title,
+                        date: '',
+                        statut: a[i].status,
+                        fichier: a[i].piece,
+                        etape:a[i].etape
+                    })
+                }
+            }
+            const today = new Date();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = String(today.getMonth() + 1).padStart(2, '0'); // January is 0!
+            const year = today.getFullYear().toString().substr(-2);
+
+            const formattedDate = `${day}-${month}-${year}`;
+            if(a.length>0){
+                switch (a[a.length - 1].etape) {
+                    case "0":
+                        s.push({
+                            id: '',
+                            title: 'Examen du dossier et fixation de la date d\'entretien',
+                            date: formattedDate,
+                            statut: false,
+                            fichier: [],
+                            etape:1
+                        });
+                        break;
+                    case "1":
+                        s.push({
+                            id: '',
+                            title: 'Complément de dossier après avis favorable',
+                            date: formattedDate,
+                            statut: false,
+                            fichier: [],
+                            etape:2
+                        })
+                        break;
+                    case "2":
+                        s.push({
+                            id: '',
+                            title: 'Entretien effectué avec succès',
+                            date: formattedDate,
+                            statut: false,
+                            fichier: [],
+                            etape:3
+                        });
+                        break;
+                    case "3":
+                        s.push({
+                            id: '',
+                            title: 'Demande acceptée',
+                            date: formattedDate,
+                            statut: false,
+                            fichier: [],
+                            etape:4
+                        });
+                        break;
+                    default:
+                        s.push({
+                            id: 0,
+                            title: 'Vérification de la complétude des pièces',
+                            date: formattedDate,
+                            statut: false,
+                            fichier: [],
+                            etape:0
+                        });
+                }
+            }
+            else{
+                s.push({
+                    id: 0,
+                    title: 'Vérification de la complétude des pièces',
+                    date: formattedDate,
+                    statut: false,
+                    fichier: [],
+                    etape:0
+                });
+            }
+           
+
+            this.steps = s;
+            console.log(this.steps)
             this.spinner = false;
         }, (error: HttpErrorResponse) => {
             console.log("Error while retrieving data");
@@ -177,9 +299,10 @@ export class DetailDemandVoyageComponent {
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];
-            this.id=id;
+            this.id = id;
             if (id) {
                 this.getDemand(id);
+                this.getDemandeEtape(id)
             }
         })
     }
@@ -228,8 +351,10 @@ export class DetailDemandVoyageComponent {
     statut_change(e) {
         console.log(e.target.value)
     }
+
     openModal(id_element: number) {
         this.display = "block";
+        console.log(id_element)
         switch (id_element) {
             case 0:
                 this.show_modal_0 = true
@@ -238,6 +363,7 @@ export class DetailDemandVoyageComponent {
                 this.show_modal_3 = false
                 break;
             case 1:
+                console.log('hre')
                 this.show_modal_0 = false
                 this.show_modal_1 = true
                 this.show_modal_2 = false
@@ -297,9 +423,9 @@ export class DetailDemandVoyageComponent {
                 const formData = this.etap0Form.value;
                 const data = JSON.stringify(formData);
                 this.demandVoyageService.addDemandeEtape({
-                    id_demande:this.id ,
-                    etape:0,
-                    data:data
+                    id_demande: this.id,
+                    etape: 0,
+                    data: data
                 }).subscribe((data: any) => {
                     this.notificationForm(
                         "success",
@@ -312,7 +438,7 @@ export class DetailDemandVoyageComponent {
                 }
                 )
                 this.saving = false
-            
+
                 break;
             case 1:
                 console.log(this.etap1Form.invalid)

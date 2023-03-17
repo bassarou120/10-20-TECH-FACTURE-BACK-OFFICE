@@ -118,15 +118,15 @@
                                         </div>
                                     </div>
                                 </li>
-                                <li class="notdo" *ngFor="let t of steps; index as i;">
-                                    <a (click)="openModal(t.id)" style="cursor: pointer !important;">
+                                <li [ngClass]="{'notdo': !t.statut, 'do': t.statut}" *ngFor="let t of steps; index as i;">
+                                    <a (click)="openModal(t.etape)" style="cursor: pointer !important;" *ngIf="!t.statut">
                                         <div class="card">
                                             <div class="card-header">
                                                 <h5 class="card-title">{{ t.title }}</h5>
                                             </div>
                                             <div class="card-body">
                                                 <a href="#" class="float-right">{{ t.date }}</a>
-                                                <ol *ngIf="t.fichier.lenght>0">
+                                                <ol *ngIf="t.fichier && t.fichier.lenght>0">
                                                     <li *ngFor=" let f of t.fichier ; index as y;" (click)="getTheUrl($event,p)">
                                                         <div class="d-flex justify-content-between ">
                                                             <div class=" ">
@@ -143,13 +143,49 @@
                                             </div>
                                             <div class="card-footer ">
                                                 <div class="float-right pull-right">
-                                                    <span *ngIf="t.statut " class="text-success">
+                                                    <span *ngIf="t.statut" class="text-success">
                                                         <i class="fa fa-info-circle "></i>
-                                                        <small>utilisateur...</small>
+                                                        <small>Valider</small>
                                                     </span>
-                                                    <span *ngIf="!t.statut " class="text-danger">
+                                                    <span *ngIf="!t.statut" class="text-danger">
                                                         <i class="fa fa-info-circle "></i>
-                                                        <small>utilisateur...</small>
+                                                        <small>Non valider</small>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    <a *ngIf="t.statut">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h5 class="card-title">{{ t.title }}</h5>
+                                            </div>
+                                            <div class="card-body">
+                                                <a href="#" class="float-right">{{ t.date }}</a>
+                                                <ol *ngIf="t.fichier && t.fichier.lenght>0">
+                                                    <li *ngFor=" let f of t.fichier ; index as y;" (click)="getTheUrl($event,p)">
+                                                        <div class="d-flex justify-content-between ">
+                                                            <div class=" ">
+                                                                <a [href]="f.url" class=" ">{{ f.nom_fichier }}</a>
+                                                            </div>
+                                                            <div class="fw-bold ">
+                                                                <a [href]="f.url" class="btn btn-link btn-sm ">
+                                                                    <span class="fa fa-download "></span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ol>
+                                            </div>
+                                            <div class="card-footer ">
+                                                <div class="float-right pull-right">
+                                                    <span *ngIf="t.statut" class="text-success">
+                                                        <i class="fa fa-info-circle "></i>
+                                                        <small>Valider</small>
+                                                    </span>
+                                                    <span *ngIf="!t.statut" class="text-danger">
+                                                        <i class="fa fa-info-circle "></i>
+                                                        <small>Non valider</small>
                                                     </span>
                                                 </div>
                                             </div>
@@ -264,43 +300,18 @@
                                 <div class="">
                                     <label class="form-check-label option_border" for="statut_spet1_1">
                                         <input class="form-check-input" type="radio" name="statut_spet1" id="statut_spet1_1"  value="1" required (change)="statut_change($event)" [formControl]="etap1Form.controls['statut_spet1']">
-                                          Conforme
+                                          Avis favorable
                                     </label>
                                 </div>
                                 <div class="">
                                     <label class="form-check-label option_border" for="statut_spet0_2">
                                         <input class="form-check-input" type="radio" name="statut_spet1" id="statut_spet1_2" value="0" required (change)="statut_change($event)" [formControl]="etap1Form.controls['statut_spet1']">
-                                        Non Conforme
+                                        Avis non favorable
                                     </label>
                                 </div>
                                 <div class="errors">
                                     <span *ngIf="statut_spet1 && statut_spet1.invalid && statut_spet1.touched && etap1Form.get('statut_spet1').errors.required " [ngClass]="'error'">Renseignez ce champs svp</span>
                                     <span *ngIf="submitted && statut_spet1.invalid  && etap1Form.get('statut_spet1').errors.required" [ngClass]="'error' ">Renseignez ce champs svp</span>
-                                </div>
-                            </div>
-                            <div class="mt-2" *ngIf="statut_spet1 && statut_spet1.valid && statut_spet1.value==0">
-                                <h5>Cause <small class="text-danger">*</small></h5>
-                                <div class="">
-                                    <label class="form-check-label option_border" for="cause1_1">
-                                        <input class="form-check-input" type="radio" name="cause1" id="cause1_1"  value="Incomplet"   [formControl]="etap1Form.controls['cause1']">
-                                          Incomplet
-                                    </label>
-                                </div>
-                                <div class="">
-                                    <label class="form-check-label option_border" for="cause0_2">
-                                        <input class="form-check-input" type="radio" name="cause1" id="cause0_2" value="Non Conforme"   [formControl]="etap1Form.controls['cause1']">
-                                        Non Conforme
-                                    </label>
-                                </div>
-                                <div class="">
-                                    <label class="form-check-label option_border" for="cause1_3">
-                                        <input class="form-check-input" type="radio" name="cause1" id="cause1_3" value="Autre"  [formControl]="etap1Form.controls['cause1']">
-                                      Autre
-                                    </label>
-                                </div>
-                                <div class="errors">
-                                    <span *ngIf="cause1 && cause1.invalid && cause1.touched && etap1Form.get('cause1').hasError('requiredIfSpecificValue')" [ngClass]="'error' ">Veuillez renseigner la cause svp.</span>
-                                    <span *ngIf="submitted && cause1.invalid  && etap1Form.get('cause1').errors.required " [ngClass]="'error' ">Renseignez ce champs svp</span>
                                 </div>
                             </div>
                             <div class="mt-3" *ngIf="statut_spet1 && statut_spet1.valid && statut_spet1.value==0">
@@ -311,8 +322,20 @@
                                     <span *ngIf="submitted && motif1_error" [ngClass]="'error'">Renseignez ce champs svp</span>
                                 </div>
                             </div>
-                            <div class="mb-1 d-none">
-                                <label for="formFile1" class="form-label">Ajouter un fichier</label>
+                            <div class="mt-3" *ngIf="statut_spet1 && statut_spet1.valid && statut_spet1.value==1">
+                                <label for="date" class="form-label">Date de l'entretien <small class="text-danger">*</small></label>
+                                <input type="date" class="form-control" id="date_entretien" placeholder="Date de l'entretien " formControlName="date_entretien">
+                            </div>
+                            <div class="mt-3" *ngIf="statut_spet1 && statut_spet1.valid && statut_spet1.value==1">
+                                <label for="heure_entretien" class="form-label">Heure <small class="text-danger">*</small></label>
+                                <input type="time" class="form-control" id="heure_entretien" placeholder="Heure " formControlName="heure_entretien">
+                            </div>
+                            <div class="mt-3" *ngIf="statut_spet1 && statut_spet1.valid && statut_spet1.value==1">
+                                <label for="lieu_entretien" class="form-label">Lieu <small class="text-danger">*</small></label>
+                                <input type="text" class="form-control" id="lieu_entretien" placeholder="Lieu" formControlName="lieu_entretien">
+                            </div>
+                            <div class="mb-1">
+                                <label for="formFile1" class="form-label">Joindre une pièce justificative</label>
                                 <input class="form-control" type="file" id="formFile1" formControlName="file1">
                             </div>
                             <div class="float-right">
