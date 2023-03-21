@@ -35,10 +35,10 @@
                                 <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
                             </ng-container>
 
-                            <ng-container matColumnDef="numDemande">
-                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 15%'"> Demande </mat-header-cell>
+                            <ng-container matColumnDef="demande">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 15%'"> Ref </mat-header-cell>
                                 <mat-cell *matCellDef="let row" [style.flex]="'1 1 15%'">
-                                    {{ row.numDemande }}
+                                    {{ row.demande }}
                                 </mat-cell>
                             </ng-container>
 
@@ -104,7 +104,7 @@
                 </div>
             </div>
             <div class="card-footer justify-content-end">
-                <mat-paginator [pageSizeOptions]=" [5, 10, 25, 100] " [pageSize]="10" [length]="demand.length"></mat-paginator>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="10" [length]="demand.length"></mat-paginator>
             </div>
 
         </div>
@@ -122,11 +122,11 @@
                     <div class=" d-flex justify-content-center ">
                         <div class="m-2 ">
                             <div>
-                                <b>Ref :</b> {{ selected_demand.numDemande }}
+                                <b>Ref :</b> {{ selected_demand.demande }}
                             </div>
-                            <div>
+                            <!-- <div>
                                 <b>Demande :</b> {{ selected_demand.demande }}
-                            </div>
+                            </div> -->
                             <div>
                                 <span *ngIf="selected_demand.status=='DEMANDE' " class="badge badge-info "> DEMANDE</span>
                                 <span *ngIf="selected_demand.status=='ACCEPTE' " class="badge badge-success "> ACCEPTE</span>
@@ -138,17 +138,14 @@
                     </div>
                     <div class="d-flex justify-content-between m-2 ">
                         <div>
+                            <!-- <b>Service :</b> {{ selected_demand.nom_du_service }} -->
                             <b>Service :</b> {{ selected_demand.nom_du_service }}
                         </div>
                         <div>
                             <b>Date de la demande :</b> {{ selected_demand.demandeDate }}
                         </div>
                     </div>
-                    <div class="d-flex justify-content-between m-2 ">
-                        <div>
-                            <b>Nombre d'étoile :</b> {{ selected_demand.nombre_etoiles }}
-                        </div>
-                    </div>
+
                     <div class="d-flex justify-content-between m-2 ">
                         <div>
                             <b>Date d'agrement :</b> {{ selected_demand.date_agrement }}
@@ -159,7 +156,7 @@
                     </div>
                     <div class="d-flex justify-content-between m-2 ">
                         <div>
-                            <b>Date d'expiration :</b> {{ selected_demand.date_expiration }}
+                            <b>Date de validité :</b> {{ selected_demand.date_expiration }}
                         </div>
                         <div>
                             <b>Dernière mise à jour :</b> {{ selected_demand.derniere_mise_a_jour }}
@@ -181,7 +178,7 @@
                                     {{ selected_demand.raison_sociale }}
                                 </div>
                             </div>
-                            <div class="d-flex justify-content-between ">
+                            <!-- <div class="d-flex justify-content-between ">
                                 <div class=" ">
                                     <p>Metier :</p>
                                 </div>
@@ -244,7 +241,7 @@
                                 <div class=" ">
                                     {{ selected_demand.commune }}
                                 </div>
-                            </div>
+                            </div> -->
 
                         </div>
                         <div class="col-md-3 "></div>

@@ -77,10 +77,10 @@
                         <div class=" d-flex justify-content-center ">
                             <div class="m-2 ">
                                 <div>
-                                    <b>Ref :</b> {{ demand.numDemande }}
+                                    <b>Ref :</b> {{ demand.demande }}
                                 </div>
                                 <div>
-                                    <b>Demande :</b> {{ demand.demande }}
+                                    <b>Service :</b> {{ demand.nom_du_service }}
                                 </div>
                                 <div>
                                     <span *ngIf="demand.status=='DEMANDE' " class="badge badge-info "> DEMANDE</span>
@@ -97,11 +97,11 @@
                                 <li class="do">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5 class="card-title">Demande soumise</h5>
+                                            <h5 class="card-title fw-bold">Demande soumise</h5>
                                         </div>
                                         <div class="card-body">
-                                            <a href="#" class="float-right">{{ formatDate( demand.demandeDate) }}</a>
-                                            <ol>
+                                            <p class="float-right mb-3">{{ demand.demandeDate ? formatDate( demand.demandeDate) : '' }}</p>
+                                            <ol class="mt-4">
                                                 <li *ngFor="let p of data_pieces; index as i;" (click)="getTheUrl($event,p)">
                                                     <div class="d-flex justify-content-between">
                                                         <div class="">
@@ -122,15 +122,14 @@
                                     <a (click)="openModal(t.etape)" style="cursor: pointer !important;" *ngIf="!t.statut">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">{{ t.title }}</h5>
+                                                <h5 class="card-title" style="font-weight:bold ;">{{ t.title }}</h5>
                                             </div>
                                             <div class="card-body">
-                                                <a href="#" class="float-right">{{ t.date }}</a>
-                                                <ol *ngIf="t.fichier && t.fichier.lenght>0">
+                                                <ol *ngIf="t.fichier && t.fichier.lenght>0" class="mt-2">
                                                     <li *ngFor=" let f of t.fichier ; index as y;" (click)="getTheUrl($event,p)">
                                                         <div class="d-flex justify-content-between ">
-                                                            <div class=" ">
-                                                                <a [href]="f.url" class=" ">{{ f.nom_fichier }}</a>
+                                                            <div class="" style="width: 100px;">
+                                                                <a [href]="f.url" class="text-truncate">{{ f.nom_fichier }}</a>
                                                             </div>
                                                             <div class="fw-bold ">
                                                                 <a [href]="f.url" class="btn btn-link btn-sm ">
@@ -141,8 +140,8 @@
                                                     </li>
                                                 </ol>
                                             </div>
-                                            <div class="card-footer ">
-                                                <div class="float-right pull-right">
+                                            <div class="m-2 d-flex justify-content-between">
+                                                <div class="">
                                                     <span *ngIf="t.statut" class="text-success">
                                                         <i class="fa fa-info-circle "></i>
                                                         <small>Valider</small>
@@ -152,16 +151,18 @@
                                                         <small>Non valider</small>
                                                     </span>
                                                 </div>
+                                                <div class="">
+                                                    <p class="text-info">{{ t.date }}</p>
+                                                </div>
                                             </div>
                                         </div>
                                     </a>
                                     <a *ngIf="t.statut">
                                         <div class="card">
                                             <div class="card-header">
-                                                <h5 class="card-title">{{ t.title }}</h5>
+                                                <h5 class="card-title fw-bold">{{ t.title }}</h5>
                                             </div>
                                             <div class="card-body">
-                                                <a href="#" class="float-right">{{ t.date }}</a>
                                                 <ol *ngIf="t.fichier && t.fichier.lenght>0">
                                                     <li *ngFor=" let f of t.fichier ; index as y;" (click)="getTheUrl($event,p)">
                                                         <div class="d-flex justify-content-between ">
@@ -177,8 +178,8 @@
                                                     </li>
                                                 </ol>
                                             </div>
-                                            <div class="card-footer ">
-                                                <div class="float-right pull-right">
+                                            <div class="d-flex justify-content-between">
+                                                <div class="">
                                                     <span *ngIf="t.statut" class="text-success">
                                                         <i class="fa fa-info-circle "></i>
                                                         <small>Valider</small>
@@ -187,6 +188,9 @@
                                                         <i class="fa fa-info-circle "></i>
                                                         <small>Non valider</small>
                                                     </span>
+                                                </div>
+                                                <div>
+                                                    <p class="">{{ t.date }}</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -199,23 +203,22 @@
                     <div class="card-footer ">
                         <div class="d-flex justify-content-center ">
                             <div class=" ">
-                                <a _ngcontent-aik-c8=" " class="btn btn-default " routerLink="/list-demand-voyage ">Retour</a>
-                            </div>
-                            <div class=" ">
-                                <button class="btn btn-success " (click)="accept() ">Accepter</button>
-                                <button class="btn btn-danger " (click)="denied() ">Rejeter</button>
+                                <a class="btn btn-default " routerLink="/list-demand-voyage">Retour</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 " id="result-alert">
+            <div class="col-md-6" id="result-alert">
                 <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
                     <i class="ti-info-alt"></i> {{messageNotificationForm}}
                     <button type="button" class="close" (click)="closeNotificationForm()">
                                  <span>×</span></button>
                 </div>
-                <iframe [src]="getSafeUrl(the_url) " type="application/pdf " width="100% " height="75% "></iframe>
+                <pdf-viewer [src]="the_url" [original-size]="false"></pdf-viewer>
+                <!-- <pdf-viewer src="/assets/img/z.pdf"></pdf-viewer> -->
+                <!-- <iframe src="/assets/img/z.pdf" width="100%" height="75%"></iframe> -->
+                <!-- <iframe [src]="getSafeUrl(the_url) " type="application/pdf " width="100% " height="75% "></iframe> -->
             </div>
         </div>
     </div>

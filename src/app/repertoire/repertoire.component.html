@@ -1,0 +1,328 @@
+<style>
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
+<div class="competions main-content">
+    <div class="container-fluid">
+
+        <!-- Alert with rounded corner -->
+        <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+            <i class="ti-info-alt"></i> {{messageNotificationForm}}
+            <button type="button" class="close" (click)="closeNotificationForm()">
+                <span>×</span></button>
+        </div>
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Opérateur touristiques</h3>
+                <p class="card-category">Ce panel vous permets d'accéder au listings de tous les opérateurs tourisques. Vous pouvez les filtrer par secteur d'activité (métier) ou par leur localisation</p>
+            </div>
+            <div class="card-body">
+                <div class=" m-3 d-flex justify-content-between">
+                    <div class="">
+                        <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                    </div>
+                </div>
+                <div class="row table-responsible">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <div class="m-2" *ngIf="!spinner">
+                        <mat-table [dataSource]="dataSource" matSort>
+                            <!-- ID Column -->
+                            <ng-container matColumnDef="id">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="metier">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Titre </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                    <span *ngIf="row.job.name=='Restaurant'" class="text-primary">Établissement de
+                                        restauration</span>
+                                    <span *ngIf="row.job.name=='Voyage'" class="text-primary">Agence de voyage</span>
+                                    <span *ngIf="row.job.name=='Hebergement'" class="text-primary">Hébergement
+                                        touristique</span>
+                                    <span *ngIf="row.job.name=='Guide'" class="text-primary">Guide de tourisme</span>
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="denomination">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 25%'"> Dénomination
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 25%'">
+                                    {{row.job.name !='Guide'? row.raison_sociale : row.nom_promoteur+' '+row.prenom_promoteur}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="ifu">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> IFU
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{row.ifu}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="telephone">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> Téléphone
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{row.telephone}}
+                                </mat-cell>
+                            </ng-container>
+
+                            <ng-container matColumnDef="npi_promoteur">
+                                <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 10%'"> NPI Promoteur
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'">
+                                    {{row.npi_promoteur}}
+                                </mat-cell>
+                            </ng-container>
+
+
+                            <ng-container matColumnDef="action">
+                                <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 5%'">
+                                    Action
+                                </mat-header-cell>
+                                <mat-cell *matCellDef="let row" [style.flex]="'1 1 5%'">
+                                    <div class="d-flex justify-content-end">
+                                        <a (click)="openShowModal(row.id)" rel="tooltip" class="action" style="cursor:pointer !important ;">
+                                            <i class="material-icons text-info">info</i>
+                                        </a>
+                                    </div>
+                                </mat-cell>
+                            </ng-container>
+
+                            <mat-header-row *matHeaderRowDef="displayedColumns "></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns; ">
+                            </mat-row>
+
+                        </mat-table>
+                    </div>
+
+                </div>
+            </div>
+            <div class="card-footer justify-content-end">
+                <mat-paginator [pageSizeOptions]=" [10,25,50,100]" [pageSize]="10" [length]="operateurs.length ">
+                </mat-paginator>
+            </div>
+        </div>
+        <div class="modal" tabindex="-1 " role="dialog " [ngStyle]="{'display':displayShowModal} ">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document ">
+                <div class="modal-content ">
+                    <div class="modal-header ">
+                        <h4 class="modal-title " id="modal_title ">Détail de l'opérateur touristique</h4>
+                        <button type="button " class="close " aria-label="Close " (click)="onCloseHandledShowModal() "><span
+                                aria-hidden="true ">&times;</span></button>
+                    </div>
+
+                    <div class="modal-body" *ngIf="selected_op">
+                        <div class="m-2 ">
+                            <div class="row ">
+                                <div class="col-md-6 ">
+                                    <p class="fw-bold">Métier:</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <span *ngIf="selected_op.job.name=='Restaurant'" class="text-primary">Établissement
+                                        de restauration</span>
+                                    <span *ngIf="selected_op.job.name=='Voyage'" class="text-primary">Agence de
+                                        voyage</span>
+                                    <span *ngIf="selected_op.job.name=='Hebergement'" class="text-primary">Hébergement
+                                        touristique</span>
+                                    <span *ngIf="selected_op.job.name=='Guide'" class="text-primary">Guide de
+                                        tourisme</span>
+                                </div>
+                            </div>
+                            <div class="row" *ngIf="selected_op.job.name !='Guide'">
+                                <div class="col-md-6 ">
+                                    <p class="fw-bold">Raison sociale :</p>
+                                </div>
+                                <div class="col-md-6">
+                                    {{ selected_op.raison_sociale }}
+                                </div>
+                            </div>
+                            <hr class="border">
+                            <div class="row ">
+                                <div class="col-md-1 "></div>
+                                <div class="col-md-10 ">
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name !='Guide'">
+                                        <div class=" ">
+                                            <b>Nombre d'étoile :</b>
+                                        </div>
+                                        <div class="">
+                                            <span class="badge badge-info"></span> {{ selected_op.nombre_etoile }}
+                                        </div>
+                                    </div>
+
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name =='Guide'">
+                                        <div class=" ">
+                                            <b>Type de guide :  </b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.type_guide }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>Ifu :</b>
+                                        </div>
+                                        <div class="">
+                                            {{ selected_op.ifu }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>RCCM :</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.rccm }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>Téléphone :</b>
+                                        </div>
+                                        <div class="">
+                                            {{ selected_op.telephone }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>Email:</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.email }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name !='Guide'">
+                                        <div class=" ">
+                                            <b>Type d'établissement :</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.type_etablissement }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name =='Hebergement'">
+                                        <div class=" ">
+                                            <b>Capacité d'hébergement :</b>
+                                        </div>
+                                        <div class="">
+                                            <span class="badge badge-info"></span> {{ selected_op.capacite_hebergement }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name =='Hebergement' && selected.association_groupement">
+                                        <div class=" ">
+                                            <b>Capacité d'hébergement :</b>
+                                        </div>
+                                        <div class="">
+                                            <span class="badge badge-info"></span> {{ selected_op.capacite_hebergement }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name =='Guide'">
+                                        <div class=" ">
+                                            <b>Type de guide :</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.type_guide }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between " *ngIf="selected_op.job.name =='Guide'">
+                                        <div class=" ">
+                                            <b>Catégorie de guide :</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.categorie_guide }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>Departement :</b>
+                                        </div>
+                                        <div class=" ">
+                                            {{ selected_op.departement }}
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between ">
+                                        <div class=" ">
+                                            <b>Commune :</b>
+                                        </div>
+                                        <div class="">
+                                            {{ selected_op.commune }}
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-1 "></div>
+                            </div>
+                            <hr class="border">
+                            <div>
+                                <h5>Promoteur</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Nom et prénom :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.nom_promoteur }} {{ selected_op.prenom_promoteur }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Sexe :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.sexe_promoteur }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Nationalité :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.nationalite_promoteur }}
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="border" *ngIf="selected_op.job.name !='Guide'">
+                            <div *ngIf="selected_op.job.name !='Guide'">
+                                <h5>Directeur ou representant égale</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Nom et prénom :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.nom_directeur }} {{ selected_op.prenom_directeur }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Sexe :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.sexe_directeur }}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <p class="fw-bold"> Nationalité :</p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        {{ selected_op.nationalite_directeur }}
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" (click)="onCloseHandledShowModal()">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

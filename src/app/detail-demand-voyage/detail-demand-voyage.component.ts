@@ -5,6 +5,7 @@ import { DemandVoyageService } from 'app/services/demand-voyage.service';
 import { Demand } from 'app/models/demand';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 
 import { AbstractControl, ValidationErrors } from '@angular/forms';
@@ -32,7 +33,7 @@ export function requiredIfSpecificValueEqualToTrueValidator(controlName: string,
     styleUrls: ['./detail-demand-voyage.component.styl'],
 })
 export class DetailDemandVoyageComponent {
-    constructor(private demandVoyageService: DemandVoyageService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer) { }
+    constructor(private demandVoyageService: DemandVoyageService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer,private http: HttpClient) { }
 
     demand: Demand;
     id: number;
@@ -147,10 +148,14 @@ export class DetailDemandVoyageComponent {
         validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause3'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
     });
 
-    addDecision(id: number) {
-
-    }
-
+    loadPdf() {
+        this.http.get(this.the_url, { responseType: 'arraybuffer' })
+          .subscribe((data) => {
+            const blob = new Blob([data], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            this.the_url = url;
+          });
+      }
     getDemand(id: number): void {
         this.demandVoyageService.getById(id).subscribe((data: Array<Demand>) => {
             this.demand = data['data'];
@@ -174,7 +179,6 @@ export class DetailDemandVoyageComponent {
         }
         )
     }
-
     getDemandeEtape(id: number): void {
         this.demandVoyageService.getDemandeEtape(id).subscribe((data: any) => {
             this.etape_de_taitement_de_demande = data['data'];
@@ -215,56 +219,58 @@ export class DetailDemandVoyageComponent {
 
             const formattedDate = `${day}-${month}-${year}`;
             if(a.length>0){
-                switch (a[a.length - 1].etape) {
-                    case "0":
-                        s.push({
-                            id: '',
-                            title: 'Examen du dossier et fixation de la date d\'entretien',
-                            date: formattedDate,
-                            statut: false,
-                            fichier: [],
-                            etape:1
-                        });
-                        break;
-                    case "1":
-                        s.push({
-                            id: '',
-                            title: 'Complément de dossier après avis favorable',
-                            date: formattedDate,
-                            statut: false,
-                            fichier: [],
-                            etape:2
-                        })
-                        break;
-                    case "2":
-                        s.push({
-                            id: '',
-                            title: 'Entretien effectué avec succès',
-                            date: formattedDate,
-                            statut: false,
-                            fichier: [],
-                            etape:3
-                        });
-                        break;
-                    case "3":
-                        s.push({
-                            id: '',
-                            title: 'Demande acceptée',
-                            date: formattedDate,
-                            statut: false,
-                            fichier: [],
-                            etape:4
-                        });
-                        break;
-                    default:
-                        s.push({
-                            id: 0,
-                            title: 'Vérification de la complétude des pièces',
-                            date: formattedDate,
-                            statut: false,
-                            fichier: [],
-                            etape:0
-                        });
+                if(a[a.length - 1].statut == 1){
+                    switch (a[a.length - 1].etape) {
+                        case "0":
+                            s.push({
+                                id: '',
+                                title: 'Examen du dossier et fixation de la date d\'entretien',
+                                date: formattedDate,
+                                statut: false,
+                                fichier: [],
+                                etape:1
+                            });
+                            break;
+                        case "1":
+                            s.push({
+                                id: '',
+                                title: 'Complément de dossier après avis favorable',
+                                date: formattedDate,
+                                statut: false,
+                                fichier: [],
+                                etape:2
+                            })
+                            break;
+                        case "2":
+                            s.push({
+                                id: '',
+                                title: 'Entretien effectué avec succès',
+                                date: formattedDate,
+                                statut: false,
+                                fichier: [],
+                                etape:3
+                            });
+                            break;
+                        case "3":
+                            s.push({
+                                id: '',
+                                title: 'Demande acceptée',
+                                date: formattedDate,
+                                statut: false,
+                                fichier: [],
+                                etape:4
+                            });
+                            break;
+                        default:
+                            s.push({
+                                id: 0,
+                                title: 'Vérification de la complétude des pièces',
+                                date: formattedDate,
+                                statut: false,
+                                fichier: [],
+                                etape:0
+                            });
+                    }
                 }
             }
             else{
@@ -305,6 +311,7 @@ export class DetailDemandVoyageComponent {
                 this.getDemandeEtape(id)
             }
         })
+        this.loadPdf();
     }
     previewFile(file: File) {
         const fileUrl = URL.createObjectURL(file);
@@ -317,7 +324,7 @@ export class DetailDemandVoyageComponent {
         event.preventDefault();
         // const url = (event.target as HTMLAnchorElement).href;
         console.log(p)
-        this.the_url = p;
+        this.the_url = p['url'];
     }
     accept() {
         this.demandVoyageService.accept(this.id).subscribe(response => {
