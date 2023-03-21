@@ -33,6 +33,7 @@ import { DetailCompetitionComponent } from '../../competitions-all/detail-compet
 
 import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
 import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
+import { RepertoireComponent } from 'app/repertoire/repertoire.component';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -53,8 +54,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-
-
+import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({
   imports: [
@@ -76,6 +77,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    PdfViewerModule,
 
     //DataTablesModule
   ],
@@ -91,7 +93,7 @@ import { MatSortModule } from '@angular/material/sort';
     DetailTrendingComponent,
     JobsComponent,
     FaqComponent,
-    ComplaintsComponent,
+    ComplaintsComponent, 
     DetailComplaintComponent,
     ReclamationsComponent,
     DetailReclamationComponent,
@@ -105,8 +107,8 @@ import { MatSortModule } from '@angular/material/sort';
     AddCompetitionComponent,
     DetailCompetitionComponent,
     ListDemandVoyageComponent,
-    DetailDemandVoyageComponent
-
+    DetailDemandVoyageComponent,
+    RepertoireComponent
   ]
 })
 

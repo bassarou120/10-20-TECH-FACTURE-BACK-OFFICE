@@ -25,7 +25,10 @@ export class Demand {
     data: string
     alldata: string
     pieces: string
-    
+    capacite_hebergement :string;
+    type_guide:string;
+    categorie_guide:string;
+    association_groupement:string;
 
     constructor(
         id: number,
@@ -53,7 +56,11 @@ export class Demand {
         derniere_notification: string,
         data: string,
         alldata: string,
-        pieces: string
+        pieces: string,
+        capacite_hebergement :string,
+        type_guide:string,
+        categorie_guide:string,
+        association_groupement:string
     ) {
         this.id= id,
         this.ifu= ifu,
@@ -81,6 +88,9 @@ export class Demand {
         this.data= data
         this.alldata= alldata
         this.pieces= pieces
-
+        this.capacite_hebergement =capacite_hebergement ,
+        this.type_guide= type_guide,
+        this.categorie_guide= categorie_guide
+        this.association_groupement= association_groupement
     }
 }

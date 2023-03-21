@@ -25,6 +25,8 @@ import { DetailReclamationComponent } from '../../reclamations-all/detail-reclam
 import { CompetitionsComponent } from '../../competitions-all/competions';
 import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
 import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
+import { RepertoireComponent } from 'app/repertoire/repertoire.component';
+
 import { SsocallbackComponent } from '../../sso-callback/ssocallback.component';
 
 export const AdminLayoutRoutes: Routes = [
@@ -98,4 +100,10 @@ export const AdminLayoutRoutes: Routes = [
             //AuthGuard
         ]
     },
+    {
+        path: 'operateurs', component: RepertoireComponent,
+        canActivate: [
+            //AuthGuard
+        ]
+    }
 ];

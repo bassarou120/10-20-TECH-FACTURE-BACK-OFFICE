@@ -19,7 +19,7 @@ export class ListDemandVoyageComponent {
     spinner = true;
     displayedColumns = [
         '#',
-        'numDemande',
+        'demande',
         'nom_du_service',
         'demandeDate',
         'derniere_mise_a_jour',
@@ -48,7 +48,7 @@ export class ListDemandVoyageComponent {
     @ViewChild(MatSort) sort: MatSort;
 
     getList(): void {
-        this.demandVoyageService.listByJob("HEB").subscribe((data: Array<Demand>) => {
+        this.demandVoyageService.listByJob("AGV").subscribe((data: Array<Demand>) => {
             this.demand = data['data'];
             this.dataSource = new MatTableDataSource(data['data']);
             this.dataSource.paginator = this.paginator;

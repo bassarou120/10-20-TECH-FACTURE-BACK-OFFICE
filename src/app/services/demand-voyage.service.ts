@@ -9,6 +9,7 @@ import {Observable} from 'rxjs';
 export class DemandVoyageService {
 
   url: string = environment.backend + '/eservice_demande';
+  base_url:string=environment.backend;
   constructor(private http: HttpClient) { }
 
   // liste des Accord
@@ -42,5 +43,17 @@ export class DemandVoyageService {
 
   denied(id: number): Observable<Object> {
     return this.http.get(`${this.url}/denied/${id}`);
+  }
+
+  getDemandeEtape(id: number): Observable<Object> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("demande_id",id);
+    // return this.http.get(`${this.base_url}/traitement_eservice_demande/get_demande_traitement/${id}`);
+    return this.http.get(`${this.base_url}/traitement_eservice_demande/get_demande_traitement`,{params:queryParams});
+  }
+
+  addDemandeEtape(data:any): Observable<Object> {
+    
+    return this.http.post(`${this.base_url}/traitement_eservice_demande/addtraitement`,data);
   }
 }
