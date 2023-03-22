@@ -55,7 +55,7 @@
 </style>
 <div class="detail-demand-voyage main-content">
     <div class="container-fluid">
-        <div class="row">
+        <div class="row" id="top">
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header card-header-rose card-header-text">
@@ -88,7 +88,6 @@
                                     <span *ngIf="demand.status=='REJETE' " class="badge badge-danger "> REJETE </span>
                                     <span *ngIf="demand.status=='ENTRETIEN' " class="badge badge-warning ">ENTRETIEN
                                     </span>
-
                                 </div>
                             </div>
                         </div>
@@ -210,11 +209,11 @@
                 </div>
             </div>
             <div class="col-md-6" id="result-alert">
-                <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                <!-- <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
                     <i class="ti-info-alt"></i> {{messageNotificationForm}}
                     <button type="button" class="close" (click)="closeNotificationForm()">
                                  <span>×</span></button>
-                </div>
+                </div> -->
                 <pdf-viewer [src]="the_url" [original-size]="false"></pdf-viewer>
                 <!-- <pdf-viewer src="/assets/img/z.pdf"></pdf-viewer> -->
                 <!-- <iframe src="/assets/img/z.pdf" width="100%" height="75%"></iframe> -->
@@ -232,6 +231,8 @@
                 </div>
                 <div class="modal-body">
                     <form [formGroup]="etap0Form" (ngSubmit)="onClickSubmit(0)" novalidate [ngClass]="{'d-none':!show_modal_0}">
+                        <input type="hidden" formControlName="etape">
+                        <input type="hidden" formControlName="id">
                         <div class="modal-body">
                             <div class="">
                                 <h5>Décision <small class="text-danger">*</small></h5>
@@ -297,6 +298,8 @@
                         </div>
                     </form>
                     <form [formGroup]="etap1Form" (ngSubmit)="onClickSubmit(1)" novalidate [ngClass]="{'d-none':!show_modal_1}">
+                        <input type="hidden" formControlName="etape">
+                        <input type="hidden" formControlName="id">
                         <div class="modal-body">
                             <div class="">
                                 <h5>Décision <small class="text-danger">*</small></h5>
@@ -349,6 +352,8 @@
                         </div>
                     </form>
                     <form [formGroup]="etap2Form" (ngSubmit)="onClickSubmit(2)" novalidate [ngClass]="{'d-none':!show_modal_2}">
+                        <input type="hidden" formControlName="etape">
+                        <input type="hidden" formControlName="id">
                         <div class="modal-body">
                             <div class="">
                                 <h5>Décision <small class="text-danger">*</small></h5>

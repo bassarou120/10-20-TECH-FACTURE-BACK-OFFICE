@@ -8,6 +8,8 @@ import {Observable} from 'rxjs';
 })
 export class OperateurTouristiqueService {
   url: string = environment.backend + '/operateur_touristique';
+  search_url: string = environment.backend + '/operateur_touristique/multi_critere_search';
+
   department_url = environment.backend + '/departement'; 
   commune_url = environment.backend + '/commune/list'
 
@@ -35,5 +37,10 @@ export class OperateurTouristiqueService {
 
   get_commune(id: String): Observable<Object> {
     return this.http.get(`${this.commune_url}/${id}`);
+  }
+
+  // Enregistrement des reglementation
+  multi_critere_search(data: any): Observable<Object> {
+      return this.http.get(`${this.search_url}`, {params:data});
   }
 }
