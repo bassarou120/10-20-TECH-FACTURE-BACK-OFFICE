@@ -33,12 +33,12 @@ export function requiredIfSpecificValueEqualToTrueValidator(controlName: string,
     styleUrls: ['./detail-demand-voyage.component.styl'],
 })
 export class DetailDemandVoyageComponent {
-    constructor(private demandVoyageService: DemandVoyageService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer,private http: HttpClient) { }
+    constructor(private demandVoyageService: DemandVoyageService, private activatedRoute: ActivatedRoute, private sanitizer: DomSanitizer, private http: HttpClient) { }
 
     demand: Demand;
     id: number;
     fileUrl: SafeResourceUrl;
-    the_url = '';
+    the_url = 'https://tourisme-api.herokuapp.com/api/v1/filemanager/files3/PS01292-230320-RgXzRV&&&2_CV_Cokou_ADJAFEFA.pdf';
     data_pieces = [];
     etape_de_taitement_de_demande = [];
     typeNotificationForm: string;
@@ -104,58 +104,24 @@ export class DetailDemandVoyageComponent {
         }
 
     ];
+    fileToUpload: File = null;
 
-    etap0Form = new FormGroup({
-        statut_spet0: new FormControl('', Validators.required),
-        cause0: new FormControl(''),
-        motif0: new FormControl(''),
-        file0: new FormControl(''),
-    }, {
-        validators: [requiredIfSpecificValueValidator('statut_spet0', 'cause0'), requiredIfSpecificValueValidator('statut_spet0', 'motif0')]
-    });
+    etap0Form: FormGroup;
 
-    etap1Form = new FormGroup({
-        statut_spet1: new FormControl('', Validators.required),
-        motif1: new FormControl(''),
-        file1: new FormControl(''),
-        date_entretien: new FormControl(''),
-        heure_entretien: new FormControl(''),
-        lieu_entretien: new FormControl(''),
-    }, {
-        validators: [
-            requiredIfSpecificValueValidator('statut_spet1', 'motif1'),
-            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'date_entretien'),
-            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'heure_entretien'),
-            requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'lieu_entretien'),
-        ]
-    });
+    etap1Form: FormGroup;
 
-    etap2Form = new FormGroup({
-        statut_spet2: new FormControl('', Validators.required),
-        cause2: new FormControl(''),
-        motif2: new FormControl(''),
-        file2: new FormControl(''),
-    }, {
-        validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause2'), requiredIfSpecificValueValidator('statut_spet2', 'motif2')]
-    });
+    etap2Form: FormGroup;
 
-    etap3Form = new FormGroup({
-        statut_spet3: new FormControl('', Validators.required),
-        cause3: new FormControl(''),
-        motif3: new FormControl(''),
-        file3: new FormControl(''),
-    }, {
-        validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause3'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
-    });
+    etap3Form: FormGroup;
 
     loadPdf() {
         this.http.get(this.the_url, { responseType: 'arraybuffer' })
-          .subscribe((data) => {
-            const blob = new Blob([data], { type: 'application/pdf' });
-            const url = URL.createObjectURL(blob);
-            this.the_url = url;
-          });
-      }
+            .subscribe((data) => {
+                const blob = new Blob([data], { type: 'application/pdf' });
+                const url = URL.createObjectURL(blob);
+                this.the_url = url;
+            });
+    }
     getDemand(id: number): void {
         this.demandVoyageService.getById(id).subscribe((data: Array<Demand>) => {
             this.demand = data['data'];
@@ -185,32 +151,32 @@ export class DetailDemandVoyageComponent {
             var s = [];
             const a = data['data'];
             for (let i = 0; i < a.length; i++) {
-                {
-                    if (a[i].etape == 0) {
-                        var title = 'Vérification de la complétude des pièces'
-                    }
-                    else if (a[i].etape == 1) {
-                        var title = 'Examen du dossier et fixation de la date d\'entretien'
-                    }
-                    else if (a[i].etape == 2) {
-                        var title = 'Complément de dossier après avis favorable'
-                    }
-                    else if (a[i].etape == 3) {
-                        var title = 'Entretien effectué avec succès'
-                    }
-                    else if (a[i].etape == 4) {
-                        var title = 'Demande acceptée'
-                    }
-
-                    s.push({
-                        id: a[i].id,
-                        title: title,
-                        date: '',
-                        statut: a[i].status,
-                        fichier: a[i].piece,
-                        etape:a[i].etape
-                    })
+                if (a[i].etape == 0) {
+                    var title = 'Vérification de la complétude des pièces'
                 }
+                else if (a[i].etape == 1) {
+                    var title = 'Examen du dossier et fixation de la date d\'entretien'
+                }
+                else if (a[i].etape == 2) {
+                    var title = 'Complément de dossier après avis favorable'
+                }
+                else if (a[i].etape == 3) {
+                    var title = 'Entretien effectué avec succès'
+                }
+                else if (a[i].etape == 4) {
+                    var title = 'Demande acceptée'
+                }
+                else {
+                    console.log('ici')
+                }
+                s.push({
+                    id: a[i].id,
+                    title: title,
+                    date: '',
+                    statut: a[i].status,
+                    fichier: a[i].piece,
+                    etape: a[i].etape
+                })
             }
             const today = new Date();
             const day = String(today.getDate()).padStart(2, '0');
@@ -218,8 +184,8 @@ export class DetailDemandVoyageComponent {
             const year = today.getFullYear().toString().substr(-2);
 
             const formattedDate = `${day}-${month}-${year}`;
-            if(a.length>0){
-                if(a[a.length - 1].statut == 1){
+            if (a.length > 0) {
+                if (a[a.length - 1].status) {
                     switch (a[a.length - 1].etape) {
                         case "0":
                             s.push({
@@ -228,7 +194,7 @@ export class DetailDemandVoyageComponent {
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
-                                etape:1
+                                etape: 1
                             });
                             break;
                         case "1":
@@ -238,7 +204,7 @@ export class DetailDemandVoyageComponent {
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
-                                etape:2
+                                etape: 2
                             })
                             break;
                         case "2":
@@ -248,7 +214,7 @@ export class DetailDemandVoyageComponent {
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
-                                etape:3
+                                etape: 3
                             });
                             break;
                         case "3":
@@ -258,7 +224,7 @@ export class DetailDemandVoyageComponent {
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
-                                etape:4
+                                etape: 4
                             });
                             break;
                         default:
@@ -268,22 +234,22 @@ export class DetailDemandVoyageComponent {
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
-                                etape:0
+                                etape: 0
                             });
                     }
                 }
             }
-            else{
+            else {
                 s.push({
                     id: 0,
                     title: 'Vérification de la complétude des pièces',
                     date: formattedDate,
                     statut: false,
                     fichier: [],
-                    etape:0
+                    etape: 0
                 });
             }
-           
+
 
             this.steps = s;
             console.log(this.steps)
@@ -302,6 +268,7 @@ export class DetailDemandVoyageComponent {
             return '';
         }
     }
+
     ngOnInit() {
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];
@@ -309,10 +276,59 @@ export class DetailDemandVoyageComponent {
             if (id) {
                 this.getDemand(id);
                 this.getDemandeEtape(id)
+
+                this.etap0Form = new FormGroup({
+                    etape: new FormControl(0),
+                    id: new FormControl(this.id),
+                    statut_spet0: new FormControl('', Validators.required),
+                    cause0: new FormControl(''),
+                    motif0: new FormControl(''),
+                    file0: new FormControl(''),
+                }, {
+                    validators: [requiredIfSpecificValueValidator('statut_spet0', 'cause0'), requiredIfSpecificValueValidator('statut_spet0', 'motif0')]
+                });
+
+                this.etap1Form = new FormGroup({
+                    etape: new FormControl(0),
+                    id: new FormControl(this.id),
+                    statut_spet1: new FormControl('', Validators.required),
+                    motif1: new FormControl(''),
+                    file1: new FormControl(''),
+                    date_entretien: new FormControl(''),
+                    heure_entretien: new FormControl(''),
+                    lieu_entretien: new FormControl(''),
+                }, {
+                    validators: [
+                        requiredIfSpecificValueValidator('statut_spet1', 'motif1'),
+                        requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'date_entretien'),
+                        requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'heure_entretien'),
+                        requiredIfSpecificValueEqualToTrueValidator('statut_spet1', 'lieu_entretien'),
+                    ]
+                });
+
+                this.etap2Form = new FormGroup({
+                    statut_spet2: new FormControl('', Validators.required),
+                    cause2: new FormControl(''),
+                    motif2: new FormControl(''),
+                    file2: new FormControl(''),
+                }, {
+                    validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause2'), requiredIfSpecificValueValidator('statut_spet2', 'motif2')]
+                });
+
+                this.etap3Form = new FormGroup({
+                    statut_spet3: new FormControl('', Validators.required),
+                    cause3: new FormControl(''),
+                    motif3: new FormControl(''),
+                    file3: new FormControl(''),
+                }, {
+                    validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause3'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
+                });
+
             }
         })
         this.loadPdf();
     }
+
     previewFile(file: File) {
         const fileUrl = URL.createObjectURL(file);
         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(fileUrl);
@@ -415,6 +431,7 @@ export class DetailDemandVoyageComponent {
 
     onClickSubmit(step: number) {
         this.submitted = true;
+        console.log(step)
         switch (step) {
             case 0:
                 // if(this.motif0.value == ''){
@@ -427,18 +444,21 @@ export class DetailDemandVoyageComponent {
                 }
 
                 this.saving = true
-                const formData = this.etap0Form.value;
-                const data = JSON.stringify(formData);
-                this.demandVoyageService.addDemandeEtape({
-                    id_demande: this.id,
-                    etape: 0,
-                    data: data
-                }).subscribe((data: any) => {
+                var formData = this.etap0Form.value;
+
+                const data0 = new FormData();
+                data0.append('id_demande', formData.id);
+                data0.append('etape', formData.etape);
+                data0.append('data', JSON.stringify(formData));
+                data0.append('Content-Type', 'multipart/form-data');
+                data0.append('file', <File>this.fileToUpload);
+
+                this.demandVoyageService.addDemandeEtape(data0).subscribe((data: any) => {
                     this.notificationForm(
                         "success",
                         "Enregistrement réussi !"
                     );
-                    this.getDemandeEtape(this.id);
+                    this.getDemandeEtape(formData.id);
                     this.display = "none";
                 }, (error: HttpErrorResponse) => {
                     console.log("Error while retrieving data");
@@ -448,19 +468,95 @@ export class DetailDemandVoyageComponent {
 
                 break;
             case 1:
-                console.log(this.etap1Form.invalid)
+                if (!this.statut_spet1.invalid && this.statut_spet1.value == 0 && this.motif1.value == '') {
+                    this.motif1_error = true;
+                    return
+                }
+                this.saving = true
+                const formData1 = this.etap1Form.value;
+
+                const data1 = new FormData();
+                data1.append('id_demande', formData1.id);
+                data1.append('etape', formData1.etape);
+                data1.append('data', JSON.stringify(formData1));
+                data1.append('Content-Type', 'multipart/form-data');
+                data1.append('file', <File>this.fileToUpload);
+
+                this.demandVoyageService.addDemandeEtape(data1).subscribe((data: any) => {
+                    this.notificationForm(
+                        "success",
+                        "Enregistrement réussi !"
+                    );
+                    this.getDemandeEtape(formData1.id);
+                    this.display = "none";
+                }, (error: HttpErrorResponse) => {
+                    console.log("Error while retrieving data");
+                }
+                )
+                this.saving = false
+
                 break;
             case 2:
-                console.log(this.etap2Form.invalid)
+                if (!this.statut_spet2.invalid && this.statut_spet2.value == 0 && this.motif2.value == '') {
+                    this.motif2_error = true;
+                    return
+                }
+                this.saving = true
+                const formData2 = this.etap2Form.value;
+
+                const data2 = new FormData();
+                data1.append('id_demande', formData2.id);
+                data1.append('etape', formData2.etape);
+                data1.append('data', JSON.stringify(formData2));
+                data1.append('Content-Type', 'multipart/form-data');
+                data1.append('file', <File>this.fileToUpload);
+
+                this.demandVoyageService.addDemandeEtape(data2).subscribe((data: any) => {
+                    this.notificationForm(
+                        "success",
+                        "Enregistrement réussi !"
+                    );
+                    this.getDemandeEtape(formData2.id);
+                    this.display = "none";
+                }, (error: HttpErrorResponse) => {
+                    console.log("Error while retrieving data");
+                }
+                )
+                this.saving = false
                 break;
             case 3:
-                console.log(this.etap1Form.invalid)
+                if (!this.statut_spet3.invalid && this.statut_spet3.value == 0 && this.motif3.value == '') {
+                    this.motif3_error = true;
+                    return
+                }
+                this.saving = true
+                const formData3 = this.etap3Form.value;
+
+                const data3 = new FormData();
+                data1.append('id_demande', formData3.id);
+                data1.append('etape', formData3.etape);
+                data1.append('data', JSON.stringify(formData3));
+                data1.append('Content-Type', 'multipart/form-data');
+                data1.append('file', <File>this.fileToUpload);
+
+                this.demandVoyageService.addDemandeEtape(data3).subscribe((data: any) => {
+                    this.notificationForm(
+                        "success",
+                        "Enregistrement réussi !"
+                    );
+                    this.getDemandeEtape(formData3.id);
+                    this.display = "none";
+                }, (error: HttpErrorResponse) => {
+                    console.log("Error while retrieving data");
+                }
+                )
+                this.saving = false
                 break;
             default:
                 console.log('default')
 
                 $('html,body').animate({
-                    scrollTop: $("#result-alert").offset().top
+                    scrollTop: $("#top").offset().top
                 }, 'slow');
         }
     }
