@@ -62,7 +62,6 @@ export class ListDemandVoyageComponent {
     }
 
     onRowClicked(id: any) {
-        console.log('hello')
         this.router.navigate(['/detail-demand-voyage', id]);
     }
 
