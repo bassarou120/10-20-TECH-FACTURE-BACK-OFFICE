@@ -21,4 +21,8 @@ export class JobService {
     stat_by_demande_job(status:string): Observable<Object> {
       return this.http.get(`${this.url1}/count/demande/${status}`);
     }
+
+    filtre(data:any): Observable<Object> {
+      return this.http.get(`${this.url1}/count/demande/${status}`);
+    }
 }

@@ -6,41 +6,111 @@
                 <p class="card-category">Les différents corps du métiers touristiques sont disponibles sur ce panel </p>
             </div>
             <div class="card-body">
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-lg-5" *ngFor="let jobItem of jobItems">
-                    <a [routerLink]="[jobItem.link]">
-                        <div class="card">
-                            <div class="card-header card-header-icon card-header-rose">
-                                <div class="card-icon">
-                                    <i class="material-icons">{{jobItem.jobIcon}}</i>
+                <div class="row justify-content-center">
+                    <div class="col-lg-5" *ngFor="let jobItem of jobItems">
+                        <a [routerLink]="[jobItem.link]">
+                            <div class="card">
+                                <div class="card-header card-header-icon card-header-rose">
+                                    <div class="card-icon">
+                                        <i class="material-icons">{{jobItem.jobIcon}}</i>
+                                    </div>
+                                    <h4 class="card-title font-weight-bold">{{jobItem.titre}}</h4>
                                 </div>
-                                <h4 class="card-title font-weight-bold">{{jobItem.titre}}</h4>
-                            </div>
-                            <div class="card-body">
-                                {{jobItem.description}}
-                            </div>
-                            <div class="card-footer">
+                                <div class="card-body">
+                                    {{jobItem.description}}
+                                </div>
+                                <div class="card-footer">
 
-                                <div class="d-flex flex-column">
-                                    <div>
-                                        <h4>Demandes</h4>
-                                    </div>
-                                    <div class="">
-                                        <div class="text-success ">
-                                            <h5>Traitées : {{ jobItem.dt}}</h5>
+                                    <div class="d-flex flex-column">
+                                        <div>
+                                            <h4>Demandes</h4>
                                         </div>
-                                        <div class="text-danger">
-                                            <h5>Non traitée : {{ jobItem.dnt}}</h5>
+                                        <div class="">
+                                            <div class="text-success ">
+                                                <h5>Traitées : {{ jobItem.dt}}</h5>
+                                            </div>
+                                            <div class="text-danger">
+                                                <h5>Non traitée : {{ jobItem.dnt}}</h5>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <hr class="border border-2">
+                <div class="row m-2">
+                    <h4 class="mb-3">Système de reporting sur les dates pour les demandes des 4 métiers</h4>
+
+                    <form [formGroup]="filtreForm" (ngSubmit)="onClickSubmit()">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Période du" type="date" id="start_date" formControlName="start_date">
+                                </mat-form-field>
+                                <div class="errors">
+                                    <span *ngIf="start_date && start_date.invalid && start_date.touched && filtreForm.get('start_date').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <span *ngIf="start_date && start_date.invalid && start_date.touched && filtreForm.get('start_date').errors.pass" [ngClass]="'error'" [ngClass]="'error'">Vous ne pouvez pas mettre des dates futures</span>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Au" type="date" id="end_date" formControlName="end_date">
+                                </mat-form-field>
+                                <div class="errors ">
+                                    <span *ngIf="end_date && end_date.invalid && end_date.touched && filtreForm.get('end_date').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <span *ngIf="end_date.touched && filtreForm.errors?.dateRange" [ngClass]="'error'" [ngClass]="'error'">Cette date doit être plus grande que la date de debut</span>
+                                    <span *ngIf="end_date && end_date.invalid && end_date.touched && filtreForm.get('end_date').errors.pass" [ngClass]="'error'">Vous ne pouvez pas mettre des dates futures</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-primary" style="background-color: #398E68 !important; " id="sbt_btn">
+                                    <span class="fa fa-filter"></span>
+                                    Valider
+                                </button>
                             </div>
                         </div>
-                    </a>
+                    </form>
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="fw-b">Métier</th>
+                                <th scope="col" class="fw-b">Total</th>
+                                <th scope="col" class="fw-b">Traitées</th>
+                                <th scope="col" class="fw-b">Non traitées</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>@mdo</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">2</th>
+                                <td>Jacob</td>
+                                <td>Thornton</td>
+                                <td>@fat</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
-
         </div>
     </div>
 </div>
