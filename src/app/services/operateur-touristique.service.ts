@@ -18,7 +18,6 @@ export class OperateurTouristiqueService {
   list(id?:number): Observable<Object> {
     if(id){
       return this.http.get(`${this.url}/getByJob/${id}`);
-
     }
     else{
       return this.http.get(`${this.url}/list`);
@@ -26,6 +25,15 @@ export class OperateurTouristiqueService {
     }
   }
 
+  list_ol_db(id?:number): Observable<Object> {
+    if(id){
+      return this.http.get(`${this.url}/getByJob/${id}`);
+    }
+    else{
+      return this.http.get(`${this.url}/list`);
+
+    }
+  }
   // Get département
   get_department(): Observable<Object> {
     return this.http.get(`${this.department_url}/list`);
