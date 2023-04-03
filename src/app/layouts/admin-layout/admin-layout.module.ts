@@ -55,6 +55,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import * as pdfjsLib from 'pdfjs-dist/build/pdf';
+// import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+
 import { BrowserModule } from '@angular/platform-browser';
 
 @NgModule({

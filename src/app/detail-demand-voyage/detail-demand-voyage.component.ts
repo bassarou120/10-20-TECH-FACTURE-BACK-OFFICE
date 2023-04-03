@@ -6,9 +6,11 @@ import { Demand } from 'app/models/demand';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import * as pdfjsLib from 'pdfjs-dist';
 
 
 import { AbstractControl, ValidationErrors } from '@angular/forms';
+import * as e from 'express';
 export function requiredIfSpecificValueValidator(controlName: string, mustRequireFieldControlName: string) {
     return (control: AbstractControl): ValidationErrors | null => {
         const controlValue = control.get(controlName)?.value;
@@ -38,33 +40,41 @@ export class DetailDemandVoyageComponent {
     demand: Demand;
     id: number;
     fileUrl: SafeResourceUrl;
-    the_url = 'https://tourisme-api.herokuapp.com/api/v1/filemanager/files3/PS01292-230320-RgXzRV&&&2_CV_Cokou_ADJAFEFA.pdf';
+    //  the_url = 'https://tourisme-api.herokuapp.com/api/v1/filemanager/files3/PS01279-230316-XqjprJ&&&2_CV_Cokou_ADJAFEFA.pdf';
+    the_url = 'https://vadimdez.github.io/ng2-pdf-viewer/assets/pdf-test.pdf';
+    pdfSrc: any;
+
     data_pieces = [];
-    etape_de_taitement_de_demande = [];
+    etape_de_taitement_de_demande = [];     
     typeNotificationForm: string;
     messageNotificationForm: string;
     isNotificationForm: boolean = false;
 
     display = "none";
     spinner = true;
+    spinner_pdf= false;
     submitted = false;
 
     show_modal_0 = false;
     show_modal_1 = false;
     show_modal_2 = false;
     show_modal_3 = false;
+    show_modal_4 = false;
+    show_modal_5 = false;
 
     motif0_error = false;
     motif1_error = false;
     motif2_error = false;
     motif3_error = false;
+    motif4_error = false;
+    motif5_error = false;
     saving = false;
 
     steps = [];
     current = [
         {
             id: 0,
-            title: 'Vérification de la complétude des pièces',
+            title: 'Vérification de la complétude des pièces (Secrétariat – UAT)',
             date: '2016 - 2019',
             statut: true,
             fichier: [],
@@ -72,7 +82,7 @@ export class DetailDemandVoyageComponent {
         },
         {
             id: 1,
-            title: 'Examen du dossier et fixation de la date d\'entretien',
+            title: 'Examen du dossier et fixation de la date d’entretien (Organe Technique - UAT)',
             date: '2016 - 2019',
             statut: false,
             fichier: [],
@@ -80,7 +90,7 @@ export class DetailDemandVoyageComponent {
         },
         {
             id: 2,
-            title: 'Complément de dossier après avis favorable',
+            title: 'Entretien (Organe technique - UAT )',
             date: '2016 - 2019',
             statut: false,
             fichier: [],
@@ -104,6 +114,7 @@ export class DetailDemandVoyageComponent {
         }
 
     ];
+
     fileToUpload: File = null;
 
     etap0Form: FormGroup;
@@ -112,16 +123,22 @@ export class DetailDemandVoyageComponent {
 
     etap2Form: FormGroup;
 
-    etap3Form: FormGroup;
+    etap4Form: FormGroup;
 
-    loadPdf() {
+    etap5Form: FormGroup;
+   
+    formattedDate1 =''
+
+    loadPdf_old() {
         this.http.get(this.the_url, { responseType: 'arraybuffer' })
             .subscribe((data) => {
                 const blob = new Blob([data], { type: 'application/pdf' });
                 const url = URL.createObjectURL(blob);
                 this.the_url = url;
+                
             });
     }
+
     getDemand(id: number): void {
         this.demandVoyageService.getById(id).subscribe((data: Array<Demand>) => {
             this.demand = data['data'];
@@ -150,7 +167,9 @@ export class DetailDemandVoyageComponent {
             this.etape_de_taitement_de_demande = data['data'];
             var s = [];
             const a = data['data'];
+            console.log(a)
             for (let i = 0; i < a.length; i++) {
+                var extra_data = JSON.parse(a[i].data);
                 if (a[i].etape == 0) {
                     var title = 'Vérification de la complétude des pièces'
                 }
@@ -158,13 +177,16 @@ export class DetailDemandVoyageComponent {
                     var title = 'Examen du dossier et fixation de la date d\'entretien'
                 }
                 else if (a[i].etape == 2) {
-                    var title = 'Complément de dossier après avis favorable'
+                    var title = 'Entretien'
                 }
                 else if (a[i].etape == 3) {
-                    var title = 'Entretien effectué avec succès'
+                    var title = 'Complément des pièces'
                 }
                 else if (a[i].etape == 4) {
-                    var title = 'Demande acceptée'
+                    var title = 'Examen des pièces complémentaires et délibération'
+                }
+                else if (a[i].etape == 5) {
+                    var title = 'Décision finale de l’autorité'
                 }
                 else {
                     console.log('ici')
@@ -172,10 +194,12 @@ export class DetailDemandVoyageComponent {
                 s.push({
                     id: a[i].id,
                     title: title,
-                    date: '',
+                    date: extra_data.date,
                     statut: a[i].status,
+                    decision: extra_data[`statut_spet${a[i].etape}`],
                     fichier: a[i].piece,
-                    etape: a[i].etape
+                    etape: a[i].etape,
+                    commentaire: extra_data[`motif${a[i].etape}`]
                 })
             }
             const today = new Date();
@@ -184,8 +208,9 @@ export class DetailDemandVoyageComponent {
             const year = today.getFullYear().toString().substr(-2);
 
             const formattedDate = `${day}-${month}-${year}`;
-            if (a.length > 0) {
-                if (a[a.length - 1].status) {
+            if(a.length > 0){
+                if(s.length>0 &&  s[s.length - 1].decision =='1'){
+                    const last_stored_step = a[a.length - 1].etape;
                     switch (a[a.length - 1].etape) {
                         case "0":
                             s.push({
@@ -193,6 +218,7 @@ export class DetailDemandVoyageComponent {
                                 title: 'Examen du dossier et fixation de la date d\'entretien',
                                 date: formattedDate,
                                 statut: false,
+                                decision:'',
                                 fichier: [],
                                 etape: 1
                             });
@@ -200,9 +226,10 @@ export class DetailDemandVoyageComponent {
                         case "1":
                             s.push({
                                 id: '',
-                                title: 'Complément de dossier après avis favorable',
+                                title: 'Entretien',
                                 date: formattedDate,
                                 statut: false,
+                                decision: '',
                                 fichier: [],
                                 etape: 2
                             })
@@ -210,9 +237,10 @@ export class DetailDemandVoyageComponent {
                         case "2":
                             s.push({
                                 id: '',
-                                title: 'Entretien effectué avec succès',
+                                title: 'Complément des pièces',
                                 date: formattedDate,
                                 statut: false,
+                                decision: '',
                                 fichier: [],
                                 etape: 3
                             });
@@ -220,11 +248,110 @@ export class DetailDemandVoyageComponent {
                         case "3":
                             s.push({
                                 id: '',
-                                title: 'Demande acceptée',
+                                title: 'Examen des pièces complémentaires et délibération',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
+                                etape: 4
+                            });
+                            break;
+                        case "4":
+                            s.push({
+                                id: '',
+                                title: 'Décision finale de l’autorité',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
+                                etape: 5
+                            });
+                            break;
+                        default:
+                            s.push({
+                                id: 0,
+                                title: 'Vérification de la complétude des pièces',
                                 date: formattedDate,
                                 statut: false,
                                 fichier: [],
+                                etape: 0
+                            });
+                    }
+                }
+            }
+            else{
+                s.push({
+                    id: 0,
+                    title: 'Vérification de la complétude des pièces',
+                    date: formattedDate,
+                    statut: false,
+                    decision: '',
+                    fichier: [],
+                    etape: 0,
+                    commentaire: ''
+                });
+            }
+
+         /*    if (a.length > 0 && s.length>0 &&  s[s.length - 1].decision =='1') {
+               
+                if (a[a.length - 1].status) {
+                    const last_stored_step = a[a.length - 1].etape;
+                    switch (a[a.length - 1].etape) {
+                        // decision: extra_data[`statut_spet${last_stored_step}`],
+
+                        case "0":
+                            s.push({
+                                id: '',
+                                title: 'Examen du dossier et fixation de la date d\'entretien',
+                                date: formattedDate,
+                                statut: false,
+                                decision:'',
+                                fichier: [],
+                                etape: 1
+                            });
+                            break;
+                        case "1":
+                            s.push({
+                                id: '',
+                                title: 'Entretien',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
+                                etape: 2
+                            })
+                            break;
+                        case "2":
+                            s.push({
+                                id: '',
+                                title: 'Complément des pièces',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
+                                etape: 3
+                            });
+                            break;
+                        case "3":
+                            s.push({
+                                id: '',
+                                title: 'Examen des pièces complémentaires et délibération',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
                                 etape: 4
+                            });
+                            break;
+                        case "4":
+                            s.push({
+                                id: '',
+                                title: 'Décision finale de l’autorité',
+                                date: formattedDate,
+                                statut: false,
+                                decision: '',
+                                fichier: [],
+                                etape: 5
                             });
                             break;
                         default:
@@ -245,12 +372,13 @@ export class DetailDemandVoyageComponent {
                     title: 'Vérification de la complétude des pièces',
                     date: formattedDate,
                     statut: false,
+                    decision: '',
                     fichier: [],
-                    etape: 0
+                    etape: 0,
+                    commentaire: ''
                 });
-            }
-
-
+            } */
+            
             this.steps = s;
             console.log(this.steps)
             this.spinner = false;
@@ -270,6 +398,16 @@ export class DetailDemandVoyageComponent {
     }
 
     ngOnInit() {
+        const now = new Date();
+
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+
+        this.formattedDate1= `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
         this.activatedRoute.params.subscribe(params => {
             const id = params['id'];
             this.id = id;
@@ -279,6 +417,7 @@ export class DetailDemandVoyageComponent {
 
                 this.etap0Form = new FormGroup({
                     etape: new FormControl(0),
+                    date:new FormControl(this.formattedDate1) ,
                     id: new FormControl(this.id),
                     statut_spet0: new FormControl('', Validators.required),
                     cause0: new FormControl(''),
@@ -289,8 +428,9 @@ export class DetailDemandVoyageComponent {
                 });
 
                 this.etap1Form = new FormGroup({
-                    etape: new FormControl(0),
+                    etape: new FormControl(1),
                     id: new FormControl(this.id),
+                    date:new FormControl(this.formattedDate1) ,
                     statut_spet1: new FormControl('', Validators.required),
                     motif1: new FormControl(''),
                     file1: new FormControl(''),
@@ -307,6 +447,9 @@ export class DetailDemandVoyageComponent {
                 });
 
                 this.etap2Form = new FormGroup({
+                    etape: new FormControl(2),
+                    id: new FormControl(this.id),
+                    date:new FormControl(this.formattedDate1) ,
                     statut_spet2: new FormControl('', Validators.required),
                     cause2: new FormControl(''),
                     motif2: new FormControl(''),
@@ -315,18 +458,35 @@ export class DetailDemandVoyageComponent {
                     validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause2'), requiredIfSpecificValueValidator('statut_spet2', 'motif2')]
                 });
 
-                this.etap3Form = new FormGroup({
-                    statut_spet3: new FormControl('', Validators.required),
-                    cause3: new FormControl(''),
-                    motif3: new FormControl(''),
-                    file3: new FormControl(''),
+                this.etap4Form = new FormGroup({
+                    etape: new FormControl(4),
+                    id: new FormControl(this.id),
+                    date:new FormControl(this.formattedDate1) ,
+                    statut_spet4: new FormControl('', Validators.required),
+                    cause4: new FormControl(''),
+                    motif4: new FormControl(''),
+                    file4: new FormControl(''),
                 }, {
-                    validators: [requiredIfSpecificValueValidator('statut_spet2', 'cause3'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
+                    validators: [requiredIfSpecificValueValidator('statut_spet4', 'cause4'), requiredIfSpecificValueValidator('statut_spet3', 'motif3')]
+                });
+
+                this.etap5Form = new FormGroup({
+                    etape: new FormControl(0),
+                    id: new FormControl(this.id),
+                    date:new FormControl(this.formattedDate1) ,
+                    statut_spet5: new FormControl('', Validators.required),
+                    cause5: new FormControl(''),
+                    motif5: new FormControl(''),
+                    file5: new FormControl(''),
+                }, {
+                    validators: [requiredIfSpecificValueValidator('statut_spet5', 'cause5'), requiredIfSpecificValueValidator('statut_spet5', 'motif5')]
                 });
 
             }
         })
-        this.loadPdf();
+      //  this.loadPdf();
+     // this.viewer.initialize();
+
     }
 
     previewFile(file: File) {
@@ -338,9 +498,10 @@ export class DetailDemandVoyageComponent {
     }
     getTheUrl(event: MouseEvent, p: string) {
         event.preventDefault();
-        // const url = (event.target as HTMLAnchorElement).href;
-        console.log(p)
+        this.spinner_pdf = true ;
         this.the_url = p['url'];
+        console.log(p['url'])
+        this.spinner_pdf = false ;
     }
     accept() {
         this.demandVoyageService.accept(this.id).subscribe(response => {
@@ -376,6 +537,9 @@ export class DetailDemandVoyageComponent {
     }
 
     openModal(id_element: number) {
+        if(id_element==3){
+            return
+        }
         this.display = "block";
         console.log(id_element)
         switch (id_element) {
@@ -386,7 +550,6 @@ export class DetailDemandVoyageComponent {
                 this.show_modal_3 = false
                 break;
             case 1:
-                console.log('hre')
                 this.show_modal_0 = false
                 this.show_modal_1 = true
                 this.show_modal_2 = false
@@ -421,144 +584,200 @@ export class DetailDemandVoyageComponent {
                 this.motif2_error = this.motif2.value == '' ? true : false;
                 break;
             case 'motif3':
-                this.motif3_error = this.motif3.value == '' ? true : false;
+                // this.motif3_error = this.motif3.value == '' ? true : false;
                 break;
+            case 'motif4':
+                this.motif4_error = this.motif4.value == '' ? true : false;
+                break;
+            case 'motif5':
+                this.motif5_error = this.motif5.value == '' ? true : false;
+                break; 
 
             default:
             // code block
         }
     }
 
-    onClickSubmit(step: number) {
+    handleFileInput(event) {
+        this.fileToUpload = event.target.files[0];
+    }
+
+    onClickSubmit(event: Event,step: number) {
+        event.preventDefault();
         this.submitted = true;
-        console.log(step)
-        switch (step) {
-            case 0:
-                // if(this.motif0.value == ''){
-                //     this.motif0_error = true;
-                //     return
-                // }
-                if (!this.statut_spet0.invalid && this.statut_spet0.value == 0 && this.motif0.value == '') {
-                    this.motif0_error = true;
-                    return
-                }
+        const now = new Date();
 
-                this.saving = true
-                var formData = this.etap0Form.value;
+        const formattedDate = now.toLocaleString('en-GB', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            second: '2-digit',
+            hour12: false
+        });
 
-                const data0 = new FormData();
-                data0.append('id_demande', formData.id);
-                data0.append('etape', formData.etape);
-                data0.append('data', JSON.stringify(formData));
-                data0.append('Content-Type', 'multipart/form-data');
-                data0.append('file', <File>this.fileToUpload);
-
-                this.demandVoyageService.addDemandeEtape(data0).subscribe((data: any) => {
-                    this.notificationForm(
-                        "success",
-                        "Enregistrement réussi !"
-                    );
-                    this.getDemandeEtape(formData.id);
-                    this.display = "none";
-                }, (error: HttpErrorResponse) => {
-                    console.log("Error while retrieving data");
-                }
-                )
-                this.saving = false
-
-                break;
-            case 1:
-                if (!this.statut_spet1.invalid && this.statut_spet1.value == 0 && this.motif1.value == '') {
-                    this.motif1_error = true;
-                    return
-                }
-                this.saving = true
-                const formData1 = this.etap1Form.value;
-
-                const data1 = new FormData();
-                data1.append('id_demande', formData1.id);
-                data1.append('etape', formData1.etape);
-                data1.append('data', JSON.stringify(formData1));
-                data1.append('Content-Type', 'multipart/form-data');
-                data1.append('file', <File>this.fileToUpload);
-
-                this.demandVoyageService.addDemandeEtape(data1).subscribe((data: any) => {
-                    this.notificationForm(
-                        "success",
-                        "Enregistrement réussi !"
-                    );
-                    this.getDemandeEtape(formData1.id);
-                    this.display = "none";
-                }, (error: HttpErrorResponse) => {
-                    console.log("Error while retrieving data");
-                }
-                )
-                this.saving = false
-
-                break;
-            case 2:
-                if (!this.statut_spet2.invalid && this.statut_spet2.value == 0 && this.motif2.value == '') {
-                    this.motif2_error = true;
-                    return
-                }
-                this.saving = true
-                const formData2 = this.etap2Form.value;
-
-                const data2 = new FormData();
-                data1.append('id_demande', formData2.id);
-                data1.append('etape', formData2.etape);
-                data1.append('data', JSON.stringify(formData2));
-                data1.append('Content-Type', 'multipart/form-data');
-                data1.append('file', <File>this.fileToUpload);
-
-                this.demandVoyageService.addDemandeEtape(data2).subscribe((data: any) => {
-                    this.notificationForm(
-                        "success",
-                        "Enregistrement réussi !"
-                    );
-                    this.getDemandeEtape(formData2.id);
-                    this.display = "none";
-                }, (error: HttpErrorResponse) => {
-                    console.log("Error while retrieving data");
-                }
-                )
-                this.saving = false
-                break;
-            case 3:
-                if (!this.statut_spet3.invalid && this.statut_spet3.value == 0 && this.motif3.value == '') {
-                    this.motif3_error = true;
-                    return
-                }
-                this.saving = true
-                const formData3 = this.etap3Form.value;
-
-                const data3 = new FormData();
-                data1.append('id_demande', formData3.id);
-                data1.append('etape', formData3.etape);
-                data1.append('data', JSON.stringify(formData3));
-                data1.append('Content-Type', 'multipart/form-data');
-                data1.append('file', <File>this.fileToUpload);
-
-                this.demandVoyageService.addDemandeEtape(data3).subscribe((data: any) => {
-                    this.notificationForm(
-                        "success",
-                        "Enregistrement réussi !"
-                    );
-                    this.getDemandeEtape(formData3.id);
-                    this.display = "none";
-                }, (error: HttpErrorResponse) => {
-                    console.log("Error while retrieving data");
-                }
-                )
-                this.saving = false
-                break;
-            default:
-                console.log('default')
-
-                $('html,body').animate({
-                    scrollTop: $("#top").offset().top
-                }, 'slow');
+        if(step !=2){
+            if (!this[`statut_spet${step}`].invalid && this[`statut_spet${step}`].value == 0 && this[`motif${step}`].value == '') {
+                this[`motif${step}_error`] = true
+                return
+            }
         }
+       
+        this.saving = true
+      
+        const formData = this[`etap${step}Form`].value;
+
+        const data = new FormData();
+        data.append('id_demande', formData.id);
+        data.append('etape', formData.etape);
+        data.append('data', JSON.stringify(formData));
+        data.append('Content-Type', 'multipart/form-data');
+        data.append('file', <File>this.fileToUpload);
+
+        this.demandVoyageService.addDemandeEtape(data).subscribe((data: any) => {
+            this.notificationForm(
+                "success",
+                "Enregistrement réussi !"
+            );
+            this.getDemandeEtape(formData.id);
+            this.display = "none";
+            this.saving = false
+        }, (error: HttpErrorResponse) => {
+            console.log("Error while retrieving data");
+        }
+        )
+       
+        // switch (step) {
+        //     case 0:
+        //         // if(this.motif0.value == ''){
+        //         //     this.motif0_error = true;
+        //         //     return
+        //         // }
+        //         if (!this.statut_spet0.invalid && this.statut_spet0.value == 0 && this.motif0.value == '') {
+        //             this.motif0_error = true;
+        //             return
+        //         }
+
+        //         this.saving = true
+        //         var formData = this.etap0Form.value;
+        //         formData.append('date0',formattedDate);
+        //         const data0 = new FormData();
+        //         data0.append('id_demande', formData.id);
+        //         data0.append('etape', formData.etape);
+        //         data0.append('data', JSON.stringify(formData));
+        //         data0.append('Content-Type', 'multipart/form-data');
+        //         data0.append('file', <File>this.fileToUpload);
+
+        //         this.demandVoyageService.addDemandeEtape(data0).subscribe((data: any) => {
+        //             this.notificationForm(
+        //                 "success",
+        //                 "Enregistrement réussi !"
+        //             );
+        //             this.getDemandeEtape(formData.id);
+        //             this.display = "none";
+        //         }, (error: HttpErrorResponse) => {
+        //             console.log("Error while retrieving data");
+        //         }
+        //         )
+        //         this.saving = false
+
+        //         break;
+        //     case 1:
+        //         if (!this.statut_spet1.invalid && this.statut_spet1.value == 0 && this.motif1.value == '') {
+        //             this.motif1_error = true;
+        //             return
+        //         }
+        //         this.saving = true
+        //         const formData1 = this.etap1Form.value;
+        //         formData1.append('date1',formattedDate);
+
+        //         const data1 = new FormData();
+        //         data1.append('id_demande', formData1.id);
+        //         data1.append('etape', formData1.etape);
+        //         data1.append('data', JSON.stringify(formData1));
+        //         data1.append('Content-Type', 'multipart/form-data');
+        //         data1.append('file', <File>this.fileToUpload);
+
+        //         this.demandVoyageService.addDemandeEtape(data1).subscribe((data: any) => {
+        //             this.notificationForm(
+        //                 "success",
+        //                 "Enregistrement réussi !"
+        //             );
+        //             this.getDemandeEtape(formData1.id);
+        //             this.display = "none";
+        //         }, (error: HttpErrorResponse) => {
+        //             console.log("Error while retrieving data");
+        //         }
+        //         )
+        //         this.saving = false
+
+        //         break;
+        //     case 2:
+        //         if (!this.statut_spet2.invalid && this.statut_spet2.value == 0 && this.motif2.value == '') {
+        //             this.motif2_error = true;
+        //             return
+        //         }
+        //         this.saving = true
+        //         const formData2 = this.etap2Form.value;
+        //         formData2.append('date2',formattedDate);
+
+        //         const data2 = new FormData();
+        //         data1.append('id_demande', formData2.id);
+        //         data1.append('etape', formData2.etape);
+        //         data1.append('data', JSON.stringify(formData2));
+        //         data1.append('Content-Type', 'multipart/form-data');
+        //         data1.append('file', <File>this.fileToUpload);
+
+        //         this.demandVoyageService.addDemandeEtape(data2).subscribe((data: any) => {
+        //             this.notificationForm(
+        //                 "success",
+        //                 "Enregistrement réussi !"
+        //             );
+        //             this.getDemandeEtape(formData2.id);
+        //             this.display = "none";
+        //         }, (error: HttpErrorResponse) => {
+        //             console.log("Error while retrieving data");
+        //         }
+        //         )
+        //         this.saving = false
+        //         break;
+        //     case 3:
+        //         if (!this.statut_spet3.invalid && this.statut_spet3.value == 0 && this.motif3.value == '') {
+        //             this.motif3_error = true;
+        //             return
+        //         }
+        //         this.saving = true
+        //         const formData3 = this.etap3Form.value;
+        //         formData3.append('date3',formattedDate);
+
+        //         const data3 = new FormData();
+        //         data1.append('id_demande', formData3.id);
+        //         data1.append('etape', formData3.etape);
+        //         data1.append('data', JSON.stringify(formData3));
+        //         data1.append('Content-Type', 'multipart/form-data');
+        //         data1.append('file', <File>this.fileToUpload);
+
+        //         this.demandVoyageService.addDemandeEtape(data3).subscribe((data: any) => {
+        //             this.notificationForm(
+        //                 "success",
+        //                 "Enregistrement réussi !"
+        //             );
+        //             this.getDemandeEtape(formData3.id);
+        //             this.display = "none";
+        //         }, (error: HttpErrorResponse) => {
+        //             console.log("Error while retrieving data");
+        //         }
+        //         )
+        //         this.saving = false
+        //         break;
+        //     default:
+        //         console.log('default')
+
+        //         $('html,body').animate({
+        //             scrollTop: $("#top").offset().top
+        //         }, 'slow');
+        // }
     }
 
     changeRadio(e) {
@@ -604,17 +823,30 @@ export class DetailDemandVoyageComponent {
         return this.etap2Form.get('file2');
     }
 
-    get statut_spet3(): any {
-        return this.etap3Form.get('statut_spet3');
+    get statut_spet4(): any {
+        return this.etap4Form.get('statut_spet4');
     }
     get cause3(): any {
-        return this.etap3Form.get('cause3');
+        return this.etap4Form.get('cause4');
     }
-    get motif3(): any {
-        return this.etap3Form.get('motif3');
+    get motif4(): any {
+        return this.etap4Form.get('motif4');
     }
-    get file3(): any {
-        return this.etap3Form.get('file3');
+    get file4(): any {
+        return this.etap4Form.get('file4');
+    }
+
+    get statut_spet5(): any {
+        return this.etap5Form.get('statut_spet5');
+    }
+    get cause5(): any {
+        return this.etap5Form.get('cause5');
+    }
+    get motif5(): any {
+        return this.etap5Form.get('motif5');
+    }
+    get file5(): any {
+        return this.etap5Form.get('file5');
     }
 
 }
