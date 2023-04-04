@@ -17,6 +17,7 @@ const routes: Routes =[
     pathMatch: 'full',
   },
   {path: 'sso_callback',component : SsocallbackComponent },
+
   {
     path: '',
     component: AdminLayoutComponent,
