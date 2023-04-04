@@ -21,18 +21,18 @@
                                 </div>
                                 <div class="card-footer">
 
-                                    <div class="d-flex flex-column">
+                                    <div class="d-flex justify-content-end">
                                         <div>
-                                            <h4>Demandes</h4>
+                                            <h4>{{ jobItem.dt}}</h4>
                                         </div>
-                                        <div class="">
+                                        <!-- <div class="">
                                             <div class="text-success ">
                                                 <h5>Traitées : {{ jobItem.dt}}</h5>
                                             </div>
                                             <div class="text-danger">
                                                 <h5>Non traitée : {{ jobItem.dnt}}</h5>
                                             </div>
-                                        </div>
+                                        </div> -->
                                     </div>
                                 </div>
                             </div>
@@ -65,7 +65,7 @@
                                 </div>
                             </div>
                             <div class="col-md-2">
-                                <button class="btn btn-primary" style="background-color: #398E68 !important; " id="sbt_btn">
+                                <button type="submit" class="btn btn-primary" style="background-color: #398E68 !important; " id="sbt_btn">
                                     <span class="fa fa-filter"></span>
                                     Valider
                                 </button>
@@ -77,35 +77,35 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="fw-b">Métier</th>
-                                <th scope="col" class="fw-b">Total</th>
-                                <th scope="col" class="fw-b">Traitées</th>
-                                <th scope="col" class="fw-b">Non traitées</th>
+                                <th scope="col" class="fw-b">En cours de traitement</th>
+                                <th scope="col" class="fw-b">Acceptées</th>
+                                <th scope="col" class="fw-b">Rejetées</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody *ngIf="!spinner">
                             <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+                                <th scope="row">Hébergement touristique</th>
+                                <td>{{ date_stat['HEB_EN_COURS_TRAITEMENT'] }}</td>
+                                <td>{{ date_stat['HEB_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['HEB_REJETE'] }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <th scope="row">Agence de voyage</th>
+                                <td>{{ date_stat['AGV_EN_COURS_TRAITEMENT'] }}</td>
+                                <td>{{ date_stat['AGV_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['AGV_REJETE'] }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <th scope="row">Guide de tourisme</th>
+                                <td>{{ date_stat['GUI_EN_COURS_TRAITEMENT'] }}</td>
+                                <td>{{ date_stat['GUI_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['GUI_REJETE'] }}</td>
                             </tr>
                             <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
+                                <th scope="row">Restaurant et assimilés </th>
+                                <td>{{ date_stat['RES_EN_COURS_TRAITEMENT'] }}</td>
+                                <td>{{ date_stat['RES_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['RES_REJETE'] }}</td>
                             </tr>
                         </tbody>
                     </table>

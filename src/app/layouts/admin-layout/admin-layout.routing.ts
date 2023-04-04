@@ -26,6 +26,7 @@ import { CompetitionsComponent } from '../../competitions-all/competions';
 import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
 import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
 import { RepertoireComponent } from 'app/repertoire/repertoire.component';
+import { OldDbComponent } from 'app/oldDB';
 
 import { SsocallbackComponent } from '../../sso-callback/ssocallback.component';
 
@@ -102,6 +103,12 @@ export const AdminLayoutRoutes: Routes = [
     },
     {
         path: 'operateurs', component: RepertoireComponent,
+        canActivate: [
+            //AuthGuard
+        ]
+    },
+    {
+        path: 'old_db', component: OldDbComponent,
         canActivate: [
             //AuthGuard
         ]

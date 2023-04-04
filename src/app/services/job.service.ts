@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +19,12 @@ export class JobService {
       return this.http.get(`${this.url}`);
     }
   
-    stat_by_demande_job(status:string): Observable<Object> {
-      return this.http.get(`${this.url1}/count/demande/${status}`);
+    stat_by_demande_job(): Observable<Object> {
+      return this.http.get(`${this.url1}/getStatistiqueByMetier`);
     }
 
-    filtre(data:any): Observable<Object> {
-      return this.http.get(`${this.url1}/count/demande/${status}`);
+    getStatByDate(data:any): Observable<Object> {
+  
+      return this.http.get(`${this.url1}/getStatistique`,{params:data});
     }
 }
