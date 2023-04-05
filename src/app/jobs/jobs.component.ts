@@ -37,6 +37,10 @@ export class JobsComponent implements OnInit {
     statistique_by_date = [];
     all_stat=[];
     date_stat=[];
+    init_stat_date:any;
+    pass_stat_date:any;
+    load_all_stat_spinner = true ;
+    load_filters_stat_spinner = true ;
     constructor(private jobService: JobService) { }
 
     filtreForm = new FormGroup({
@@ -98,6 +102,7 @@ export class JobsComponent implements OnInit {
     }
 
     stat(): void {
+       this.load_all_stat_spinner=true;
         this.jobItems = METIERS.filter(menuItem => menuItem);
         this.jobService.stat_by_demande_job().subscribe((data: Array<Job>) => {
             this.all_stat=data['data']
@@ -119,7 +124,7 @@ export class JobsComponent implements OnInit {
                 }
                 
             }
-            console.log(this.jobItems)
+            this.load_all_stat_spinner=false;
         }, (error: HttpErrorResponse) => {
             console.log("Error while retrieving data");
         }
@@ -128,10 +133,44 @@ export class JobsComponent implements OnInit {
 
     ngOnInit() {
        this.stat()
+       const date = new Date();
+       const year = date.getFullYear();
+       const month = (date.getMonth() + 1).toString().padStart(2, '0');
+       const day = date.getDate().toString().padStart(2, '0');
+       this.init_stat_date = `${year}-${month}-${day}`;
+
+
+       const date1 = new Date();
+       date1.setDate(date1.getDate() - 30)
+       const year1 = date1.getFullYear();
+       const month1 = (date1.getMonth() + 1).toString().padStart(2, '0');
+       const day1 = date1.getDate().toString().padStart(2, '0');
+       this.pass_stat_date = `${year1}-${month1}-${day1}`;
+
+       this.filtreForm.patchValue({
+        start_date:this.pass_stat_date ,
+        end_date: this.init_stat_date
+      });
+      this.filtre(this.init_stat_date,this.pass_stat_date)
     }
 
+    filtre(start:any,end:any){
+        this.jobService.getStatByDate({
+            date_debut:start,
+            date_fin:end
+        }).subscribe((data: Array<Job>) => {
+                this.date_stat=data['data']
+                this.spinner = false;
+                this.load_filters_stat_spinner= false;
+            }, (error: HttpErrorResponse) => {
+                console.log("Error while retrieving data");
+                this.spinner = false;
+            })
+    }
     onClickSubmit(): void {
         this.spinner = true;
+        this.load_filters_stat_spinner= true;
+
         const formData = this.filtreForm.value;
         this.jobService.getStatByDate({
             date_debut:formData.start_date,
@@ -139,14 +178,14 @@ export class JobsComponent implements OnInit {
         }).subscribe((data: Array<Job>) => {
                 this.date_stat=data['data']
                 this.spinner = false;
+                this.load_filters_stat_spinner= false;
+
             }, (error: HttpErrorResponse) => {
                 console.log("Error while retrieving data");
                 this.spinner = false;
             })
 
     }
-
-
 
     get start_date(): any {
         return this.filtreForm.get('start_date');

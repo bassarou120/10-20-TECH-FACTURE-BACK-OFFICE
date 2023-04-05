@@ -21,7 +21,6 @@ export class OperateurTouristiqueService {
     }
     else{
       return this.http.get(`${this.url}/listByStatus/nouveau`);
-
     }
   }
 

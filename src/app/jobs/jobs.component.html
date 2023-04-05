@@ -6,7 +6,12 @@
                 <p class="card-category">Les différents corps du métiers touristiques sont disponibles sur ce panel </p>
             </div>
             <div class="card-body">
-                <div class="row justify-content-center">
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-success text-center" role="status" *ngIf="load_all_stat_spinner">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
+                <div class="row justify-content-center" *ngIf="!load_all_stat_spinner">
                     <div class="col-lg-5" *ngFor="let jobItem of jobItems">
                         <a [routerLink]="[jobItem.link]">
                             <div class="card">
@@ -72,8 +77,12 @@
                             </div>
                         </div>
                     </form>
-
-                    <table class="table">
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="load_filters_stat_spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <table class="table" *ngIf="!load_filters_stat_spinner">
                         <thead>
                             <tr>
                                 <th scope="col" class="fw-b">Métier</th>
