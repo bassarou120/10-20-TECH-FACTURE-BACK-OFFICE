@@ -35,7 +35,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'dashboard', component: DashboardComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
 
@@ -92,19 +92,19 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'list-demand-voyage', component: ListDemandVoyageComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
     {
         path: 'detail-demand-voyage/:id', component: DetailDemandVoyageComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
     {
         path: 'operateurs', component: RepertoireComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
     {

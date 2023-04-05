@@ -20,7 +20,7 @@ export class OperateurTouristiqueService {
       return this.http.get(`${this.url}/getByJob/${id}`);
     }
     else{
-      return this.http.get(`${this.url}/list`);
+      return this.http.get(`${this.url}/listByStatus/nouveau`);
 
     }
   }
@@ -30,7 +30,7 @@ export class OperateurTouristiqueService {
       return this.http.get(`${this.url}/getByJob/${id}`);
     }
     else{
-      return this.http.get(`${this.url}/list`);
+      return this.http.get(`${this.url}/listByStatus/ancien`);
 
     }
   }

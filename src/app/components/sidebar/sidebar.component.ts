@@ -20,10 +20,10 @@ export const ROUTES: RouteInfo[] = [
     // { path: '/user-profile', title: 'User Profile',  icon:'person', class: ''},
     { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
     { path: '/competitions', title: 'Concours',  icon:'folder_open', class: '' },
-    { path: '/operateurs', title: 'Rechercher',  icon:'search', class: '' },
+    { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
     { path: 'https://tourisme-app.star-labs.bj/evaluation/', title: 'Evaluation',  icon:'library_books', class: '' },
     // { path: '#', title: 'Recherche',  icon:'autorenew', class: '' },
-    { path: '/old_db', title: 'Ancienne Base',  icon:'search', class: '' },
+    { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
     { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
 
 ];
