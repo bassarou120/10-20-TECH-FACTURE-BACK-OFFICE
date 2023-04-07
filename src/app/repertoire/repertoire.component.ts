@@ -139,7 +139,7 @@ export class RepertoireComponent {
             data['capacite_hebergement'] ?  seach_var['capacite_hebergement'] = data['capacite_hebergement'] : '' ;
             data['type_guide'] ?  seach_var['type_guide'] = data['type_guide'] : '' ;
             data['categorie_guide'] ?  seach_var['categorie_guide'] = data['categorie_guide'] : '' ;
-           
+            seach_var['status']="nouveau";
             this.spinner = true ;
             this.opService.multi_critere_search(seach_var).subscribe((data:Array<OperateurTouristique>)=>{
                 this.operateurs = data;
