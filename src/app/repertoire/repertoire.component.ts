@@ -200,7 +200,7 @@ export class RepertoireComponent {
         return `${startIndex + 1} - ${endIndex} sur ${length}`;
     }
 
- 
+
       openShowModal(id: number) {
         this.selected_op = this.operateurs.find(x => x.id == id);
         this.displayShowModal = "block";

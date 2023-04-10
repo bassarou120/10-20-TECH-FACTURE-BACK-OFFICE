@@ -151,7 +151,7 @@ export class JobsComponent implements OnInit {
         start_date:this.pass_stat_date ,
         end_date: this.init_stat_date
       });
-      this.filtre(this.init_stat_date,this.pass_stat_date)
+      this.filtre(this.pass_stat_date,this.init_stat_date)
     }
 
     filtre(start:any,end:any){
