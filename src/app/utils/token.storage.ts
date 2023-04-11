@@ -58,6 +58,7 @@ export class TokenStorage {
     return sessionStorage.getItem(TOKEN_KEY);
   }
 
+
   public getCurrentUser(): string {
     return sessionStorage.getItem(CURRENT_USER);
   }

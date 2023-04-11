@@ -40,7 +40,7 @@ export const AdminLayoutRoutes: Routes = [
     },
 
     // users
-    { path: 'user-profile', component: UserProfileComponent },
+    { path: 'user-profile/:id', component: UserProfileComponent },
     { path: 'users', component: UsersComponent },
     { path: 'user/add', component: AddUserComponent },
 
@@ -56,7 +56,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'infos', component: InfosComponent,
         canActivate: [
-            //AuthGuard
+            // AuthGuard
         ]
     },
     { path: 'info/add', component: AddInfoComponent },
@@ -72,7 +72,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'competitions', component: CompetitionsComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
 
@@ -86,7 +86,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'faq', component: FaqComponent,
         canActivate: [
-            //AuthGuard
+            // AuthGuard
         ]
     },
     {
@@ -110,7 +110,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'old_db', component: OldDbComponent,
         canActivate: [
-            //AuthGuard
+            // AuthGuard
         ]
     }
 ];

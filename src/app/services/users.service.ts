@@ -19,7 +19,11 @@ export class UsersService {
     return this.http.post(`${this.url}`, user);
   }
 
-  // Supression d'un element 
+  updateBackofficeUser(data,id:number): Observable<Object> {
+    return this.http.post(`${this.url}/updateBackofficeUser/${id}`, data);
+  }
+
+  // Supression d'un element
   delete(user: Users): Observable<Object> {
     return this.http.delete(`${this.url}`, user);
   }
@@ -29,8 +33,8 @@ export class UsersService {
     return this.http.get(`${this.url}/list`);
   }
 
-  // liste des IDE par id
+
   getById(id: number): Observable<Object> {
-    return this.http.get(`${this.url}/${id}`);
+    return this.http.get(`${this.url}/get-by-id/${id}`);
   }
 }

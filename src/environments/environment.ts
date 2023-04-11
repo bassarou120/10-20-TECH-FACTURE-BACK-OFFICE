@@ -6,7 +6,7 @@
 export const environment = {
   production: true,
   // backend: "https://toursime-app-api.herokuapp.com/api/v1",
-  //  backend: "http://localhost:8080/api/v1",
+  //  backend: "http://localhost/api/v1",
   // backend: "https://tourisme-api.herokuapp.com/api/v1",
   backend: "https://tourisme-app-api.star-labs.bj/api/v1",
 

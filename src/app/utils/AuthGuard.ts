@@ -11,6 +11,7 @@ export class AuthGuard implements CanActivate {
 
   ssoUrlCallback: string = environment.ssoUrlCallback;
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+
     if (this.tokenStorage.getToken() !== null) {
       // logged in so return true
       return true;

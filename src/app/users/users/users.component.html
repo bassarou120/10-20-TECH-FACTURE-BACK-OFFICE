@@ -1,14 +1,14 @@
 <div class=".regulations main-content">
     <div class="container-fluid">
         <div class="d-flex justify-content-end">
-            <a routerLink="/user/add" mat-raised-button="" class="btn mat-raised-button mat-button-base">
-                <span class="mat-button-wrapper"><span class="">
-                    <i class="material-icons">add</i></span> Utilisateur </span>
-                <div matripple="" class="mat-ripple mat-button-ripple">
-                </div>
-                <div class="mat-button-focus-overlay">
-                </div>
-            </a>
+<!--            <a routerLink="/user/add" mat-raised-button="" class="btn mat-raised-button mat-button-base">-->
+<!--                <span class="mat-button-wrapper"><span class="">-->
+<!--                    <i class="material-icons">add</i></span> Utilisateur </span>-->
+<!--                <div matripple="" class="mat-ripple mat-button-ripple">-->
+<!--                </div>-->
+<!--                <div class="mat-button-focus-overlay">-->
+<!--                </div>-->
+<!--            </a>-->
         </div>
 
         <div class="card">
@@ -17,6 +17,12 @@
                 <p class="card-category">Ce panel vous permets de gérer les utilisateurs de ce système</p>
             </div>
             <div class="card-body">
+
+                <div class="d-flex justify-content-center">
+                    <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                </div>
                 <div class="row table-responsible">
                     <table class="table datatable">
                         <thead class="text-danger">
@@ -25,7 +31,7 @@
                                 <th style="width:25% !important;">Nom d'utilisateur</th>
                                 <th style="width:20% !important;">Email</th>
                                 <th style="width:20% !important;">Rôle</th>
-                                <th style="width:10% !important;">Poste</th>
+
                                 <th style="width:10% !important;">Status</th>
                                 <th style="width:13% !important;" class="td-actions text-right">Actions</th>
                             </tr>
@@ -48,18 +54,25 @@
                                         {{role.name}}<br>
                                     </div>
                                 </td>
-                                <td>{{user.profession}}</td>
-                                <td><span class="badge badge-success">Oui</span></td>
+<!--                                <td>{{user.profession}}</td>-->
+                                <td>
+                                    <span *ngIf="user.status==true; else elseBlock" class="badge badge-success">ACTIF</span>
+                                    <ng-template #elseBlock>
+                                        <span class="badge badge-danger">INACTIF</span>
+                                    </ng-template>
+
+
+                                </td>
                                 <td class="td-actions text-right">
-                                    <a routerLink="/user-profile" rel="tooltip" class="btn btn-info btn-link">
-                                        <i class="material-icons">info</i>
-                                    </a>
-                                    <a routerLink="/user/add" class="btn btn-success btn-link">
+<!--                                    <a routerLink="/user-profile" rel="tooltip" class="btn btn-info btn-link">-->
+<!--                                        <i class="material-icons">info</i>-->
+<!--                                    </a>-->
+                                    <a [routerLink]="['/user-profile', user.id]" class="btn btn-success btn-link">
                                         <i class="material-icons">edit</i>
                                     </a>
-                                    <button type="button" rel="tooltip" class="btn btn-info  btn-link">
-                                        <i class="material-icons">settings_power</i>
-                                    </button>
+<!--                                    <button type="button" rel="tooltip" class="btn btn-info  btn-link">-->
+<!--                                        <i class="material-icons">settings_power</i>-->
+<!--                                    </button>-->
                                     <button type="button" rel="tooltip" class="btn btn-danger  btn-link">
                                         <i class="material-icons">close</i>
                                     </button>

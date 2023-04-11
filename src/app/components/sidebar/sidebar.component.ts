@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {TokenStorage} from '../../utils/token.storage';
+import jwt_decode from 'jwt-decode';
 
 declare const $: any;
 
@@ -9,6 +11,7 @@ declare interface RouteInfo {
     class: string;
 }
 
+/*
 export const ROUTES: RouteInfo[] = [
     { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
     { path: '/jobs', title: 'Metiers',  icon:'category', class: '' },
@@ -27,6 +30,9 @@ export const ROUTES: RouteInfo[] = [
     { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
 
 ];
+*/
+
+
 
 export const HIDE_ROUTES: RouteInfo[] = [
   { path: '/regulations/:id', title: 'Détail Règlementation',  icon: '', class: '' },
@@ -54,11 +60,121 @@ export const HIDE_ROUTES: RouteInfo[] = [
 export class SidebarComponent implements OnInit {
   menuItems: any[];
 
-  constructor() { }
+  constructor(private tokenStorage:TokenStorage) { }
 
   ngOnInit() {
-    this.menuItems = ROUTES.filter(menuItem => menuItem);
+        // this.menuItems = ROUTES.filter(menuItem => menuItem);
+
+      console.log(this.menuItems)
+
+    this.getUserRole();
   }
+
+  UsetTokenInfo:any;
+  userRole
+
+
+
+
+  getUserRole(){
+
+
+      try {
+        console.log( jwt_decode(this.tokenStorage.getToken()))
+          this.UsetTokenInfo=jwt_decode(this.tokenStorage.getToken());
+
+          this.userRole=this.UsetTokenInfo.user_roles[0].name
+
+      } catch(Error) {
+
+          console.log("error")
+
+      }
+
+
+      switch (this.userRole){
+          case "ROLE_ADMIN":
+              this.menuItems = [
+                  { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+                  { path: '/jobs', title: 'Metiers',  icon:'category', class: '' },
+                  { path: '/regulations', title: 'Règlementations',  icon:'loyalty', class: ''  },
+                  { path: '/trendings', title: 'Tendances',  icon:'library_books', class: '' },
+                  // { path: '/infos', title: 'Comment obtenir ?',  icon:'announcement', class: '' },
+                  { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
+                  { path: '/reclamations', title: 'Réclamations',  icon:'announcement', class: ''},
+                  // { path: '/user-profile', title: 'User Profile',  icon:'person', class: ''},
+                  { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
+                  { path: '/competitions', title: 'Concours',  icon:'folder_open', class: '' },
+                  { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
+                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  // { path: '#', title: 'Recherche',  icon:'autorenew', class: '' },
+                  { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+                  { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
+
+              ];
+           break
+          case "ROLE_COMMISSION_VISITE":
+              this.menuItems = [
+                  { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+
+                  { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
+                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  // { path: 'https://tourisme-app.star-labs.bj/evaluation/', title: 'Evaluation',  icon:'library_books', class: '' },
+
+                  { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+
+              ];
+              break
+          case "ROLE_AUDITEUR":
+              this.menuItems = [
+                  { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+                  { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
+                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+
+              ];
+              break
+
+          case "ROLE_ORGANE_TECH":
+              this.menuItems = [
+                  { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+                  { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
+                  { path: '/reclamations', title: 'Réclamations',  icon:'announcement', class: ''},
+                  { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
+                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+
+                  { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+
+
+              ];
+           break
+
+          case "ROLE_SECRETARIAT":
+              this.menuItems = [
+                  { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+
+                  { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
+
+                  { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
+
+                  { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+
+
+              ];
+           break
+
+      }
+
+
+  }
+
+    getLinkWithExternal(url){
+
+      window.location.href=url;
+
+    }
+
+
   isMobileMenu() {
       if ($(window).width() > 991) {
           return false;

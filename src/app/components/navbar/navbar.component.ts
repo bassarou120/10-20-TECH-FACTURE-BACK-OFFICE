@@ -1,5 +1,6 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import { ROUTES,HIDE_ROUTES } from '../sidebar/sidebar.component';
+import { HIDE_ROUTES } from '../sidebar/sidebar.component';
+// import { ROUTES,HIDE_ROUTES } from '../sidebar/sidebar.component';
 import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
 import { Router } from '@angular/router';
 import {TokenStorage} from '../../utils/token.storage';
@@ -29,7 +30,7 @@ export class NavbarComponent implements OnInit {
     }
    
     ngOnInit(){
-      this.listTitles = ROUTES.filter(listTitle => listTitle);
+      // this.listTitles = ROUTES.filter(listTitle => listTitle);
       this.listTitlesHide = HIDE_ROUTES.filter(listTitleHide => listTitleHide);
       const navbar: HTMLElement = this.element.nativeElement;
       this.toggleButton = navbar.getElementsByClassName('navbar-toggler')[0];
@@ -117,6 +118,8 @@ export class NavbarComponent implements OnInit {
         }
     };
 
+
+    /*
     getTitle(){
       var titlee = this.location.prepareExternalUrl(this.location.path());
       if(titlee.charAt(0) === '#'){
@@ -144,4 +147,7 @@ export class NavbarComponent implements OnInit {
       }
       return 'Tableau de bord';
     }
+
+
+     */
 }
