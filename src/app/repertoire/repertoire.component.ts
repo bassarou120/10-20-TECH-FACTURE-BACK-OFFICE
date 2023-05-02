@@ -120,7 +120,7 @@ export class RepertoireComponent {
             var data = this.searchForm.value;
             var seach_var = [];
            // seach_var['jobId'] = this.id
-            data['job'] ?  seach_var['jobId'] = data['job'] : '' ;
+            data['job'] ?  seach_var['id_job'] = data['id_job'] : '' ;
             data['departement'] ?  seach_var['departement'] = data['departement'].split(',')[0] : '' ;
             data['commune'] ?  seach_var['commune'] = data['commune'] : '' ;
             data['raison_sociale'] ?  seach_var['raison_sociale'] = data['raison_sociale'].toUpperCase() : '' ;
