@@ -29,13 +29,14 @@ import { RepertoireComponent } from 'app/repertoire/repertoire.component';
 import { OldDbComponent } from 'app/oldDB';
 
 import { SsocallbackComponent } from '../../sso-callback/ssocallback.component';
+import {RedirectGuard} from '../../RedirectGuard/RedirectGuard';
 
 export const AdminLayoutRoutes: Routes = [
 
     {
         path: 'dashboard', component: DashboardComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
 
@@ -48,7 +49,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'complaints', component: ComplaintsComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     { path: 'complaints/:id', component: DetailComplaintComponent },
@@ -56,7 +57,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'infos', component: InfosComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     { path: 'info/add', component: AddInfoComponent },
@@ -72,7 +73,7 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'competitions', component: CompetitionsComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
 
@@ -86,31 +87,39 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'faq', component: FaqComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     {
         path: 'list-demand-voyage', component: ListDemandVoyageComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     {
         path: 'detail-demand-voyage/:id', component: DetailDemandVoyageComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     {
         path: 'operateurs', component: RepertoireComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
     },
     {
         path: 'old_db', component: OldDbComponent,
         canActivate: [
-            // AuthGuard
+            AuthGuard
         ]
+    },
+    {
+        path: 'evaluation',
+        canActivate: [RedirectGuard],
+        component: RedirectGuard,
+        data: {
+            externalUrl: 'https://tourisme-app.star-labs.bj/evaluation/hotel/100'
+        }
     }
 ];

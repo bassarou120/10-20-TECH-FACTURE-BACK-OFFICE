@@ -17,7 +17,7 @@ declare interface MetierInfo {
 
 export const METIERS: MetierInfo[] = [
     { jobIcon: 'flight', titre: 'Agences de voyage', description: 'Nombre total de demande', dt: 0, dnt: 0, link: '/list-demand-voyage' },
-    { jobIcon: 'hotel', titre: 'Hotels', description: 'Nombre total de demande', dt: 0, dnt: 0, link: '#' },
+    { jobIcon: 'hotel', titre: 'Hébergements touristique', description: 'Nombre total de demande', dt: 0, dnt: 0, link: '#' },
     { jobIcon: 'restaurant', titre: 'Restaurants et assimilés', description: 'Nombre total de demande', dt: 0, dnt: 0, link: '#' },
     { jobIcon: 'person', titre: 'Guides touristiques', description: 'Tableau de bord Tableau de bTableau de bord', dt: 0, dnt: 0, link: '#' }
 ];

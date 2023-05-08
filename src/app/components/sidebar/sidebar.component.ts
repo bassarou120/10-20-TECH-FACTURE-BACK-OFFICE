@@ -72,11 +72,13 @@ export class SidebarComponent implements OnInit {
 
   UsetTokenInfo:any;
   userRole
+    user_name
 
 
 
 
-  getUserRole(){
+
+    getUserRole(){
 
 
       try {
@@ -84,6 +86,7 @@ export class SidebarComponent implements OnInit {
           this.UsetTokenInfo=jwt_decode(this.tokenStorage.getToken());
 
           this.userRole=this.UsetTokenInfo.user_roles[0].name
+          this.user_name =this.UsetTokenInfo.user_name
 
       } catch(Error) {
 
@@ -106,7 +109,7 @@ export class SidebarComponent implements OnInit {
                   { path: '/faq', title: 'FAQ',  icon:'question_mark', class: '' },
                   { path: '/competitions', title: 'Concours',  icon:'folder_open', class: '' },
                   { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
-                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  { path: "/evaluation", title: 'Evaluation',  icon:'library_books', class: '' },
                   // { path: '#', title: 'Recherche',  icon:'autorenew', class: '' },
                   { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
                   { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
@@ -118,7 +121,7 @@ export class SidebarComponent implements OnInit {
                   { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
 
                   { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
-                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  { path: "/evaluation", title: 'Evaluation',  icon:'library_books', class: '' },
                   // { path: 'https://tourisme-app.star-labs.bj/evaluation/', title: 'Evaluation',  icon:'library_books', class: '' },
 
                   { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
@@ -129,7 +132,7 @@ export class SidebarComponent implements OnInit {
               this.menuItems = [
                   { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
                   { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
-                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  { path: "/evaluation", title: 'Evaluation',  icon:'library_books', class: '' },
                   { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
 
               ];
@@ -141,7 +144,7 @@ export class SidebarComponent implements OnInit {
                   { path: '/complaints', title: 'Plaintes',  icon:'notifications', class: ''},
                   { path: '/reclamations', title: 'Réclamations',  icon:'announcement', class: ''},
                   { path: '/operateurs', title: 'Base operateurs',  icon:'search', class: '' },
-                  { path: "getLinkWithExternal('https://tourisme-app.star-labs.bj/evaluation/')", title: 'Evaluation',  icon:'library_books', class: '' },
+                  { path: "/evaluation", title: 'Evaluation',  icon:'library_books', class: '' },
 
                   { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
 

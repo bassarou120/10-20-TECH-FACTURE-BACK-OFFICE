@@ -25,6 +25,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import {RedirectGuard} from './RedirectGuard/RedirectGuard';
 
 @NgModule({
   imports: [
@@ -51,6 +52,7 @@ import { MatInputModule } from '@angular/material/input';
   providers: [
     AuthService,
     TokenStorage,
+    RedirectGuard,
     // { provide: NZ_I18N, useValue: en_US },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
