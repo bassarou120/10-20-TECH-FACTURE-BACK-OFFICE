@@ -24,6 +24,7 @@ export const ROUTES: RouteInfo[] = [
     { path: 'https://tourisme-app.star-labs.bj/evaluation/', title: 'Evaluation',  icon:'library_books', class: '' },
     // { path: '#', title: 'Recherche',  icon:'autorenew', class: '' },
     { path: '/old_db', title: 'Ancienne Base operateurs',  icon:'search', class: '' },
+    { path: '/indicator', title: 'Statistiques-Indicateur',  icon:'query_stats', class: '' },
     { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
 
 ];

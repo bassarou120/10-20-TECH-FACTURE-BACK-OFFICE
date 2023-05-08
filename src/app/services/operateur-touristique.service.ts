@@ -50,4 +50,9 @@ export class OperateurTouristiqueService {
   multi_critere_search(data: any): Observable<Object> {
       return this.http.get(`${this.search_url}`, {params:data});
   }
+
+      // Enregistrement des reglementation
+      op_stat_by_date(data: any): Observable<Object> {
+        return this.http.get(`${this.url}/getStatistiqueOpByDate`, {params:data});
+      }
 }
