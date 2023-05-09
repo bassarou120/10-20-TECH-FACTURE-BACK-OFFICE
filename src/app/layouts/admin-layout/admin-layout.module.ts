@@ -35,6 +35,7 @@ import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
 import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
 import { RepertoireComponent } from 'app/repertoire/repertoire.component';
 import { OldDbComponent } from 'app/oldDB';
+import { IndicatorComponent } from 'app/indicator';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
@@ -113,7 +114,8 @@ import { BrowserModule } from '@angular/platform-browser';
     ListDemandVoyageComponent,
     DetailDemandVoyageComponent,
     RepertoireComponent,
-    OldDbComponent
+    OldDbComponent,
+    IndicatorComponent
   ]
 })
 

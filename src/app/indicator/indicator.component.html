@@ -1,0 +1,87 @@
+<div class=".jobs main-content">
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header card-header-danger">
+                <h3 class="card-title">Metiers touristiques</h3>
+                <p class="card-category">Création d'entreprise par secteur d'activité </p>
+            </div>
+            <div class="card-body">
+
+                <div class="row m-2">
+                    <h4 class="mb-3">Choisissez la période </h4>
+
+                    <form [formGroup]="filtreForm" (ngSubmit)="onClickSubmit()">
+                        <div class="row">
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Période du" type="date" id="start_date" formControlName="start_date">
+                                </mat-form-field>
+                                <div class="errors">
+                                    <span *ngIf="start_date && start_date.invalid && start_date.touched && filtreForm.get('start_date').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <span *ngIf="start_date && start_date.invalid && start_date.touched && filtreForm.get('start_date').errors.pass" [ngClass]="'error'" [ngClass]="'error'">Vous ne pouvez pas mettre des dates futures</span>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Au" type="date" id="end_date" formControlName="end_date">
+                                </mat-form-field>
+                                <div class="errors ">
+                                    <span *ngIf="end_date && end_date.invalid && end_date.touched && filtreForm.get('end_date').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <span *ngIf="end_date.touched && filtreForm.errors?.dateRange" [ngClass]="'error'" [ngClass]="'error'">Cette date doit être plus grande que la date de debut</span>
+                                    <span *ngIf="end_date && end_date.invalid && end_date.touched && filtreForm.get('end_date').errors.pass" [ngClass]="'error'">Vous ne pouvez pas mettre des dates futures</span>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <button type="submit" class="btn btn-primary" style="background-color: #398E68 !important; " id="sbt_btn">
+                                    <span class="fa fa-filter"></span>
+                                    Valider
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <div class="d-flex justify-content-center">
+                        <div class="spinner-border text-success text-center" role="status" *ngIf="load_filters_stat_spinner">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                    </div>
+                    <table class="table" *ngIf="!load_filters_stat_spinner">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="fw-b">Métier</th>
+                                <th scope="col" class="fw-b">Nombre</th>
+                                <!-- <th scope="col" class="fw-b">Acceptées</th>
+                                <th scope="col" class="fw-b">Rejetées</th> -->
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="!spinner">
+                            <tr>
+                                <th scope="row">Hébergement touristique</th>
+                                <td>{{ date_stat['HEB_TOTAL'] }}</td>
+                                <!-- <td>{{ date_stat['HEB_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['HEB_REJETE'] }}</td> -->
+                            </tr>
+                            <tr>
+                                <th scope="row">Agence de voyage</th>
+                                <td>{{ date_stat['AGV_TOTAL'] }}</td>
+                                <!-- <td>{{ date_stat['AGV_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['AGV_REJETE'] }}</td> -->
+                            </tr>
+                            <tr>
+                                <th scope="row">Guide de tourisme</th>
+                                <td>{{ date_stat['GUI_TOTAL'] }}</td>
+                                <!-- <td>{{ date_stat['GUI_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['GUI_REJETE'] }}</td> -->
+                            </tr>
+                            <tr>
+                                <th scope="row">Restaurant et assimilés </th>
+                                <td>{{ date_stat['RES_TOTAL'] }}</td>
+                                <!-- <td>{{ date_stat['RES_ACCEPTE'] }}</td>
+                                <td>{{ date_stat['RES_REJETE'] }}</td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

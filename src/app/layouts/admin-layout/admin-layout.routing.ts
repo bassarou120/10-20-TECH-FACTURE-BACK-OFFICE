@@ -27,6 +27,7 @@ import { ListDemandVoyageComponent } from 'app/list-demand-voyage';
 import { DetailDemandVoyageComponent } from '../../detail-demand-voyage';
 import { RepertoireComponent } from 'app/repertoire/repertoire.component';
 import { OldDbComponent } from 'app/oldDB';
+import { IndicatorComponent } from 'app/indicator';
 
 import { SsocallbackComponent } from '../../sso-callback/ssocallback.component';
 import {RedirectGuard} from '../../RedirectGuard/RedirectGuard';
@@ -105,13 +106,20 @@ export const AdminLayoutRoutes: Routes = [
     {
         path: 'operateurs', component: RepertoireComponent,
         canActivate: [
-            AuthGuard
+            // AuthGuard
         ]
     },
     {
         path: 'old_db', component: OldDbComponent,
         canActivate: [
             AuthGuard
+            //AuthGuard
+        ]
+    },
+    {
+        path: 'indicator', component: IndicatorComponent,
+        canActivate: [
+            //AuthGuard
         ]
     },
     {
