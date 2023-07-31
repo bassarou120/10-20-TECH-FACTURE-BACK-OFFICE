@@ -1,0 +1,601 @@
+<style>
+    mat-cell {
+        /* text-align: center !important; */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 2px;
+    }
+    
+    ng-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    mat-cell,
+    mat-header-cell,
+    mat-footer-cell {
+        flex: 1;
+        display: block !important;
+        text-align: start !important;
+    }
+    
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+</style>
+<div class=".regulations main-content">
+
+    <div  class="card" style="border-radius: 0px;height: 60px;text-align: center;font-weight: bold;padding-top: 20px">
+        LE ACTUALITES DU RESHAOC
+    </div>
+    <div class="containe ">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-activite-tab" data-toggle="tab" data-target="#nav-activite" type="button" role="tab" aria-controls="nav-activite" aria-selected="true">
+                    Activités pharre
+                </button>
+                <button class="nav-link" id="nav-article-tab" data-toggle="tab" data-target="#nav-article" type="button" role="tab" aria-controls="nav-article" aria-selected="false">
+                    Articles
+                </button>
+                <button class="nav-link" id="nav-agenda-tab" data-toggle="tab" data-target="#nav-agenda" type="button" role="tab" aria-controls="nav-agenda" aria-selected="false">
+                    Agenda
+                </button>
+
+               <button class="nav-link" id="nav-journee-tab" data-toggle="tab" data-target="#nav-journee" type="button" role="tab" aria-controls="nav-journee" aria-selected="false">
+                   Journées Scientifiques
+                </button>
+
+
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+
+            <div class="tab-pane fade show active" id="nav-activite" role="tabpanel" aria-labelledby="nav-activite-tab">
+
+                    <div class="d-flex justify-content-end">
+                        <a [routerLink]="['/add-actualite', 'ACTIVITE-PHARRE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
+
+                    <span class=""><span class="">
+                        <i class="material-icons">add</i></span> ajouter Activité pharre </span>
+                            <div matripple="" class="mat-ripple mat-button-ripple">
+                            </div>
+                            <div class="mat-button-focus-overlay">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h3 class="card-title">Activités pharre</h3>
+                            <p class="card-category">Ce panel vous permets de gérer les Activités pharre</p>
+
+                        </div>
+                        <div class="card-body">
+                            <div class=" m-3 d-flex justify-content-between">
+                                <div class="">
+                                    <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                                </div>
+                            </div>
+                            <div class="row table-responsible">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+
+                                <div class="m-2" *ngIf="!spinner">
+
+                                    <table class="table table-responsive table-striped">
+                                        <tr class="card-header card-header-danger" >
+                                            <th>N0</th>
+                                            <th>Titre</th>
+                                            <th>Type</th>
+                                            <th>image</th>
+                                            <th>Date</th>
+                                            <th>Action</th>
+                                        </tr>
+
+                                        <tbody>
+                                        <tr *ngFor="let a of listActivite ; let i = index" >
+                                            <td>{{i+1}}</td>
+                                            <td>{{a.title}}</td>
+                                            <td>{{a.type}}</td>
+                                            <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
+                                            <td>{{a.created_at }}</td>
+                                            <td>
+                                                <a [routerLink]="['/edit-actualite',  a.id ]" rel="tooltip" class="action">
+                                                  <i class="material-icons text-info">info</i>
+                                                                                                 </a>
+                                                <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                      <i class="material-icons ">close</i>
+                                                                                                      </button>
+                                            </td>
+
+                                        </tr>
+                                        </tbody>
+
+                                    </table>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 ">
+<!--                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+                        </div>
+                    </div>
+
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-article" role="tabpanel" aria-labelledby="nav-article-tab">
+                <div class="d-flex justify-content-end">
+                    <a [routerLink]="['/add-actualite', 'ARTICLE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
+
+                    <span class=""><span class="">
+                        <i class="material-icons">add</i></span> ajouter Article </span>
+                        <div matripple="" class="mat-ripple mat-button-ripple">
+                        </div>
+                        <div class="mat-button-focus-overlay">
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Articles</h3>
+                        <p class="card-category">Ce panel vous permets de gérer les Articles</p>
+
+                    </div>
+                    <div class="card-body">
+                        <div class=" m-3 d-flex justify-content-between">
+                            <div class="">
+                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                            </div>
+                        </div>
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+
+                                <table class="table table-responsive table-striped">
+                                    <tr class="card-header card-header-danger" >
+                                        <th>N0</th>
+                                        <th>Titre</th>
+                                        <th>Type</th>
+                                        <th>image</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    <tbody>
+                                    <tr *ngFor="let a of listArticle; let i = index" >
+                                        <td>{{i+1}}</td>
+                                        <td>{{a.title}}</td>
+                                        <td>{{a.type}}</td>
+                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
+                                        <td>{{a.created_at }}</td>
+                                        <td>
+                                            <a [routerLink]="['/regulations', a.id]" rel="tooltip" class="action">
+                                                <i class="material-icons text-info">info</i>
+                                            </a>
+                                            <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                <i class="material-icons ">close</i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
+
+
+                                <!--
+                                                                <mat-table [dataSource]="dataSourceArticle" matSort>
+
+                                                                    <ng-container matColumnDef="id">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <ng-container matColumnDef="type">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'0.1 1 10%'"> Type </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'"> {{row.type}} </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <ng-container matColumnDef="titre">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Titre
+                                                                        </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 40%'">
+                                                                            {{row.titre}}
+                                                                        </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <ng-container matColumnDef="job">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Job
+                                                                        </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                                                            <a routerLink="/jobs">
+                                                                                <span *ngIf="row.job.name=='Restaurant'" class="">Établissement de restauration</span>
+                                                                                <span *ngIf="row.job.name=='Voyage'" class="">Agence de voyage</span>
+                                                                                <span *ngIf="row.job.name=='Hebergement'" class="">Hébergement touristique</span>
+                                                                                <span *ngIf="row.job.name=='Guide'" class="">Guide de tourisme</span>
+                                                                            </a>
+                                                                        </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <ng-container matColumnDef="isDisplayed">
+                                                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> Afficher
+                                                                        </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 5%'">
+                                                                            <span *ngIf="row.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                                                                            <ng-template #elseBlock>
+                                                                                <span class="badge badge-danger">Non</span>
+                                                                            </ng-template>
+                                                                        </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <ng-container matColumnDef="action">
+                                                                        <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 20%'"> Action
+                                                                        </mat-header-cell>
+                                                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                                                            <div class="d-flex justify-content-center">
+                                                                                <a [routerLink]="['/regulations', row.id]" rel="tooltip" class="action">
+                                                                                    <i class="material-icons text-info">info</i>
+                                                                                </a>
+                                                                                <a *ngIf="row.file" [href]="row.file" rel="tooltip" class="action">
+                                                                                    <i class="material-icons text-warning">download</i>
+                                                                                </a>
+                                                                                <a href="javascript:void(0)" class="action" (click)="edit(row.id)">
+                                                                                    <i class="material-icons text-success">edit</i>
+                                                                                </a>
+                                                                                <a href="javascript:void(0)" rel="tooltip" class="action" (click)="hideElement(row.id)">
+                                                                                    <i class="material-icons text-danger">settings_power</i>
+                                                                                </a>
+                                                                                <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                                                    <i class="material-icons ">close</i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </mat-cell>
+                                                                    </ng-container>
+
+                                                                    <mat-header-row *matHeaderRowDef="displayedColumnsActivite"></mat-header-row>
+                                                                    <mat-row *matRowDef="let row; columns: displayedColumnsActivite; ">
+                                                                    </mat-row>
+
+                                                                </mat-table>
+                                                                -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 ">
+<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-agenda" role="tabpanel" aria-labelledby="nav-agenda-tab">
+
+                <div class="d-flex justify-content-end">
+                    <a [routerLink]="['/add-actualite', 'AGENDA']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
+
+                    <span class=""><span class="">
+                        <i class="material-icons">add</i></span> ajouter Article </span>
+                        <div matripple="" class="mat-ripple mat-button-ripple">
+                        </div>
+                        <div class="mat-button-focus-overlay">
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Agenda</h3>
+                        <p class="card-category">Ce panel vous permets de gérer les    Agenda</p>
+
+                    </div>
+                    <div class="card-body">
+                        <div class=" m-3 d-flex justify-content-between">
+                            <div class="">
+                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                            </div>
+                        </div>
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <table class="table table-responsive table-striped">
+                                    <tr class="card-header card-header-danger" >
+                                        <th>N0</th>
+                                        <th>Titre</th>
+                                        <th>Type</th>
+                                        <th>image</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    <tbody>
+                                    <tr *ngFor="let a of listAgenda ; let i = index" >
+                                        <td>{{i+1}}</td>
+                                        <td>{{a.title}}</td>
+                                        <td>{{a.type}}</td>
+                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
+                                        <td>{{a.created_at }}</td>
+                                        <td>
+                                            <a [routerLink]="['/regulations', a.id]" rel="tooltip" class="action">
+                                                <i class="material-icons text-info">info</i>
+                                            </a>
+                                            <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                <i class="material-icons ">close</i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
+
+                                <!--
+                                <mat-table [dataSource]="dataSourceAgenda" matSort>
+
+                                    <ng-container matColumnDef="id">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                                        <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="type">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'0.1 1 10%'"> Type </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'"> {{row.type}} </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="titre">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Titre
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 40%'">
+                                            {{row.titre}}
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="job">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Job
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                            <a routerLink="/jobs">
+                                                <span *ngIf="row.job.name=='Restaurant'" class="">Établissement de restauration</span>
+                                                <span *ngIf="row.job.name=='Voyage'" class="">Agence de voyage</span>
+                                                <span *ngIf="row.job.name=='Hebergement'" class="">Hébergement touristique</span>
+                                                <span *ngIf="row.job.name=='Guide'" class="">Guide de tourisme</span>
+                                            </a>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="isDisplayed">
+                                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> Afficher
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 5%'">
+                                            <span *ngIf="row.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                                            <ng-template #elseBlock>
+                                                <span class="badge badge-danger">Non</span>
+                                            </ng-template>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="action">
+                                        <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 20%'"> Action
+                                        </mat-header-cell>
+                                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                                            <div class="d-flex justify-content-center">
+                                                <a [routerLink]="['/regulations', row.id]" rel="tooltip" class="action">
+                                                    <i class="material-icons text-info">info</i>
+                                                </a>
+                                                <a *ngIf="row.file" [href]="row.file" rel="tooltip" class="action">
+                                                    <i class="material-icons text-warning">download</i>
+                                                </a>
+                                                <a href="javascript:void(0)" class="action" (click)="edit(row.id)">
+                                                    <i class="material-icons text-success">edit</i>
+                                                </a>
+                                                <a href="javascript:void(0)" rel="tooltip" class="action" (click)="hideElement(row.id)">
+                                                    <i class="material-icons text-danger">settings_power</i>
+                                                </a>
+                                                <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                    <i class="material-icons ">close</i>
+                                                </button>
+                                            </div>
+                                        </mat-cell>
+                                    </ng-container>
+
+                                    <mat-header-row *matHeaderRowDef="displayedColumnsActivite"></mat-header-row>
+                                    <mat-row *matRowDef="let row; columns: displayedColumnsActivite; ">
+                                    </mat-row>
+
+                                </mat-table>
+                                   -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 ">
+<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-journee" role="tabpanel" aria-labelledby="nav-journee-tab">
+
+                <div class="d-flex justify-content-end">
+                    <a [routerLink]="['/add-actualite', 'JOURNEE-SCIENTIFIQUE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
+
+                    <span class=""><span class="">
+                        <i class="material-icons">add</i></span> ajouter journée Scientifique </span>
+                        <div matripple="" class="mat-ripple mat-button-ripple">
+                        </div>
+                        <div class="mat-button-focus-overlay">
+                        </div>
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Journée Scientifique </h3>
+                        <p class="card-category">Ce panel vous permets de gérer les Journées Scientifique</p>
+
+                    </div>
+                    <div class="card-body">
+                        <div class=" m-3 d-flex justify-content-between">
+                            <div class="">
+                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
+                            </div>
+                        </div>
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <table class="table table-responsive table-striped">
+                                    <tr class="card-header card-header-danger" >
+                                        <th>N0</th>
+                                        <th>Titre</th>
+                                        <th>Type</th>
+                                        <th>image</th>
+                                        <th>Date</th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                    <tbody>
+                                    <tr *ngFor="let a of listJournee ; let i = index" >
+                                        <td>{{i+1}}</td>
+                                        <td>{{a.title}}</td>
+                                        <td>{{a.type}}</td>
+                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
+                                        <td>{{a.created_at }}</td>
+                                        <td>
+                                            <a [routerLink]="['/regulations', a.id]" rel="tooltip" class="action">
+                                                <i class="material-icons text-info">info</i>
+                                            </a>
+                                            <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                                <i class="material-icons ">close</i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                    </tbody>
+
+                                </table>
+
+                                <!--
+                <mat-table [dataSource]="dataSourceActivite" matSort>
+
+                    <ng-container matColumnDef="id">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> # </mat-header-cell>
+                        <mat-cell *matCellDef="let row;let i = index" [style.flex]="'1 1 5%'"> {{i+1}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="type">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'0.1 1 10%'"> Type </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 10%'"> {{row.type}} </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="titre">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 40%'"> Titre
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 40%'">
+                            {{row.titre}}
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="job">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 20%'"> Job
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                            <a routerLink="/jobs">
+                                <span *ngIf="row.job.name=='Restaurant'" class="">Établissement de restauration</span>
+                                <span *ngIf="row.job.name=='Voyage'" class="">Agence de voyage</span>
+                                <span *ngIf="row.job.name=='Hebergement'" class="">Hébergement touristique</span>
+                                <span *ngIf="row.job.name=='Guide'" class="">Guide de tourisme</span>
+                            </a>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="isDisplayed">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header style="font-weight: bold;" [style.flex]="'1 1 5%'"> Afficher
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 5%'">
+                            <span *ngIf="row.isDisplayed; else elseBlock" class="badge badge-success">Oui</span>
+                            <ng-template #elseBlock>
+                                <span class="badge badge-danger">Non</span>
+                            </ng-template>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="action">
+                        <mat-header-cell *matHeaderCellDef style="font-weight: bold; " [style.flex]="'1 1 20%'"> Action
+                        </mat-header-cell>
+                        <mat-cell *matCellDef="let row" [style.flex]="'1 1 20%'">
+                            <div class="d-flex justify-content-center">
+                                <a [routerLink]="['/regulations', row.id]" rel="tooltip" class="action">
+                                    <i class="material-icons text-info">info</i>
+                                </a>
+                                <a *ngIf="row.file" [href]="row.file" rel="tooltip" class="action">
+                                    <i class="material-icons text-warning">download</i>
+                                </a>
+                                <a href="javascript:void(0)" class="action" (click)="edit(row.id)">
+                                    <i class="material-icons text-success">edit</i>
+                                </a>
+                                <a href="javascript:void(0)" rel="tooltip" class="action" (click)="hideElement(row.id)">
+                                    <i class="material-icons text-danger">settings_power</i>
+                                </a>
+                                <button type="button" rel="tooltip " class="btn btn-link btn-sm btn-danger" (click)="deleteElement(row.id)">
+                                    <i class="material-icons ">close</i>
+                                </button>
+                            </div>
+                        </mat-cell>
+                    </ng-container>
+
+                    <mat-header-row *matHeaderRowDef="displayedColumnsActivite "></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: displayedColumnsActivite; ">
+                    </mat-row>
+
+                </mat-table>
+                -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 ">
+<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+</div>

@@ -68,7 +68,11 @@ export class SidebarComponent implements OnInit {
 
       console.log(this.menuItems)
 
-    this.getUserRole();
+      this.getMenu();
+
+      
+
+    // this.getUserRole();
   }
 
   UsetTokenInfo:any;
@@ -77,6 +81,20 @@ export class SidebarComponent implements OnInit {
 
 
 
+
+    getMenu(){
+
+        this.menuItems = [
+            { path: '/dashboard', title: 'Tableau de bord',  icon: 'dashboard', class: '' },
+            { path: '/dashboard', title: 'Activités pharre',  icon: 'dashboard', class: '' },
+            { path: '/dashboard', title: 'Articles',  icon: 'dashboard', class: '' },
+            { path: '/dashboard', title: 'Agenda',  icon: 'dashboard', class: '' },
+            { path: '/dashboard', title: 'Journées Scientifiques',  icon: 'dashboard', class: '' },
+
+            { path: '/regulations', title: 'Règlementations',  icon:'loyalty', class: ''  },
+            { path: '/users', title: 'Utilisateurs',  icon:'people', class: '' },
+            ]
+    }
 
 
     getUserRole(){

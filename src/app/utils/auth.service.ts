@@ -19,7 +19,7 @@ const httpOptions = {
 @Injectable()
 export class AuthService {
 
-  authUrl = environment.backend + '/auth';
+  authUrl = environment.backend  ;
   //currentUserUrl = environment.backend + '/user/me';
 
 
@@ -27,9 +27,9 @@ export class AuthService {
   }
 
   attemptAuth(usernameOrEmail: string, password: string): Observable<any> {
-    const credentials = {usernameOrEmail: usernameOrEmail, password: password};
+    const credentials = {email: usernameOrEmail, password: password};
     console.log('attempAuth ::');
-    return this.http.post(`${this.authUrl}/signin`, credentials,httpOptions );
+    return this.http.post(`${this.authUrl}/login`, credentials,httpOptions );
   }
 
   retrieveCurrentUser() {

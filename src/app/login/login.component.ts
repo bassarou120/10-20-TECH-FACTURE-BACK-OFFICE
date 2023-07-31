@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
         });
 
 
-        this.tokenStorage.signOut();
+      this.tokenStorage.signOut();
 
     }
 
@@ -75,10 +75,22 @@ export class LoginComponent implements OnInit {
                             console.log("Login ou mot de passe incorrect !");
                               this.notificationForm("danger", "Login ou mot de passe incorrect !");
                         } else {
-                            this.tokenStorage.saveToken(data.accessToken);
+                            this.tokenStorage.saveToken(data.data.token);
+                            console.log(data);
                             console.log("Login OK OK  !");
                             console.log(this.tokenStorage.getToken());
-                            this.storeCurrentUser();
+
+                            this.tokenStorage.saveCurrentUser(JSON.stringify(data.data.user));
+
+                            console.log(this.tokenStorage.getCurrentUser());
+
+                            // this.user = JSON.parse(this.tokenStorage.getCurrentUser());
+                            // this.user = JSON.parse(this.tokenStorage.getCurrentUser());
+
+                            // location.href = "/dashboard";
+                            this.router.navigate(['/dashboard']);
+
+                            // this.storeCurrentUser();
                         }
                     },
                     (error) => {
@@ -126,7 +138,9 @@ export class LoginComponent implements OnInit {
                         this.user = JSON.parse(this.tokenStorage.getCurrentUser());
                         console.log(this.user.roles[0].name);
                         // location.href = "/dashboard";
+                        this.router.navigate(['/dashboard']);
 
+                        /*
                         if (this.user.roles[0].name == "ROLE_ADMIN") {
                             // location.href = "/dashboard";
                             this.router.navigate(['/dashboard']);
@@ -149,7 +163,8 @@ export class LoginComponent implements OnInit {
                                 this.router.navigate(['/dashboard']);
                             }
 
-                        } else {
+                        } else
+                            {
 
                             /*
                             this.modalService.info({
@@ -163,6 +178,7 @@ export class LoginComponent implements OnInit {
                             });
 
                             */
+                        /*
                             this.notificationForm(
                                 "info",
                                 " Veuillez réinitialiser votre mot de passe pour la toute première fois " +
@@ -170,6 +186,8 @@ export class LoginComponent implements OnInit {
                             );
                             this.isFirstLogin = true;
                         }
+
+                        */
 
                     }
                 }

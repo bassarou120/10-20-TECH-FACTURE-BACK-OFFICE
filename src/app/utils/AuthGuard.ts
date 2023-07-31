@@ -17,13 +17,13 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
-    // console.log("sdsadsa");
-    window.location.href="https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri="+this.ssoUrlCallback+"&response_type=code&scope=openid&authError=true";
+    // // console.log("sdsadsa");
+    // window.location.href="https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri="+this.ssoUrlCallback+"&response_type=code&scope=openid&authError=true";
 
       // this.router.navigateByUrl("https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri="+this.ssoUrl+"&response_type=code&scope=openid&authError=true")
 
     // not logged in so redirect to login page with the return url
-   // this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+   this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
     return false;
   }
 }

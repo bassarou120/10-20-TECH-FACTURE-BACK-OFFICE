@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { CompetitionService } from 'app/services/competition.service';
 import { ComplaintsService } from 'app/services/complaints.service';
-import { RegulationService } from 'app/services/regulation.service';
+import { ActualiteService } from 'app/services/actualite.service';
 import { Regulation } from 'app/models/regulation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,7 +15,7 @@ import { Complaints } from 'app/models/complaints';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private competitionService: CompetitionService,private complaintsService: ComplaintsService,private regulationService:RegulationService) { }
+  constructor(private competitionService: CompetitionService,private complaintsService: ComplaintsService,private regulationService:ActualiteService) { }
 
    
   regulations_count: number;  
@@ -151,10 +151,10 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   // this.getRegCount();
-    this.getComCount();
+  //   this.getComCount();
     // this.getReclaCount();
     // this.getComplCount();
-    this.getList();
+    // this.getList();
     // this.getReclaUntreatCount();
     // this.getPendingCompCount();
     // this.getPassedCompCount();

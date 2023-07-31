@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as Chartist from 'chartist';
 import { CompetitionService } from 'app/services/competition.service';
 import { ComplaintsService } from 'app/services/complaints.service';
-import { RegulationService } from 'app/services/regulation.service';
+import { ActualiteService } from 'app/services/actualite.service';
 import { Regulation } from 'app/models/regulation';
 import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';

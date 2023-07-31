@@ -60,71 +60,7 @@
             </div>
 
         </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">notifications</i>
-                        </div>
-                        <p class="card-category text-danger">Plaintes non traitée </p>
-                        <h3 class="card-title text-danger">
-                            <div class="spinner-border text-success" role="status" *ngIf="loading;else el">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #el>{{stat_data['nbrPlaintesNonTraitee'] }}</ng-template>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
 
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">notifications</i>
-                        </div>
-                        <p class="card-category text-danger">Réclamations non traitée </p>
-                        <h3 class="card-title text-danger">
-                            <div class="spinner-border text-success" role="status" *ngIf="loading;else ele">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #ele>{{ stat_data['nbrReclamationNonTraitee']}}</ng-template>
-
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <!-- <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">folder</i>
-                        </div>
-                        <p class="card-category text-danger ">Concours cloturée</p>
-                        <h3 class="card-title text-danger">
-                            <div class="spinner-border text-success" role="status" *ngIf="spinner7;else elseB">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #elseB>{{ competitions_passed_count}}</ng-template>
-
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-                        <!-- <div class="stats">
-                            <i class="material-icons">date_range</i> Last 24 Hours
-                        </div> -->
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-lg-12 col-md-12">

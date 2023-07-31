@@ -1,0 +1,348 @@
+<style>
+    mat-cell {
+        /* text-align: center !important; */
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 2px;
+    }
+    
+    ng-container {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    
+    mat-cell,
+    mat-header-cell,
+    mat-footer-cell {
+        flex: 1;
+        display: block !important;
+        text-align: start !important;
+    }
+    
+    .action {
+        margin: 10px !important;
+        width: 10px !important;
+    }
+
+
+    .ql-container {
+        height:500px !important;
+    }
+</style>
+<div class=".regulations main-content">
+
+    <div  class="card" style="border-radius: 0px;height: 60px;text-align: center;font-weight: bold;padding-top: 20px">
+        LE  RESHAOC
+    </div>
+    <div class="containe ">
+        <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                <button class="nav-link active" id="nav-presentation-tab" data-toggle="tab" data-target="#nav-presentation" type="button" role="tab" aria-controls="nav-presentation" aria-selected="true">
+                    Présentation du RESHAOC
+                </button>
+                <button class="nav-link" id="nav-mission-tab" data-toggle="tab" data-target="#nav-mission" type="button" role="tab" aria-controls="nav-mission" aria-selected="false">
+                    Missions
+                </button>
+                <button class="nav-link" id="nav-objectif-tab" data-toggle="tab" data-target="#nav-objectif" type="button" role="tab" aria-controls="nav-objectif" aria-selected="false">
+                    Objectifs
+                </button>
+                 <button class="nav-link" id="nav-organisation-tab" data-toggle="tab" data-target="#nav-organisation" type="button" role="tab" aria-controls="nav-organisation" aria-selected="false">
+                    Organisation
+                </button>
+
+                  <button class="nav-link" id="nav-plan-tab" data-toggle="tab" data-target="#nav-plan" type="button" role="tab" aria-controls="nav-plan" aria-selected="false">
+                      Plan stratégique
+                </button>
+
+                  <button class="nav-link" id="nav-document-tab" data-toggle="tab" data-target="#nav-document" type="button" role="tab" aria-controls="nav-document" aria-selected="false">
+                      Documents fondamentaux
+                    </button>
+
+
+            </div>
+        </nav>
+
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-presentation" role="tabpanel" aria-labelledby="nav-presentation-tab">
+
+                    <div class="card">
+                        <div class="card-header card-header-danger">
+                            <h3 class="card-title">Présentation du RESHAOC</h3>
+                            <p class="card-category">Ce panel vous permets de gérer la Présentation du RESHAOC</p>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="row table-responsible">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                </div>
+                                <div class="m-2" *ngIf="!spinner">
+                                    <div class="d-flex justify-content-end">
+
+                                    <button   (click)="enregistrer('presentation')"    type="submit"   class="btn btn-fill btn-success mat-raised-button mat-button-base">
+                                        <span class="fa fa-spinner fa-spin d-none" id="spinner"></span>
+                                        <span class="mat-button-wrapper ">Enregistrer</span>
+                                    </button>
+                                    </div>
+
+                                    <div>
+                                        <ngx-quill   [style]="{'height':'300px'}"   [options]="editorOptions"
+                                                   (blur)="onEditorBluredPresention($event)"
+                                                   (focus)="onEditorFocusedPresention($event)"
+                                                   (ready)="onEditorCreatedPresention($event)"
+                                                   (change)="onContentChangedPresention($event)">
+                                        </ngx-quill>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-mission" role="tabpanel" aria-labelledby="nav-mission-tab">
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Mission</h3>
+                        <p class="card-category">Ce panel vous permets de gérer la mission du RESHAOC</p>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button   (click)="enregistrer('mission')"    type="submit" id="sbt_btn" class="btn btn-fill btn-success mat-raised-button mat-button-base">
+                                        <span class="fa fa-spinner fa-spin d-none" id="spinnerMission"></span>
+                                        <span class="mat-button-wrapper ">Enregistrer</span>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <ngx-quill   [style]="{'height':'300px'}"   [options]="editorOptions"
+                                                 (blur)="onEditorBluredMission($event)"
+                                                 (focus)="onEditorFocusedMission($event)"
+                                                 (ready)="onEditorCreatedMission($event)"
+                                                 (change)="onContentChangedMission($event)">
+                                    </ngx-quill>
+                                </div>
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-objectif" role="tabpanel" aria-labelledby="nav-objectif-tab">
+
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Objectif</h3>
+                        <p class="card-category">Ce panel vous permets de gérer les  Objectif du RESHAOC</p>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button   (click)="enregistrer('objectif')"    type="submit" id="sbt_btn" class="btn btn-fill btn-success mat-raised-button mat-button-base">
+                                        <span class="fa fa-spinner fa-spin d-none" id="spinnerObjectif"></span>
+                                        <span class="mat-button-wrapper ">Enregistrer</span>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <ngx-quill   [style]="{'height':'300px'}"   [options]="editorOptions"
+                                                 (blur)="onEditorBluredObjectif($event)"
+                                                 (focus)="onEditorFocusedObjectif($event)"
+                                                 (ready)="onEditorCreatedObjectif($event)"
+                                                 (change)="onContentChangedObjectif($event)">
+                                    </ngx-quill>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-organisation" role="tabpanel" aria-labelledby="nav-organisation-tab">
+
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Organisation</h3>
+                        <p class="card-category">Ce panel vous permets de gérer l'organisation du RESHAOC</p>
+
+                    </div>
+                    <div class="card-body">
+
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button   (click)="enregistrer('organisation')"    type="submit" id="sbt_btn" class="btn btn-fill btn-success mat-raised-button mat-button-base">
+                                        <span class="fa fa-spinner fa-spin d-none" id="spinnerObjectif"></span>
+                                        <span class="mat-button-wrapper ">Enregistrer</span>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <ngx-quill   [style]="{'height':'300px'}"   [options]="editorOptions"
+                                                 (blur)="onEditorBluredOrganisation($event)"
+                                                 (focus)="onEditorFocusedOrganisation($event)"
+                                                 (ready)="onEditorCreatedOrganisation($event)"
+                                                 (change)="onContentChangedOrganisation($event)">
+                                    </ngx-quill>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-plan" role="tabpanel" aria-labelledby="nav-journee-tab">
+
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">Plan stratégique </h3>
+                        <p class="card-category">Ce panel vous permets de gérer le plan stratégique du RESAHOC'</p>
+
+                    </div>
+                    <div class="card-body">
+                        <div class=" m-3 d-flex justify-content-between">
+
+                        </div>
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+                                <div class="d-flex justify-content-end">
+
+                                    <button   (click)="enregistrer('plan')"    type="submit" id="sbt_btn" class="btn btn-fill btn-success mat-raised-button mat-button-base">
+                                        <span class="fa fa-spinner fa-spin d-none" id="spinnerOrganisation"></span>
+                                        <span class="mat-button-wrapper ">Enregistrer</span>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <ngx-quill   [style]="{'height':'300px'}"   [options]="editorOptions"
+                                                 (blur)="onEditorBluredPlan($event)"
+                                                 (focus)="onEditorFocusedPlan($event)"
+                                                 (ready)="onEditorCreatedPlan($event)"
+                                                 (change)="onContentChangedPlan($event)">
+                                    </ngx-quill>
+                                </div>
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-plan" role="tabpanel" aria-labelledby="nav-journee-tab">
+
+
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h3 class="card-title">     Documents fondamentaux </h3>
+                        <p class="card-category">Ce panel vous permets de gérer les Documents fondamentaux</p>
+
+                    </div>
+                    <div class="card-body">
+                        <div class=" m-3 d-flex justify-content-between">
+
+                        </div>
+                        <div class="row table-responsible">
+                            <div class="d-flex justify-content-center">
+                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="m-2" *ngIf="!spinner">
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+
+
+
+</div>

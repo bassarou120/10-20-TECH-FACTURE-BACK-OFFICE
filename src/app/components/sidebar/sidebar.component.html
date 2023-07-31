@@ -2,9 +2,9 @@
     <a href="#" class="simple-text">
         <!-- logo-img -->
         <div class="">
-            <img src="/assets/img/logo_ministere.png" width="100" />
+            <img src="/assets/img/lg1.png" width="50" />
         </div>
-        MTCA - {{user_name}}
+       RESHAOC - {{user_name}}
     </a>
 </div>
 <div class="sidebar-wrapper">
@@ -38,8 +38,7 @@
                     </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Mike John responded to your email</a>
-                    <a class="dropdown-item" href="#">You have 5 new tasks</a>
+
                     <a class="dropdown-item" href="#">You're now friend with Andrew</a>
                     <a class="dropdown-item" href="#">Another Notification</a>
                     <a class="dropdown-item" href="#">Another One</a>
@@ -55,12 +54,81 @@
             </li>
         </ul>
     </div>
+
+
     <ul class="nav">
-        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">
-            <a class="nav-link" [routerLink]="[menuItem.path]">
-                <i class="material-icons">{{menuItem.icon}}</i>
-                <p>{{menuItem.title}}</p>
+        <li routerLinkActive="active"   class="nav-item .dropdown-menu ">
+
+            <a class="nav-link" [routerLink]="['/dashboard']">
+                <i class="material-icons">dashboard</i>
+                <p>Tableau de bord</p>
             </a>
         </li>
+
+        <li routerLinkActive="active"    class="nav-item .dropdown-menu ">
+
+            <a class="nav-link" [routerLink]="['/actualite']">
+                <i class="material-icons">dashboard</i>
+                <p>ACTUALITES</p>
+            </a>
+        </li>
+
+          <li routerLinkActive="active"    class="nav-item .dropdown-menu ">
+
+            <a class="nav-link" [routerLink]="['/reshaoc']">
+                <i class="material-icons">article</i>
+                <p>Le RESHAOC</p>
+            </a>
+        </li>
+
+
+         <li routerLinkActive="active"    class="nav-item .dropdown-menu ">
+
+            <a class="nav-link" [routerLink]="['/pays-membre']">
+                <i class="material-icons">article</i>
+                <p>PAYS MEMBRES</p>
+            </a>
+        </li>
+
+
+<!--         <li routerLinkActive="active"    class="nav-item .dropdown-menu ">-->
+
+<!--            <a class="nav-link" [routerLink]="['/Articldses']">-->
+<!--                <i class="material-icons">country</i>-->
+<!--                <p>PAYS MEMBRES</p>-->
+<!--            </a>-->
+<!--        </li>-->
+
+         <li routerLinkActive="active"    class="nav-item .dropdown-menu ">
+
+            <a class="nav-link" [routerLink]="['/Ardsticles']">
+                <i class="material-icons">article</i>
+                <p>PARTENARIATS</p>
+            </a>
+        </li>
+
+
+
+
+
+
+
+
     </ul>
+
+
+
+
+
+<!--        <ul class="nav">-->
+<!--        <li routerLinkActive="active" *ngFor="let menuItem of menuItems" class="{{menuItem.class}} nav-item">-->
+<!--            -->
+<!--            <a class="nav-link" [routerLink]="[menuItem.path]">-->
+<!--                <i class="material-icons">{{menuItem.icon}}</i>-->
+<!--                <p>{{menuItem.title}}</p>-->
+<!--            </a>-->
+<!--        </li>-->
+<!--    </ul>-->
+<!--    -->
+
 </div>

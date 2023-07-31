@@ -5,10 +5,12 @@
 
 export const environment = {
   production: true,
-  // backend: "https://toursime-app-api.herokuapp.com/api/v1",
-  //  backend: "http://localhost/api/v1",
-  // backend: "https://tourisme-api.herokuapp.com/api/v1",
-  backend: "https://tourisme-app-api.star-labs.bj/api/v1",
+
+  // backend: "http://127.0.0.1:8000/api",
+  // base_url_backend: "http://127.0.0.1:8000",
+
+  backend: "https://reshaoc.africanschoolofeconomics.com/api",
+  base_url_backend: "https://reshaoc.africanschoolofeconomics.com",
 
   ssoUrlCallback: "https://tourisme-app.star-labs.bj/admin/sso_callback",
   // ssoUrl: "https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri=http://tourisme-app.star-labs.bj/admin/sso_callback&response_type=code&scope=openid&authError=true",
