@@ -6,11 +6,11 @@
 export const environment = {
   production: true,
 
-  // backend: "http://127.0.0.1:8000/api",
-  // base_url_backend: "http://127.0.0.1:8000",
+  backend: "http://127.0.0.1:8000/api",
+  base_url_backend: "http://127.0.0.1:8000",
 
-  backend: "https://reshaoc.africanschoolofeconomics.com/api",
-  base_url_backend: "https://reshaoc.africanschoolofeconomics.com",
+  // backend: "https://reshaoc.africanschoolofeconomics.com/api",
+  // base_url_backend: "https://reshaoc.africanschoolofeconomics.com",
 
   ssoUrlCallback: "https://tourisme-app.star-labs.bj/admin/sso_callback",
   // ssoUrl: "https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri=http://tourisme-app.star-labs.bj/admin/sso_callback&response_type=code&scope=openid&authError=true",

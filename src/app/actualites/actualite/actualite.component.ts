@@ -63,7 +63,7 @@ export class ActualiteComponent implements OnInit {
 
 
     getListActivite(): void {
-        this.actualiteService.getByType("ACTIVITE-PHARRE").subscribe((data: Array<Actualite>) => {
+        this.actualiteService.getByType("ACTIVITE-PHARE").subscribe((data: Array<Actualite>) => {
                 this.listActivite = data['data'];
 
                 //this.dataSource=data['data'];
@@ -196,9 +196,12 @@ export class ActualiteComponent implements OnInit {
     }
 
     deleteElement(id: number) {
+
+
         this.actualiteService.delete(id).subscribe(response => {
             this.notificationForm("success", "Supression réussi !");
             // this.getList();
+            this.ngOnInit()
         }, (error: HttpErrorResponse) => {
             console.log("Error while deleting data");
         })

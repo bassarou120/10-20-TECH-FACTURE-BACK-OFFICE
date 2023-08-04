@@ -157,7 +157,7 @@ export class AddActualiteComponent implements OnInit {
         this.action='add';
       }else {
 
-        this.typeActualite="MODIFIER L'ACTUALITE"
+
         this.card_header_title = "MODIFIER L'ACTUALITE"
 
       }
@@ -179,6 +179,8 @@ export class AddActualiteComponent implements OnInit {
 
     console.log(this.actualite )
     this.actualiteForm.get('titre').setValue(response['data'].title);
+    this.typeActualite=response['data'].type
+    // this.actualiteForm.get('type').setValue(response['data'].title);
   // this.actualiteForm.setValue({titre:this.actualite.titre})
     // this.actualiteForm.value.titre=this.actualite.titre
 
@@ -240,12 +242,12 @@ export class AddActualiteComponent implements OnInit {
       // data.append('Content-Type', 'multipart/form-data');
       // data.append('file', <File>this.fileToUpload);
       data.append('image', <File>this.imgToUpload);
-      data.append('title', formData.titre);
       data.append('content', this.editor.root.innerHTML);
       data.append('type', this.typeActualite);
-
+      data.append('title', formData.titre);
 
       if (this.action == 'add') {
+
         this.actualiteService.saveWithInmage(data, 0)
           .subscribe(response => {
 
@@ -271,13 +273,13 @@ export class AddActualiteComponent implements OnInit {
       else {
 
 
-        this.actualiteService.edit({
-          'title':formData.titre,
-          'content': this.editor.root.innerHTML,
-          'type':this.typeActualite
 
-        }, this.id)
+        data.append('_method', 'PUT');
+        data.append('image', <File>this.imgToUpload);
+        // console.log( <File>this.imgToUpload)
+        this.actualiteService.edit(data, this.id)
           .subscribe(response => {
+            console.log(response);
             this.notificationForm(
               "success",
               "Modification réussi !"
@@ -289,13 +291,15 @@ export class AddActualiteComponent implements OnInit {
             );
 
 
+
+
             console.log("Error while retrieving data");
           })
       }
-      
-      
-      
-      $('#sbt_btn').addClass('disabled');
+
+
+
+
       $('#spinner').removeClass('d-none');
     
    

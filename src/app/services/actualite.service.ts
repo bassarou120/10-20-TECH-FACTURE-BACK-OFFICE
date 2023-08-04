@@ -29,7 +29,8 @@ export class ActualiteService {
 
   // Modification d'un element
     edit(data:any,id: number): Observable<Object> {
-    return this.http.put(`${this.url}/actualites/${id}`, data);
+
+    return this.http.post(`${this.url}/actualites/${id}`, data );
   }
 
 
@@ -40,12 +41,12 @@ export class ActualiteService {
 
   // Supression d'un element 
   delete(id: number): Observable<Object> {
-    return this.http.delete(`${this.url}/${id}`);
+    return this.http.delete(`${this.url}/actualites/${id}`);
   }
 
   // Supression d'un element 
   deleteByJob(id: number): Observable<Object> {
-    return this.http.delete(`${this.url_by_job}/${id}/reglementations`);
+    return this.http.delete(`${this.url}/${id}/reglementations`);
   }
 
   // liste des infos
@@ -68,5 +69,5 @@ export class ActualiteService {
     return this.http.get(`${this.url}/getActuByType?type=${type}`);
   }
 
-  
+
 }
