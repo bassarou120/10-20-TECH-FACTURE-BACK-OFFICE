@@ -4,8 +4,8 @@
 <!--    <base href='https://tourisme-app.star-labs.bj/admin/'>-->
 
     <meta charset="utf-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png">
-    <link rel="icon" type="image/png" href="./assets/img/favicon.png">
+<!--    <link rel="apple-touch-icon" sizes="76x76" href="./assets/img/apple-icon.png" />-->
+    <link rel="icon" type="image/png" href="./assets/img/lg1.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>RESHAOC BACK-OFFICE</title>
@@ -20,10 +20,28 @@
 
     <!-- Theme included stylesheets -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">
+<!--    <link href="https://cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">-->
 
     <!-- Core build with no theme, formatting, non-essential modules -->
     <link href="https://cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet">
+
+
+
+
+    <!-- Main Quill library -->
+<!--    <script src="//cdn.quilljs.com/1.3.6/quill.js"></script>-->
+    <script src="//cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+    <!-- Theme included stylesheets -->
+    <link href="//cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+<!--    <link href="//cdn.quilljs.com/1.3.6/quill.bubble.css" rel="stylesheet">-->
+
+    <!-- Core build with no theme, formatting, non-essential modules -->
+    <link href="//cdn.quilljs.com/1.3.6/quill.core.css" rel="stylesheet">
+    <script src="//cdn.quilljs.com/1.3.6/quill.core.js"></script>
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.2.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 
@@ -43,6 +61,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jasny-bootstrap/4.0.0/js/jasny-bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-notify/0.2.0/js/bootstrap-notify.min.js" integrity="sha512-vCgNjt5lPWUyLz/tC5GbiUanXtLX1tlPXVFaX5KAQrUHjwPcCwwPOLn34YBFqws7a7+62h7FRvQ1T0i/yFqANA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="./assets/js/bootstrap-notify-3.1.3/bootstrap-notify.min.js"></script>
+
+
+    <link href="styles-quills.css">
     <style>
         .error {
             color: red;
@@ -52,7 +73,181 @@
         /*.ql-container {*/
         /*    height:200px !important;*/
         /*}*/
+
+
+
+
+
+        /*.ql-snow .ql-size .ql-picker-item[data-value="10px"]::before {*/
+        /*    content: "10";*/
+        /*    font-size: 10px !important;*/
+        /*}*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="9px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="9px"]::before {*/
+ /*           content: '9';*/
+ /*           font-size: 9px !important;*/
+
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="10px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="10px"]::before {*/
+ /*           content: '10';*/
+ /*           font-size: 10px !important;*/
+
+ /*       }*/
+
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="11px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="11px"]::before {*/
+ /*           content: '11';*/
+ /*           font-size: 11px !important;*/
+ /*       }*/
+
+
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="12px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="12px"]::before {*/
+ /*           content: '12';*/
+ /*           font-size: 12px !important;*/
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="14px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="14px"]::before {*/
+ /*           content: '14';*/
+ /*           font-size: 14px !important;*/
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="16px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="16px"]::before {*/
+ /*           content: '16';*/
+ /*           font-size: 16px !important;*/
+ /*       }*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="18px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="18px"]::before {*/
+ /*           content: '18';*/
+ /*           font-size: 18px !important;*/
+ /*       }*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="24px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="24px"]::before {*/
+ /*           content: '24';*/
+ /*           font-size: 24px !important;*/
+ /*       }*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="26px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="26px"]::before {*/
+ /*           content: '26';*/
+ /*           font-size: 26px !important;*/
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="28px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="28px"]::before {*/
+ /*           content: '28';*/
+ /*           font-size: 28px !important;*/
+ /*       }*/
+ /*.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="30px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="30px"]::before {*/
+ /*           content: '30';*/
+ /*           font-size: 30px !important;*/
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="36px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="36px"]::before {*/
+ /*           content: '36';*/
+ /*           font-size: 36px !important;*/
+ /*       }*/
+ /*.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="48px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="48px"]::before {*/
+ /*           content: '48';*/
+ /*           font-size: 48px !important;*/
+ /*       }*/
+ /*.ql-snow .ql-picker.ql-size .ql-picker-item[data-value="60px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="60px"]::before {*/
+ /*           content: '60';*/
+ /*           font-size: 60px !important;*/
+ /*       }*/
+
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="72px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="72px"]::before {*/
+ /*           content: '72';*/
+ /*           font-size: 72px !important;*/
+ /*       }*/
+ /* .ql-snow .ql-picker.ql-size .ql-picker-item[data-value="96px"]::before,*/
+ /*       .ql-snow .ql-picker.ql-size .ql-picker-label.ql-active[data-value="96px"]::before {*/
+ /*           content: '96';*/
+ /*           font-size: 96px !important;*/
+ /*       }*/
+
+
+
+
+
+
+        .ql-snow .ql-picker.ql-size .ql-picker-label[data-value]::before,
+        .ql-snow .ql-picker.ql-size .ql-picker-item[data-value]::before {
+            content: attr(data-value) !important;
+        }
+
+
+        /*for font-family*/
+
+        .ql-snow .ql-picker.ql-font .ql-picker-label[data-value]::before,
+        .ql-snow .ql-picker.ql-font .ql-picker-item[data-value]::before {
+            content: attr(data-value) !important;
+        }
+
+        .ql-snow .ql-picker.ql-font {
+            width: 150px !important;
+            white-space: nowrap;
+        }
+
+
+
+
+
     </style>
+
+    <!-- Style -->
+    <style type="text/css">@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu72xKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu5mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7mxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+1F00-1FFF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0370-03FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7WxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu7GxKKTU1Kvnz.woff2) format('woff2');unicode-range:U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;}@font-face{font-family:'Roboto';font-style:normal;font-weight:400;src:url(https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxKKTU1Kg.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;}</style>
+<!--    <style>-->
+<!--        /* Set dropdown font-families */-->
+
+<!--        #toolbar-container .ql-font span[data-label="Sans Serif"]::before {-->
+<!--            font-family: "Sans Serif";-->
+<!--        }-->
+
+<!--        #toolbar-container .ql-font span[data-label="Inconsolata"]::before {-->
+<!--            font-family: "Inconsolata";-->
+<!--        }-->
+
+<!--        #toolbar-container .ql-font span[data-label="Roboto"]::before {-->
+<!--            font-family: "Roboto";-->
+<!--        }-->
+
+<!--        #toolbar-container .ql-font span[data-label="Mirza"]::before {-->
+<!--            font-family: "Mirza";-->
+<!--        }-->
+
+<!--        #toolbar-container .ql-font span[data-label="Arial"]::before {-->
+<!--            font-family: "Arial";-->
+<!--        }-->
+<!--        /* Set content font-families */-->
+
+<!--        .ql-font-inconsolata {-->
+<!--            font-family: "Inconsolata";-->
+<!--        }-->
+
+<!--        .ql-font-roboto {-->
+<!--            font-family: "Roboto";-->
+<!--        }-->
+
+<!--        .ql-font-mirza {-->
+<!--            font-family: "Mirza";-->
+<!--        }-->
+
+<!--        .ql-font-arial {-->
+<!--            font-family: "Arial";-->
+<!--        }-->
+<!--        /* We do not set Sans Serif since it is the default font */-->
+<!--    </style>-->
 <style>@charset "UTF-8";:root{--blue:#2196f3;--indigo:#3f51b5;--purple:#9c27b0;--pink:#e91e63;--red:#f44336;--orange:#ff9800;--yellow:#ffeb3b;--green:#4c74af;--teal:#009688;--cyan:#00bcd4;--white:#ffffff;--gray:#6c757d;--gray-dark:#343a40;--primary:#2196f3;--secondary:#6c757d;--success:#4c74af;--info:#00bcd4;--warning:#ffeb3b;--danger:#f44336;--light:#f8f9fa;--dark:#343a40;--breakpoint-xs:0;--breakpoint-sm:576px;--breakpoint-md:768px;--breakpoint-lg:992px;--breakpoint-xl:1200px;--font-family-sans-serif:"Roboto", "Helvetica", "Arial", sans-serif;--font-family-monospace:SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}*,*:before,*:after{box-sizing:border-box}html{font-family:sans-serif;line-height:1.15;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{margin:0;font-family:Roboto,Helvetica,Arial,sans-serif;font-size:1rem;font-weight:400;line-height:1.5;color:#212529;text-align:left;background-color:#fafafa}svg{overflow:hidden;vertical-align:middle}@media print{*,*:before,*:after{text-shadow:none!important;box-shadow:none!important}@page{size:a3}body{min-width:992px!important}}html *{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}body{font-family:Roboto,Helvetica,Arial,sans-serif;font-weight:300;line-height:1.5em}body{background-color:#eee;color:#3c4858;font-weight:300}*{-webkit-tap-highlight-color:rgba(255,255,255,0);-webkit-tap-highlight-color:transparent}*:focus{outline:0}@media (max-width: 991px){html,body{overflow-x:hidden}body{position:relative}}@charset "UTF-8";:root{--dt-row-selected:13, 110, 253;--dt-row-selected-text:255, 255, 255;--dt-row-selected-link:9, 10, 11}</style><link rel="stylesheet" href="styles.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.css"></noscript></head>
 
 <body>

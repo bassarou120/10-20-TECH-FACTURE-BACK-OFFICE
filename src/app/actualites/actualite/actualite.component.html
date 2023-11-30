@@ -1,207 +1,325 @@
+<!-- @format -->
+
 <style>
-    mat-cell {
-        /* text-align: center !important; */
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
-        padding: 2px;
-    }
-    
-    ng-container {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    
-    mat-cell,
-    mat-header-cell,
-    mat-footer-cell {
-        flex: 1;
-        display: block !important;
-        text-align: start !important;
-    }
-    
-    .action {
-        margin: 10px !important;
-        width: 10px !important;
-    }
+  mat-cell {
+    /* text-align: center !important; */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 2px;
+  }
+  ng-container {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  mat-cell,
+  mat-header-cell,
+  mat-footer-cell {
+    flex: 1;
+    display: block !important;
+    text-align: start !important;
+  }
+
+  .action {
+    margin: 10px !important;
+    width: 10px !important;
+  }
 </style>
 <div class=".regulations main-content">
+  <div
+    class="card"
+    style="
+      border-radius: 0px;
+      height: 60px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 35px;
+      padding-top: 20px;
+    "
+  >
+    LE ACTUALITES DU RESHAOC
+  </div>
+  <div class="containe">
+    <nav>
+      <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <button
+          class="nav-link active"
+          id="nav-activite-tab"
+          data-toggle="tab"
+          data-target="#nav-activite"
+          type="button"
+          role="tab"
+          aria-controls="nav-activite"
+          aria-selected="true"
+        >
+          Activités pharre
+        </button>
+        <button
+          class="nav-link"
+          id="nav-article-tab"
+          data-toggle="tab"
+          data-target="#nav-article"
+          type="button"
+          role="tab"
+          aria-controls="nav-article"
+          aria-selected="false"
+        >
+          Articles
+        </button>
+        <button
+          class="nav-link"
+          id="nav-agenda-tab"
+          data-toggle="tab"
+          data-target="#nav-agenda"
+          type="button"
+          role="tab"
+          aria-controls="nav-agenda"
+          aria-selected="false"
+        >
+          Agenda
+        </button>
 
-    <div  class="card" style="border-radius: 0px;height: 60px;text-align: center;font-weight: bold;padding-top: 20px">
-        LE ACTUALITES DU RESHAOC
-    </div>
-    <div class="containe ">
-        <nav>
-            <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                <button class="nav-link active" id="nav-activite-tab" data-toggle="tab" data-target="#nav-activite" type="button" role="tab" aria-controls="nav-activite" aria-selected="true">
-                    Activités pharre
-                </button>
-                <button class="nav-link" id="nav-article-tab" data-toggle="tab" data-target="#nav-article" type="button" role="tab" aria-controls="nav-article" aria-selected="false">
-                    Articles
-                </button>
-                <button class="nav-link" id="nav-agenda-tab" data-toggle="tab" data-target="#nav-agenda" type="button" role="tab" aria-controls="nav-agenda" aria-selected="false">
-                    Agenda
-                </button>
 
-               <button class="nav-link" id="nav-journee-tab" data-toggle="tab" data-target="#nav-journee" type="button" role="tab" aria-controls="nav-journee" aria-selected="false">
-                   Journées Scientifiques
-                </button>
+       <button
+          class="nav-link"
+          id="nav-journee-tab"
+          data-toggle="tab"
+          data-target="#nav-journee"
+          type="button"
+          role="tab"
+          aria-controls="nav-journee"
+          aria-selected="false"
+        >
+                  Activités des points focaux
+        </button>
+      </div>
+    </nav>
 
-
+    <div class="tab-content" id="nav-tabContent">
+      <div
+        class="tab-pane fade show active"
+        id="nav-activite"
+        role="tabpanel"
+        aria-labelledby="nav-activite-tab"
+      >
+        <div class="d-flex justify-content-end">
+          <a
+            [routerLink]="['/add-actualite', 'ACTIVITE-PHARE']"
+            mat-raised-button=""
+            class="btn mat-raised-button mat-button-base"
+          >
+            <span class=""
+              ><span class=""> <i class="material-icons">add</i></span> ajouter
+              Activité pharre
+            </span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h3 class="card-title">Activités pharre</h3>
+            <p class="card-category">
+              Ce panel vous permets de gérer les Activités pharre
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="m-3 d-flex justify-content-between">
+              <div class="">
+                <input
+                  class="form-control"
+                  type="text"
+                  (keyup)="applyFilter($event.target.value)"
+                  placeholder="Rechercher"
+                />
+              </div>
             </div>
-        </nav>
-
-        <div class="tab-content" id="nav-tabContent">
-
-            <div class="tab-pane fade show active" id="nav-activite" role="tabpanel" aria-labelledby="nav-activite-tab">
-
-                    <div class="d-flex justify-content-end">
-                        <a [routerLink]="['/add-actualite', 'ACTIVITE-PHARRE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
-
-                    <span class=""><span class="">
-                        <i class="material-icons">add</i></span> ajouter Activité pharre </span>
-                            <div matripple="" class="mat-ripple mat-button-ripple">
-                            </div>
-                            <div class="mat-button-focus-overlay">
-                            </div>
-                        </a>
-                    </div>
-                    <div class="card">
-                        <div class="card-header card-header-danger">
-                            <h3 class="card-title">Activités pharre</h3>
-                            <p class="card-category">Ce panel vous permets de gérer les Activités pharre</p>
-
-                        </div>
-                        <div class="card-body">
-                            <div class=" m-3 d-flex justify-content-between">
-                                <div class="">
-                                    <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
-                                </div>
-                            </div>
-                            <div class="row table-responsible">
-                                <div class="d-flex justify-content-center">
-                                    <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
-                                        <span class="sr-only">Loading...</span>
-                                    </div>
-                                </div>
-
-                                <div class="m-2" *ngIf="!spinner">
-
-                                    <table class="table table-responsive table-striped">
-                                        <tr class="card-header card-header-danger" >
-                                            <th>N0</th>
-                                            <th>Titre</th>
-                                            <th>Type</th>
-                                            <th>image</th>
-                                            <th>Date</th>
-                                            <th>Action</th>
-                                        </tr>
-
-                                        <tbody>
-                                        <tr *ngFor="let a of listActivite ; let i = index" >
-                                            <td>{{i+1}}</td>
-                                            <td>{{a.title}}</td>
-                                            <td>{{a.type}}</td>
-                                            <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
-                                            <td>{{a.created_at }}</td>
-                                            <td>
-                                                <a [routerLink]="['/edit-actualite',  a.id ]" rel="tooltip" class="action">
-                                                  <i class="material-icons text-info">info</i>
-                                                                                                 </a>
-                                                <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger"
-                                                        (click)="deleteElement(a.id)">
-                                                      <i class="material-icons ">close</i>
-                                                                                                      </button>
-                                            </td>
-
-                                        </tr>
-                                        </tbody>
-
-                                    </table>
-
-
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12 ">
-<!--                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
-                        </div>
-                    </div>
-
-
-            </div>
-
-            <div class="tab-pane fade" id="nav-article" role="tabpanel" aria-labelledby="nav-article-tab">
-                <div class="d-flex justify-content-end">
-                    <a [routerLink]="['/add-actualite', 'ARTICLE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
-
-                    <span class=""><span class="">
-                        <i class="material-icons">add</i></span> ajouter Article </span>
-                        <div matripple="" class="mat-ripple mat-button-ripple">
-                        </div>
-                        <div class="mat-button-focus-overlay">
-                        </div>
-                    </a>
+            <div class="row table-responsible">
+              <div class="d-flex justify-content-center">
+                <div
+                  class="spinner-border text-success text-center"
+                  role="status"
+                  *ngIf="spinner"
+                >
+                  <span class="sr-only">Loading...</span>
                 </div>
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h3 class="card-title">Articles</h3>
-                        <p class="card-category">Ce panel vous permets de gérer les Articles</p>
+              </div>
 
-                    </div>
-                    <div class="card-body">
-                        <div class=" m-3 d-flex justify-content-between">
-                            <div class="">
-                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
-                            </div>
-                        </div>
-                        <div class="row table-responsible">
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
+              <div class="m-2" *ngIf="!spinner">
+                <table class="table table-responsive table-striped">
+                  <tr class="card-header card-header-danger">
+                    <th>N0</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                    <th>image</th>
+                    <th>Date</th>
+                    <th>isVedette</th>
+                    <th>Action</th>
+                  </tr>
 
-                            <div class="m-2" *ngIf="!spinner">
+                  <tbody>
+                    <tr *ngFor="let a of listActivite; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ a.title }}</td>
+                      <td>{{ a.type }}</td>
+                      <td>
+                        <img
+                          width="100"
+                          src="{{ url }}/actualite/{{ a.image }}"
+                          alt=""
+                        />
+                      </td>
+                      <td>{{ a.created_at }}</td>
+                      <td>
+<!--                        {{ a.isvedette }}-->
 
+                        <mat-slide-toggle [checked]="a.isvedette ==1 ? true:false " (change)="checkCheckBoxvalue($event,a.id)">
+<!--                          <div *ngIf="a.isvedette ==1;else content">-->
+<!--                            desactiver-->
+<!--                          </div>-->
+<!--                          <ng-template #content>activer</ng-template>-->
+                        </mat-slide-toggle>
 
-                                <table class="table table-responsive table-striped">
-                                    <tr class="card-header card-header-danger" >
-                                        <th>N0</th>
-                                        <th>Titre</th>
-                                        <th>Type</th>
-                                        <th>image</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
+                      </td>
+                      <td>
+                        <a
+                          [routerLink]="['/edit-actualite', a.id]"
+                          rel="tooltip"
+                          class="action"
+                        >
+                          <i class="material-icons text-info">info</i>
+                        </a>
+                        <button
+                          type="button"
+                          rel="tooltip"
+                          class="btn btn-link btn-sm btn-danger"
+                          (click)="deleteElement(a.id)"
+                        >
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <!--                            <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+          </div>
+        </div>
+      </div>
 
-                                    <tbody>
-                                    <tr *ngFor="let a of listArticle; let i = index" >
-                                        <td>{{i+1}}</td>
-                                        <td>{{a.title}}</td>
-                                        <td>{{a.type}}</td>
-                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
-                                        <td>{{a.created_at }}</td>
-                                        <td>
-                                            <a [routerLink]="['/edit-actualite',  a.id ]" rel="tooltip" class="action">
-                                                <i class="material-icons text-info">info</i>
-                                            </a>
-                                            <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger"
-                                                    (click)="deleteElement(a.id)">
-                                                <i class="material-icons ">close</i>
-                                            </button>
-                                        </td>
+      <div
+        class="tab-pane fade"
+        id="nav-article"
+        role="tabpanel"
+        aria-labelledby="nav-article-tab"
+      >
+        <div class="d-flex justify-content-end">
+          <a
+            [routerLink]="['/add-actualite', 'ARTICLE']"
+            mat-raised-button=""
+            class="btn mat-raised-button mat-button-base"
+          >
+            <span class=""
+              ><span class=""> <i class="material-icons">add</i></span> ajouter
+              Article
+            </span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h3 class="card-title">Articles</h3>
+            <p class="card-category">
+              Ce panel vous permets de gérer les Articles
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="m-3 d-flex justify-content-between">
+              <div class="">
+                <input
+                  class="form-control"
+                  type="text"
+                  (keyup)="applyFilter($event.target.value)"
+                  placeholder="Rechercher"
+                />
+              </div>
+            </div>
+            <div class="row table-responsible">
+              <div class="d-flex justify-content-center">
+                <div
+                  class="spinner-border text-success text-center"
+                  role="status"
+                  *ngIf="spinner"
+                >
+                  <span class="sr-only">Loading...</span>
+                </div>
+              </div>
 
-                                    </tr>
-                                    </tbody>
+              <div class="m-2" *ngIf="!spinner">
+                <table class="table table-responsive table-striped">
+                  <tr class="card-header card-header-danger">
+                    <th>N0</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                    <th>image</th>
+                    <th>Date</th>
+                    <th>isvedette</th>
 
-                                </table>
+                    <th>Action</th>
+                  </tr>
 
+                  <tbody>
+                    <tr *ngFor="let a of listArticle; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ a.title }}</td>
+                      <td>{{ a.type }}</td>
+                      <td>
+                        <img
+                          width="100"
+                          src="{{ url }}/actualite/{{ a.image }}"
+                          alt=""
+                        />
+                      </td>
+                      <td>{{ a.created_at }}</td>
+                      <td>
+                        <!--                        {{ a.isvedette }}-->
 
+                        <mat-slide-toggle [checked]="a.isvedette ==1 ? true:false " (change)="checkCheckBoxvalue($event,a.id)">
+                          <!--                          <div *ngIf="a.isvedette ==1;else content">-->
+                          <!--                            desactiver-->
+                          <!--                          </div>-->
+                          <!--                          <ng-template #content>activer</ng-template>-->
+                        </mat-slide-toggle>
 
-                                <!--
+                      </td>
+                      <td>
+                        <a
+                          [routerLink]="['/edit-actualite', a.id]"
+                          rel="tooltip"
+                          class="action"
+                        >
+                          <i class="material-icons text-info">info</i>
+                        </a>
+                        <button
+                          type="button"
+                          rel="tooltip"
+                          class="btn btn-link btn-sm btn-danger"
+                          (click)="deleteElement(a.id)"
+                        >
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <!--
                                                                 <mat-table [dataSource]="dataSourceArticle" matSort>
 
                                                                     <ng-container matColumnDef="id">
@@ -276,84 +394,124 @@
 
                                                                 </mat-table>
                                                                 -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 ">
-<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
-                    </div>
-                </div>
-
+              </div>
             </div>
+          </div>
+          <div class="col-md-12">
+            <!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+          </div>
+        </div>
+      </div>
 
-            <div class="tab-pane fade" id="nav-agenda" role="tabpanel" aria-labelledby="nav-agenda-tab">
-
-                <div class="d-flex justify-content-end">
-                    <a [routerLink]="['/add-actualite', 'AGENDA']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
-
-                    <span class=""><span class="">
-                        <i class="material-icons">add</i></span> ajouter Article </span>
-                        <div matripple="" class="mat-ripple mat-button-ripple">
-                        </div>
-                        <div class="mat-button-focus-overlay">
-                        </div>
-                    </a>
+      <div
+        class="tab-pane fade"
+        id="nav-agenda"
+        role="tabpanel"
+        aria-labelledby="nav-agenda-tab"
+      >
+        <div class="d-flex justify-content-end">
+          <a
+            [routerLink]="['/add-actualite', 'AGENDA']"
+            mat-raised-button=""
+            class="btn mat-raised-button mat-button-base"
+          >
+            <span class=""
+              ><span class=""> <i class="material-icons">add</i></span> ajouter
+              Agenda
+            </span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h3 class="card-title">Agenda</h3>
+            <p class="card-category">
+              Ce panel vous permets de gérer les Agenda
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="m-3 d-flex justify-content-between">
+              <div class="">
+                <input
+                  class="form-control"
+                  type="text"
+                  (keyup)="applyFilter($event.target.value)"
+                  placeholder="Rechercher"
+                />
+              </div>
+            </div>
+            <div class="row table-responsible">
+              <div class="d-flex justify-content-center">
+                <div
+                  class="spinner-border text-success text-center"
+                  role="status"
+                  *ngIf="spinner"
+                >
+                  <span class="sr-only">Loading...</span>
                 </div>
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h3 class="card-title">Agenda</h3>
-                        <p class="card-category">Ce panel vous permets de gérer les    Agenda</p>
+              </div>
 
-                    </div>
-                    <div class="card-body">
-                        <div class=" m-3 d-flex justify-content-between">
-                            <div class="">
-                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
-                            </div>
-                        </div>
-                        <div class="row table-responsible">
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
+              <div class="m-2" *ngIf="!spinner">
+                <table class="table table-responsive table-striped">
+                  <tr class="card-header card-header-danger">
+                    <th>N0</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                    <th>Evernement</th>
+                    <th>image</th>
+                    <th>Date</th>
+                    <th>IsVedette</th>
+                    <th>Action</th>
+                  </tr>
 
-                            <div class="m-2" *ngIf="!spinner">
+                  <tbody>
+                    <tr *ngFor="let a of listAgenda; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ a.title }}</td>
+                      <td>{{ a.type }}</td>
+                      <td>{{ a.id }}</td>
+                      <td>
+                        <img
+                          width="100"
+                          src="{{ url }}/actualite/{{ a.image }}"
+                          alt=""
+                        />
+                      </td>
+                      <td>{{ a.created_at }}</td>
+                      <td>
+                        <!--                        {{ a.isvedette }}-->
 
-                                <table class="table table-responsive table-striped">
-                                    <tr class="card-header card-header-danger" >
-                                        <th>N0</th>
-                                        <th>Titre</th>
-                                        <th>Type</th>
-                                        <th>image</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
+                        <mat-slide-toggle [checked]="a.isvedette ==1 ? true:false " (change)="checkCheckBoxvalue($event,a.id)">
+                          <!--                          <div *ngIf="a.isvedette ==1;else content">-->
+                          <!--                            desactiver-->
+                          <!--                          </div>-->
+                          <!--                          <ng-template #content>activer</ng-template>-->
+                        </mat-slide-toggle>
 
-                                    <tbody>
-                                    <tr *ngFor="let a of listAgenda ; let i = index" >
-                                        <td>{{i+1}}</td>
-                                        <td>{{a.title}}</td>
-                                        <td>{{a.type}}</td>
-                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
-                                        <td>{{a.created_at }}</td>
-                                        <td>
-                                            <a [routerLink]="['/edit-actualite',  a.id ]" rel="tooltip" class="action">
-                                                <i class="material-icons text-info">info</i>
-                                            </a>
-                                            <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger"
-                                                    (click)="deleteElement(a.id)">
-                                                <i class="material-icons ">close</i>
-                                            </button>
-                                        </td>
+                      </td>
+                      <td>
+                        <a
+                          [routerLink]="['/edit-actualite', a.id]"
+                          rel="tooltip"
+                          class="action"
+                        >
+                          <i class="material-icons text-info">info</i>
+                        </a>
+                        <button
+                          type="button"
+                          rel="tooltip"
+                          class="btn btn-link btn-sm btn-danger"
+                          (click)="deleteElement(a.id)"
+                        >
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-                                    </tr>
-                                    </tbody>
-
-                                </table>
-
-
-                                <!--
+                <!--
                                 <mat-table [dataSource]="dataSourceAgenda" matSort>
 
                                     <ng-container matColumnDef="id">
@@ -428,83 +586,122 @@
 
                                 </mat-table>
                                    -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 ">
-<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
-                    </div>
-                </div>
-
+              </div>
             </div>
+          </div>
+          <div class="col-md-12">
+            <!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+          </div>
+        </div>
+      </div>
 
-            <div class="tab-pane fade" id="nav-journee" role="tabpanel" aria-labelledby="nav-journee-tab">
-
-                <div class="d-flex justify-content-end">
-                    <a [routerLink]="['/add-actualite', 'JOURNEE-SCIENTIFIQUE']"   mat-raised-button="" class="btn mat-raised-button mat-button-base">
-
-                    <span class=""><span class="">
-                        <i class="material-icons">add</i></span> ajouter journée Scientifique </span>
-                        <div matripple="" class="mat-ripple mat-button-ripple">
-                        </div>
-                        <div class="mat-button-focus-overlay">
-                        </div>
-                    </a>
+      <div
+        class="tab-pane fade"
+        id="nav-journee"
+        role="tabpanel"
+        aria-labelledby="nav-journee-tab"
+      >
+        <div class="d-flex justify-content-end">
+          <a
+            [routerLink]="['/add-actualite', 'ACTIVITE-POINTS-FOCAUX']"
+            mat-raised-button=""
+            class="btn mat-raised-button mat-button-base"
+          >
+            <span class=""
+              ><span class=""> <i class="material-icons">add</i></span> ajouter
+              Activités points focaux
+            </span>
+            <div matripple="" class="mat-ripple mat-button-ripple"></div>
+            <div class="mat-button-focus-overlay"></div>
+          </a>
+        </div>
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h3 class="card-title"> Activités points focaux</h3>
+            <p class="card-category">
+              Ce panel vous permets de gérer les Activités points focaux
+            </p>
+          </div>
+          <div class="card-body">
+            <div class="m-3 d-flex justify-content-between">
+              <div class="">
+                <input
+                  class="form-control"
+                  type="text"
+                  (keyup)="applyFilter($event.target.value)"
+                  placeholder="Rechercher"
+                />
+              </div>
+            </div>
+            <div class="row table-responsible">
+              <div class="d-flex justify-content-center">
+                <div
+                  class="spinner-border text-success text-center"
+                  role="status"
+                  *ngIf="spinner"
+                >
+                  <span class="sr-only">Loading...</span>
                 </div>
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h3 class="card-title">Journée Scientifique </h3>
-                        <p class="card-category">Ce panel vous permets de gérer les Journées Scientifique</p>
+              </div>
 
-                    </div>
-                    <div class="card-body">
-                        <div class=" m-3 d-flex justify-content-between">
-                            <div class="">
-                                <input class="form-control" type="text" (keyup)="applyFilter($event.target.value)" placeholder="Rechercher">
-                            </div>
-                        </div>
-                        <div class="row table-responsible">
-                            <div class="d-flex justify-content-center">
-                                <div class="spinner-border text-success text-center" role="status" *ngIf="spinner">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
+              <div class="m-2" *ngIf="!spinner">
+                <table class="table table-responsive table-striped">
+                  <tr class="card-header card-header-danger">
+                    <th>N0</th>
+                    <th>Titre</th>
+                    <th>Type</th>
+                    <th>image</th>
+                    <th>Date</th>
+                    <th>IsVedette</th>
+                    <th>Action</th>
+                  </tr>
 
-                            <div class="m-2" *ngIf="!spinner">
+                  <tbody>
+                    <tr *ngFor="let a of listJournee; let i = index">
+                      <td>{{ i + 1 }}</td>
+                      <td>{{ a.title }}</td>
+                      <td>{{ a.type }}</td>
+                      <td>
+                        <img
+                          width="100"
+                          src="{{ url }}/actualite/{{ a.image }}"
+                          alt=""
+                        />
+                      </td>
+                      <td>{{ a.created_at }}</td>
+                      <td>
+                        <!--                        {{ a.isvedette }}-->
 
-                                <table class="table table-responsive table-striped">
-                                    <tr class="card-header card-header-danger" >
-                                        <th>N0</th>
-                                        <th>Titre</th>
-                                        <th>Type</th>
-                                        <th>image</th>
-                                        <th>Date</th>
-                                        <th>Action</th>
-                                    </tr>
+                        <mat-slide-toggle [checked]="a.isvedette ==1 ? true:false " (change)="checkCheckBoxvalue($event,a.id)">
+                          <!--                          <div *ngIf="a.isvedette ==1;else content">-->
+                          <!--                            desactiver-->
+                          <!--                          </div>-->
+                          <!--                          <ng-template #content>activer</ng-template>-->
+                        </mat-slide-toggle>
 
-                                    <tbody>
-                                    <tr *ngFor="let a of listJournee ; let i = index" >
-                                        <td>{{i+1}}</td>
-                                        <td>{{a.title}}</td>
-                                        <td>{{a.type}}</td>
-                                        <td><img width='100' src="{{url}}/storage/actualite/{{a.image}}" alt=""></td>
-                                        <td>{{a.created_at }}</td>
-                                        <td>
-                                            <a [routerLink]="['/edit-actualite',  a.id ]" rel="tooltip" class="action">
-                                                <i class="material-icons text-info">info</i>
-                                            </a>
-                                            <button type="button" rel="tooltip" class="btn btn-link btn-sm btn-danger"
-                                                    (click)="deleteElement(a.id)">
-                                                <i class="material-icons ">close</i>
-                                            </button>
-                                        </td>
+                      </td>
+                      <td>
+                        <a
+                          [routerLink]="['/edit-actualite', a.id]"
+                          rel="tooltip"
+                          class="action"
+                        >
+                          <i class="material-icons text-info">info</i>
+                        </a>
+                        <button
+                          type="button"
+                          rel="tooltip"
+                          class="btn btn-link btn-sm btn-danger"
+                          (click)="deleteElement(a.id)"
+                        >
+                          <i class="material-icons">close</i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
 
-                                    </tr>
-                                    </tbody>
-
-                                </table>
-
-                                <!--
+                <!--
                 <mat-table [dataSource]="dataSourceActivite" matSort>
 
                     <ng-container matColumnDef="id">
@@ -579,27 +776,14 @@
 
                 </mat-table>
                 -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 ">
-<!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
-                    </div>
-                </div>
-
+              </div>
             </div>
-
-
+          </div>
+          <div class="col-md-12">
+            <!--                        <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+          </div>
         </div>
-
+      </div>
     </div>
-
-
-
-
-
-
-
-
-
+  </div>
 </div>

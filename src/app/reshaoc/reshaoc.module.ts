@@ -10,10 +10,10 @@ import { MatSelectModule } from '@angular/material/select';
         MatSelectModule
     ],
     declarations: [
-       // ReshaocComponent
+       // ParamettreGeneralComponent
     ],
     exports: [
-        //ReshaocComponent
+        //ParamettreGeneralComponent
     ],
     providers: [ActualiteService],
 

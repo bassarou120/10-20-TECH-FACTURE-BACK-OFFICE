@@ -5,9 +5,16 @@
 
 export const environment = {
   production: true,
+  //
+  // backend: "http://api.reshaoc.org/api",
+  // base_url_backend: "http://api.reshaoc.org",
+  // accet_url: "http://api.reshaoc.org/storage/app/public",
 
   backend: "http://127.0.0.1:8000/api",
   base_url_backend: "http://127.0.0.1:8000",
+  accet_url: "http://127.0.0.1:8000/storage",
+
+
 
   // backend: "https://reshaoc.africanschoolofeconomics.com/api",
   // base_url_backend: "https://reshaoc.africanschoolofeconomics.com",

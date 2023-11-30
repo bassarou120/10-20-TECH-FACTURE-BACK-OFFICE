@@ -1,13 +1,11 @@
-import { NgModule } from '@angular/core';
+import {NgModule, OnInit} from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
-import { UserProfileComponent } from '../../users/user-profile/user-profile.component';
-import { UsersComponent } from '../../users/users/users.component';
-import { AddUserComponent } from '../../users/add-user/add-user.component';
+
 import { ActualiteComponent } from '../../actualites/actualite/actualite.component';
 import { AddActualiteComponent } from '../../actualites/add-actualite/add-actualite.component';
 import { DetailActualiteComponent } from '../../actualites/detail-actualite/detail-actualite.component';
@@ -45,9 +43,24 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 // import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 import { BrowserModule } from '@angular/platform-browser';
-import {AddActivitePharreComponent} from '../../actualites/add-activite-pharre';
+
 import {ReshaocComponent} from '../../reshaoc';
 import {PaysMembreComponent} from '../../pays-membre/pays-membre.component';
+import {EventComponent} from '../../evernementiel/event';
+import {AddEventComponent} from '../../evernementiel/add-event';
+import {MatSlideToggle, MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {PartenariatComponent} from '../../partenariats/partenariat';
+import {AddPartenariatComponent} from '../../partenariats/add-partenariat';
+import {ParamettreImageComponent} from '../../paramettre-image';
+import {ParamettreGeneralComponent} from '../../paramettre-generale';
+import {FromationComponent} from '../../formations/fromation';
+import {AddFromationComponent} from '../../formations/add-formation';
+
+import {HttpClientModule} from '@angular/common/http';
+import {QuillModule} from 'ngx-quill';
+import {DocumentComponent} from '../../documentheque/document';
+import {AddDocumentComponent} from '../../documentheque/add-document';
+
 
 
 @NgModule({
@@ -71,24 +84,44 @@ import {PaysMembreComponent} from '../../pays-membre/pays-membre.component';
     MatPaginatorModule,
     MatSortModule,
     PdfViewerModule,
+    MatSlideToggleModule,
+    QuillModule.forRoot(),
+    HttpClientModule
 
     //DataTablesModule
   ],
   declarations: [
     DashboardComponent,
-    UserProfileComponent,
-    AddUserComponent,
-    ActualiteComponent,
-    AddActualiteComponent,
+
     DetailActualiteComponent,
     EditorComponent,
-    UsersComponent,
     RepertoireComponent,
     OldDbComponent,
     IndicatorComponent,
-      AddActivitePharreComponent,
+
+    ActualiteComponent,
+    AddActualiteComponent,
+
       ReshaocComponent,
-    PaysMembreComponent
+    PaysMembreComponent,
+
+      EventComponent,
+    AddEventComponent,
+
+      PartenariatComponent,
+      AddPartenariatComponent,
+
+      ParamettreImageComponent,
+    ParamettreGeneralComponent,
+
+    FromationComponent,
+    AddFromationComponent,
+    DocumentComponent,
+  AddDocumentComponent
+
+
+
+
 
 
 

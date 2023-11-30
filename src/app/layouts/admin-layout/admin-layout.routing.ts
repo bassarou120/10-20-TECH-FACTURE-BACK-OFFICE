@@ -1,14 +1,11 @@
 import { Routes } from '@angular/router';
 
-import { UserProfileComponent } from '../../users/user-profile/user-profile.component';
+
 
 import { ActualiteComponent } from '../../actualites/actualite';
 import { AddActualiteComponent } from '../../actualites/add-actualite';
 import { DetailActualiteComponent } from '../../actualites/detail-actualite';
-import { AddUserComponent } from '../../users/add-user';
 
-
-import { UsersComponent } from '../../users/users';
 
 import { DashboardComponent } from '../../dashboard/dashboard.component';
 
@@ -22,9 +19,19 @@ import { IndicatorComponent } from 'app/indicator';
 
 import { SsocallbackComponent } from '../../sso-callback/ssocallback.component';
 import {RedirectGuard} from '../../RedirectGuard/RedirectGuard';
-import {AddActivitePharreComponent} from '../../actualites/add-activite-pharre';
+
 import {ReshaocComponent} from '../../reshaoc';
 import {PaysMembreComponent} from '../../pays-membre';
+import {EventComponent} from '../../evernementiel/event';
+import {AddEventComponent} from '../../evernementiel/add-event';
+import {PartenariatComponent} from '../../partenariats/partenariat';
+import {AddPartenariatComponent} from '../../partenariats/add-partenariat';
+import {ParamettreImageComponent} from '../../paramettre-image';
+import {ParamettreGeneralComponent} from '../../paramettre-generale';
+import {AddFromationComponent} from '../../formations/add-formation';
+import {FromationComponent} from '../../formations/fromation';
+import {DocumentComponent} from '../../documentheque/document';
+import {AddDocumentComponent} from '../../documentheque/add-document';
 
 export const AdminLayoutRoutes: Routes = [
 
@@ -38,17 +45,35 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'actualite', component: ActualiteComponent },
     { path: 'add-actualite/:type', component: AddActualiteComponent },
     { path: 'edit-actualite/:id', component: AddActualiteComponent },
+
+  { path: 'partenariat', component: PartenariatComponent },
+    { path: 'add-partenariat/:type', component: AddPartenariatComponent },
+    { path: 'edit-partenariat/:id', component: AddPartenariatComponent },
+
+    { path: 'event', component: EventComponent},
+    { path: 'add-event/:type', component: AddEventComponent },
+    { path: 'edit-event/:id', component: AddEventComponent },
+
     { path: 'reshaoc', component: ReshaocComponent },
+    { path: 'paramettre-image', component: ParamettreImageComponent },
     { path: 'pays-membre', component: PaysMembreComponent },
+    { path: 'paramettre-generale', component: ParamettreGeneralComponent},
+
+
+    { path: 'formation', component: FromationComponent },
+    { path: 'add-formation/:type', component: AddFromationComponent },
+    { path: 'edit-formation/:id', component: AddFromationComponent },
+
+    { path: 'document', component:  DocumentComponent },
+    { path: 'add-document/:type', component: AddDocumentComponent },
+    // { path: 'edit-formation/:id', component: AddFromationComponent },
 
 
 
 
 
     // users
-    { path: 'user-profile/:id', component: UserProfileComponent },
-    { path: 'users', component: UsersComponent },
-    { path: 'user/add', component: AddUserComponent },
+
     { path: 'actualite/:id', component: DetailActualiteComponent },
 
     {

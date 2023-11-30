@@ -11,14 +11,27 @@ import {Actualite} from '../models/Actualite';
 import {environment} from '../../environments/environment';
 import {ReshaocService} from '../services/reshaoc.service';
 
+import * as QuillNamespace from 'quill';
+
+var Size = QuillNamespace.import("attributors/style/size");
+
+Size.whitelist = ['8px','9px','10px','12px','14px','16px','20px','24px','32px','42px','54px','68px','84px','98px','100px',
+];
+QuillNamespace.register(Size, true);
+
+const fontFamilyArr = ['Arial','Arial Black','Arial Rounded MT Bold','Apple Chancery','Times New Roman','Comic Sans MS','Impact', 'Georgia','Roman',"Roboto Condensed",'Courier', 'Garamond', 'Tahoma',  , 'Verdana', "Times New Roman", "Calibri", "Calibri Light", "Sans-Serif"];
+let fonts = QuillNamespace.import("attributors/style/font");
+fonts.whitelist = fontFamilyArr;
+QuillNamespace.register(fonts, true);
+
 
 const fullToolbar = [
     [
         {
-            font: []
+            font: fonts.whitelist
         },
         {
-            size: []
+            size: Size.whitelist
         }
     ],
     ['bold', 'italic', 'underline', 'strike'],
@@ -164,7 +177,7 @@ let content=""
 
         }, this.reshaoc.id).subscribe(
             response=>{
-                alert(JSON.stringify(response))
+                alert("Enregistrer avec success")
             },
             error => {}
         )

@@ -1,124 +1,147 @@
 <div class="main-content">
     <div class="container-fluid">
-<!--        <div class="row">-->
-<!--            <div class="col-lg-4 col-md-6 col-sm-6">-->
-<!--                <div class="card card-stats">-->
-<!--                    <div class="card-header card-header-success card-header-icon">-->
-<!--                        <div class="card-icon">-->
-<!--                            <i class="material-icons">notifications</i>-->
-<!--                        </div>-->
-<!--                        <p class="card-category">Plaintes traitées</p>-->
-<!--                        <h3 class="card-title">-->
-<!--                            <div class="spinner-border text-success" role="status" *ngIf="loading;else i">-->
-<!--                                <span class="sr-only">Loading...</span>-->
-<!--                            </div>-->
-<!--                            <ng-template #i>{{ stat_data['nbrPlaintesTraitee']}}</ng-template>-->
-<!--                        </h3>-->
-<!--                    </div>-->
-<!--                    <div class="card-footer">-->
 
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4 col-md-6 col-sm-6">-->
-<!--                <div class="card card-stats">-->
-<!--                    <div class="card-header card-header-warning card-header-icon">-->
-<!--                        <div class="card-icon">-->
-<!--                            <i class="material-icons">notifications</i>-->
-<!--                        </div>-->
-<!--                        <p class="card-category">Reclamations traitées</p>-->
-<!--                        <h3 class="card-title ">-->
-<!--                            <div class="spinner-border text-success" role="status" *ngIf="loading;else elseBlock">-->
-<!--                                <span class="sr-only">Loading...</span>-->
-<!--                            </div>-->
-<!--                            <ng-template #elseBlock>{{ stat_data['nbrReclamationTraitee']}}</ng-template>-->
-<!--                        </h3>-->
-<!--                    </div>-->
-<!--                    <div class="card-footer">-->
+        <h1>Tableau de bord</h1>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-success card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">notifications</i>
+                        </div>
+                        <p class="card-category">TOTAL MEMBRES</p>
+                        <h3 class="card-title">
+                            <div class="spinner-border text-success" role="status" *ngIf="loading;else i">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <ng-template #i>{{ stat_data['nbr_adherant']}}</ng-template>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
 
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="col-lg-4 col-md-6 col-sm-6">-->
-<!--                <div class="card card-stats">-->
-<!--                    <div class="card-header card-header-info card-header-icon">-->
-<!--                        <div class="card-icon">-->
-<!--                            <i class="material-icons">folder</i>-->
-<!--                        </div>-->
-<!--                        <p class="card-category">Concours en cours</p>-->
-<!--                        <h3 class="card-title">-->
-<!--                            <div class="spinner-border text-success" role="status" *ngIf="spinner5;else e">-->
-<!--                                <span class="sr-only">Loading...</span>-->
-<!--                            </div>-->
-<!--                            <ng-template #e>{{competitions_count}}</ng-template>-->
-<!--                        </h3>-->
-<!--                    </div>-->
-<!--                    <div class="card-footer">-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-warning card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">notifications</i>
+                        </div>
+                        <p class="card-category">TOTAL EVERNEMNTS</p>
+                        <h3 class="card-title ">
+                            <div class="spinner-border text-success" role="status" *ngIf="loading;else elseBlock">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <ng-template #elseBlock>{{ stat_data['nbr_event']}}</ng-template>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
 
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card card-stats">
+                    <div class="card-header card-header-info card-header-icon">
+                        <div class="card-icon">
+                            <i class="material-icons">folder</i>
+                        </div>
+                        <p class="card-category">TOTAL FORMATIONS</p>
+                        <h3 class="card-title">
+                            <div class="spinner-border text-success" role="status" *ngIf="loading;else e">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <ng-template #e>{{ stat_data['nbr_formation']}}</ng-template>
+                        </h3>
+                    </div>
+                    <div class="card-footer">
 
-<!--        </div>-->
+                    </div>
+                </div>
+            </div>
+
+        </div>
 
 
-<!--        <div class="row">-->
-<!--            <div class="col-lg-12 col-md-12">-->
-<!--                <div class="card">-->
-<!--                    <div class="card-header card-header-danger">-->
-<!--                        <h4 class="card-title">Plaintes récentes enrégistrées</h4>-->
-<!--                        <p class="card-category">Toutes les plaintes enregister cette semaine</p>-->
-<!--                    </div>-->
-<!--                    <div class="card-body table-responsive">-->
-<!--                        <table class="table table-hover" style="width:100% !important">-->
-<!--                            <thead class=" text-warning ">-->
-<!--                                <th style="width:25% !important ">Plaignant</th>-->
-<!--                                <th style="width:5% !important;">Type</th>-->
-<!--                                <th style="width:45% !important ">Plainte</th>-->
-<!--                                <th style="width:15% !important ">Date</th>-->
-<!--                            </thead>-->
-<!--                            <tbody>-->
-<!--                                <tr *ngFor="let c of complaints; index as i;">-->
-<!--                                    <td>-->
-<!--                                        <a *ngIf="c.type=='plainte'; else elseBlock1" [routerLink]="['/complaints', c.id]">-->
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Liste des Cotisations</h4>
+                        <p class="card-category">Toutes les Cotisations enregister cette année</p>
+                    </div>
+                    <div class="card-body table-responsive ">
+<!--                        width:1% !important-->
+                        <table class="table table-hover" style="width:100% !important ">
+                            <thead class=" text-warning ">
+                                <th style=" ">N</th>
+                                <th style="">Adhérant</th>
+                                <th style=" ">Montant </th>
+                                <th style="">Date</th>
+                                <th style="">Observation</th>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let c of listCotisation ; index as i;">
+                                    <td>  {{ i+1 }} </td>
+                                    <td>{{c.raison_sociale}}</td>
+                                    <td>{{c.montant}}</td>
 
-<!--                                            <div class="d-flex flex-column ">-->
-<!--                                                <div class="">-->
-<!--                                                    {{ c.lastname }} {{ c.firstname}}-->
-<!--                                                </div>-->
-<!--                                                <div class="">-->
-<!--                                                    <b>  {{ c.phonenumber }} </b>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </a>-->
-<!--                                        <ng-template #elseBlock1>-->
-<!--                                            <a [routerLink]="['/reclamations', c.id]">-->
-<!--                                                <div class="d-flex flex-column ">-->
-<!--                                                    <div class="">-->
-<!--                                                        {{ c.lastname }} {{ c.firstname}}-->
-<!--                                                    </div>-->
-<!--                                                    <div class="">-->
-<!--                                                        <b>  {{ c.phonenumber }} </b>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </a>-->
-<!--                                        </ng-template>-->
-<!--                                    </td>-->
-<!--                                    <td>-->
-<!--                                        <span *ngIf="c.type=='plainte'; else elseBlock" class="badge badge-danger">Plainte</span>-->
-<!--                                        <ng-template #elseBlock>-->
-<!--                                            <span class="badge badge-warning">Réclamation</span>-->
-<!--                                        </ng-template>-->
-<!--                                    </td>-->
-<!--                                    <td> {{ (c.objet.length>100)? (c.objet | slice:0:100)+'...':(c.objet) }}</td>-->
-<!--                                    <td>{{ formatDate(c.created_at) }}</td>-->
-<!--                                </tr>-->
+                                    <td>{{c.created_at}}</td>
+                                    <td>{{c.observation}}</td>
 
-<!--                            </tbody>-->
-<!--                        </table>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header card-header-danger">
+                        <h4 class="card-title">Liste des Membres de du RESHAOC</h4>
+                        <p class="card-category">Le adherants </p>
+                    </div>
+                    <div class="card-body table-responsive ">
+<!--                        width:1% !important-->
+                        <table class="table table-hover" style="width:100% !important ">
+                            <thead class=" text-warning ">
+                                <th style=" ">N</th>
+                                <th style="">Raison sociale</th>
+                                <th style=" ">Categorie </th>
+                                <th style="">Email</th>
+                                <th style="">Telephone</th>
+                                <th style="">Pays</th>
+                            </thead>
+                            <tbody>
+
+<!--                            {{listAdherant|json}}-->
+                                <tr *ngFor="let c of listAdherant ; index as i;">
+                                    <td>  {{ i+1 }} </td>
+                                    <td>{{c.raison_sociale}}</td>
+                                    <td>{{c.categorie}}</td>
+                                    <td>{{c.email}}</td>
+                                    <td>{{c.telephone}}</td>
+                                    <td>{{c.pays}}</td>
+
+<!--                                    <td>{{c.created_at}}</td>-->
+<!--                                    <td>{{c.observation}}</td>-->
+
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
 </div>

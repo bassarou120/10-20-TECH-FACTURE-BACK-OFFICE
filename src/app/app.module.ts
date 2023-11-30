@@ -26,6 +26,10 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {RedirectGuard} from './RedirectGuard/RedirectGuard';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatSelectModule} from '@angular/material/select';
+import {MatOptionModule} from '@angular/material/core';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
 
 @NgModule({
   imports: [
@@ -46,7 +50,12 @@ import {RedirectGuard} from './RedirectGuard/RedirectGuard';
     NgxQuillModule,
     MatPaginatorModule,
     MatTableModule,
-    MatSortModule
+    MatSortModule,
+    MatSlideToggleModule,
+    MatSelectModule,
+      MatOptionModule,
+    QuillModule.forRoot()
+
     
 ],
   providers: [
@@ -56,6 +65,7 @@ import {RedirectGuard} from './RedirectGuard/RedirectGuard';
     // { provide: NZ_I18N, useValue: en_US },
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   declarations: [
     AppComponent,

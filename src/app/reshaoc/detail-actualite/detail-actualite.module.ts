@@ -8,10 +8,10 @@ import { ActualiteService } from '../../services/actualite.service';
         CommonModule
     ],
     declarations: [
-       // DetailActualiteComponent
+       // DetailDocumentComponent
     ],
     exports: [
-       // DetailActualiteComponent
+       // DetailDocumentComponent
     ],
     providers: [ActualiteService],
 })

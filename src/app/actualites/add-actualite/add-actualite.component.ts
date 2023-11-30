@@ -9,6 +9,22 @@ import { ActivatedRoute } from '@angular/router';
 import { JobService } from 'app/services/job.service';
 import {Actualite} from '../../models/Actualite';
 
+import {QuillModule, QuillModules} from 'ngx-quill';
+
+
+import * as QuillNamespace from 'quill';
+
+var Size = QuillNamespace.import("attributors/style/size");
+
+Size.whitelist = ['8px','9px','10px','12px','14px','16px','20px','24px','32px','42px','54px','68px','84px','98px','100px',
+];
+QuillNamespace.register(Size, true);
+
+const fontFamilyArr = ['Arial','Arial Black','Arial Rounded MT Bold','Apple Chancery','Times New Roman','Comic Sans MS','Impact', 'Georgia','Roman',"Roboto Condensed",'Courier', 'Garamond', 'Tahoma',  , 'Verdana', "Times New Roman", "Calibri", "Calibri Light", "Sans-Serif"];
+let fonts = QuillNamespace.import("attributors/style/font");
+fonts.whitelist = fontFamilyArr;
+QuillNamespace.register(fonts, true);
+
 
 declare const $: any;
 declare interface Type {
@@ -26,10 +42,10 @@ const fullToolbar = [
 
   [
     {
-      font: []
+      font: fonts.whitelist
     },
     {
-      size: []
+      size: Size.whitelist
     }
   ],
   ['bold', 'italic', 'underline', 'strike'],
@@ -83,12 +99,79 @@ const fullToolbar = [
   ['clean']
 ];
 
+/*
+const fullToolbar = [
+
+  [
+    {
+      font: fonts.whitelist
+    },
+    {
+      size: Size.whitelist
+    }
+  ],
+  ['bold', 'italic', 'underline', 'strike'],
+  [
+    {
+      color: []
+    },
+    {
+      background: []
+    }
+  ],
+  [
+    {
+      script: 'super'
+    },
+    {
+      script: 'sub'
+    }
+  ],
+  [
+    {
+      header: '1'
+    },
+    {
+      header: '2'
+    },
+    'blockquote',
+    'code-block'
+  ],
+  [
+    {
+      list: 'ordered'
+    },
+    {
+      list: 'bullet'
+    },
+    {
+      indent: '-1'
+    },
+    {
+      indent: '+1'
+    }
+  ],
+  [
+    'direction',
+    {
+      align: []
+    }
+  ],
+  ['link', 'image', 'video', 'formula'],
+  ['emoji'],
+  ['clean']
+];
+*/
+
 @Component({
   selector: 'add-regulation',
   templateUrl: './add-actualite.component.html',
   styleUrls: ['./add-actualite.component.styl']
 })
 export class AddActualiteComponent implements OnInit {
+
+
+  Quill: any = QuillNamespace;
 
   types: any[];
 
@@ -108,9 +191,18 @@ export class AddActualiteComponent implements OnInit {
   //   displaySize: true
   // // },
 
+
+
+  customOptions = [{
+    import: '??',
+    whitelist: ['[GuestName]', '[HotelName]']
+  }];
+
+
+
   //******************************************
 
-  public editorOptions = {
+  public editorOptions:QuillModules = {
     placeholder: "insert content...",
     theme: 'snow',
     modules: {
@@ -118,7 +210,12 @@ export class AddActualiteComponent implements OnInit {
       formula: true,
       toolbar: fullToolbar
     },
+
   };
+
+
+
+
   typeActualite:any
 
   actualite: Actualite
@@ -126,6 +223,10 @@ export class AddActualiteComponent implements OnInit {
   id: number;
   card_header_title: string = ' '
   fileToUpload: File = null;
+
+  isAgenda=false
+
+  listEvent:any;
 
 
   public editor;
@@ -138,6 +239,7 @@ export class AddActualiteComponent implements OnInit {
 
   actualiteForm = new FormGroup({
     titre: new FormControl('', Validators.required),
+    description: new FormControl(''),
     // type: new FormControl('', Validators.required),
    });
 
@@ -169,6 +271,28 @@ export class AddActualiteComponent implements OnInit {
         this.getActualite(idActualite);
       }
     })
+
+    if(this.typeActualite=="AGENDA"){
+      this.isAgenda=true;
+      this.getEvents()
+    }
+
+
+
+  }
+
+  getEvents(){
+
+      this.actualiteService.getListEvent().subscribe((data: Array<Actualite>) => {
+            this.listEvent = data['data'];
+
+            console.log( this.listEvent)
+
+          }, (error: HttpErrorResponse) => {
+            console.log("Error while retrieving data");
+          }
+      )
+
   }
 
   getActualite(id){
@@ -179,6 +303,7 @@ export class AddActualiteComponent implements OnInit {
 
     console.log(this.actualite )
     this.actualiteForm.get('titre').setValue(response['data'].title);
+    this.actualiteForm.get('description').setValue(response['data'].description);
     this.typeActualite=response['data'].type
     // this.actualiteForm.get('type').setValue(response['data'].title);
   // this.actualiteForm.setValue({titre:this.actualite.titre})
@@ -233,23 +358,27 @@ export class AddActualiteComponent implements OnInit {
 
   onClickSubmit(): void {
     if (!this.actualiteForm.invalid) {
-      $('#sbt_btn').removeClass('disabled');
-      $('#spinner').addClass('d-none')
+      $('#sbt_btn').addClass('disabled');
+
+      $('#spinner').removeClass('d-none')
+
       const formData = this.actualiteForm.value;
       // console.log(formData);
 
       const data = new FormData();
       // data.append('Content-Type', 'multipart/form-data');
-      // data.append('file', <File>this.fileToUpload);
+      data.append('fichier', <File>this.fileToUpload);
       data.append('image', <File>this.imgToUpload);
       data.append('content', this.editor.root.innerHTML);
       data.append('type', this.typeActualite);
       data.append('title', formData.titre);
+      data.append('description', formData.description);
 
       if (this.action == 'add') {
 
         this.actualiteService.saveWithInmage(data, 0)
           .subscribe(response => {
+
 
             this.notificationForm(
               "success",
@@ -257,8 +386,9 @@ export class AddActualiteComponent implements OnInit {
             );
             console.log(response);
 
-            $('#sbt_btn').addClass('disabled');
-            $('#spinner').removeClass('d-none');
+            $('#sbt_btn').removeClass('disabled');
+            $('#spinner').addClass('d-none')
+            // $('#spinner').removeClass('d-none');
 
             this.actualiteForm.reset();
           }, (error: HttpErrorResponse) => {
@@ -284,6 +414,11 @@ export class AddActualiteComponent implements OnInit {
               "success",
               "Modification réussi !"
             );
+
+            // $('#sbt_btn').addClass('disabled');
+            $('#spinner').addClass('d-none');
+
+
           }, (error: HttpErrorResponse) => {
             this.notificationForm(
                 "danger",

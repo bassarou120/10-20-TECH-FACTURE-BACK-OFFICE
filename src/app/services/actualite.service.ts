@@ -23,8 +23,21 @@ export class ActualiteService {
     return this.http.post(`${this.url}/actualites`, actualite);
   }
 
+  updateIsVedete(data:any): Observable<Object> {
+    return this.http.post(`${this.url}/updateIsVedete`, data);
+  }
+
   saveWithInmage(data:any,id: number):Observable<Object> {
     return this.http.post(`${this.url}/actualites`, data);
+  }
+
+
+  saveDocument(data:any):Observable<Object> {
+    return this.http.post(`${this.url}/saveDocument`, data);
+  }
+
+  listDocument():Observable<Object> {
+    return this.http.get(`${this.url}/listDocument` );
   }
 
   // Modification d'un element
@@ -67,6 +80,15 @@ export class ActualiteService {
   // liste des IDE par id
   getByType(type: any): Observable<Object> {
     return this.http.get(`${this.url}/getActuByType?type=${type}`);
+  }
+
+
+  getListEvent(): Observable<Object> {
+    return this.http.get(`${this.url}/getListeEvent`);
+  }
+
+  getReservationByEvent(id: number): Observable<Object> {
+    return this.http.get(`${this.url}/getReservationByEvent/${id}`);
   }
 
 

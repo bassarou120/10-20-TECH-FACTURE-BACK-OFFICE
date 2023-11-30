@@ -7,6 +7,8 @@ import { Regulation } from 'app/models/regulation';
 import { HttpErrorResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Complaints } from 'app/models/complaints';
+import {ParamettreImageService} from '../services/paramettre-image.service';
+import {AdherantService} from '../services/adherant.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,7 +17,8 @@ import { Complaints } from 'app/models/complaints';
 })
 export class DashboardComponent implements OnInit {
 
-  constructor(private competitionService: CompetitionService,private complaintsService: ComplaintsService,private regulationService:ActualiteService) { }
+  constructor(private  paramettreImageService:ParamettreImageService,
+             private adherantService:AdherantService) { }
 
    
   regulations_count: number;  
@@ -42,9 +45,28 @@ export class DashboardComponent implements OnInit {
   stat_data=[];
   complaints: Array<Complaints> = [];
 
+  listCotisation
+  listAdherant
+  ngOnInit() {
+
+    this.stat();
+    this.getCotisation()
+    this.getAdherant()
+    setTimeout(() => {
+      if(!this.spinner4 && !this.total_complaint_spinner)
+        this.treated_complaints =  this.complaints_count - this.complaint_untreated_count;
+      this.spinner1= false ;
+
+      console.log(this.complaints_count,this.complaint_untreated_count);
+    }, 10000);
+
+  }
+
   stat(): void {
-      this.complaintsService.stat().subscribe((data: Array<Regulation>) => {
+      this.paramettreImageService.getStat().subscribe((data: Array<any>) => {
         this.stat_data= data['data'];
+
+        // alert(JSON.stringify(this.stat_data))
         this.loading= false;        
       }, (error: HttpErrorResponse) => {
         console.log("Error while retrieving data");
@@ -52,124 +74,37 @@ export class DashboardComponent implements OnInit {
       )
   }
 
-  getRegCount(): void {
-    this.regulationService.total_reglementation().subscribe((data: Array<Regulation>) => {
-      this.regulations_count = data['data'];
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-}
-  //en cours
-  getComCount(): void {
-    this.competitionService.total_competition().subscribe((data: Array<Regulation>) => {
-      this.competitions_count = data['data'];
-      this.spinner5 = false ;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
+  getCotisation(): void {
+    this.paramettreImageService.getCotisation().subscribe((data: Array<any>) => {
+          this.listCotisation= data['data'];
+
+          // alert(JSON.stringify(this.stat_data))
+          this.loading= false;
+        }, (error: HttpErrorResponse) => {
+          console.log("Error while retrieving data");
+        }
     )
   }
+  getAdherant(): void {
+    this.adherantService.getAdherantlite().subscribe((data: Array<any>) => {
+          this.listAdherant= data['data'].data;
 
-  getComplCount(): void {
-    this.complaintsService.total_complaints().subscribe((data: Array<Regulation>) => {
-      this.complaints_count = data['data'];
-      this.total_complaint_spinner= false ;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
-
-  getPendingCompCount(): void {
-    this.competitionService.total_competition().subscribe((data: Array<Regulation>) => {
-      //this.complaints_count = data['data'];
-      this.competitions_count = data['data'];
-      
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
-
-  getPassedCompetition():void{
-    this.competitionService.passed_competition().subscribe((data: Array<Regulation>) => {
-      this.  competitions_passed_count  = data['data'];
-      this.spinner7 = false;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
-
-  getPassedCompCount(): void {
-    this.competitionService.pending_competition().subscribe((data: Array<Regulation>) => {
-      this.complaints_count = data['data'];
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
+          // alert(JSON.stringify(this.stat_data))
+          this.loading= false;
+        }, (error: HttpErrorResponse) => {
+          console.log("Error while retrieving data");
+        }
     )
   }
 
 
 
-  getReclaCount(): void {
-    this.spinner2= true;
-    this.complaintsService.total_reclamations().subscribe((data: Array<Regulation>) => {
-      this.reclamation_count = data['data'];
-      this.spinner2= false;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
-
-  getReclaUntreatCount(): void {
-    this.complaintsService.unTreated_reclamations().subscribe((data: Array<Regulation>) => {
-      this.reclamation_untreated_count = data['data'];
-      this.spinner3 = false ;
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
-  
-  getList(): void {
-    this.complaintsService.list().subscribe((data: Array<Complaints>) => {
-      this.complaints = data['data'].slice(0,6);
-      // console.log(this.complaints );
-    }, (error: HttpErrorResponse) => {
-      console.log("Error while retrieving data");
-    }
-    )
-  }
 
   formatDate(date:string){
     const d = date.split("T");
     return d[0]+' '+d[1].substr(0, 8);
   }
 
-  ngOnInit() {
-  // this.getRegCount();
-  //   this.getComCount();
-    // this.getReclaCount();
-    // this.getComplCount();
-    // this.getList();
-    // this.getReclaUntreatCount();
-    // this.getPendingCompCount();
-    // this.getPassedCompCount();
-    this.getPassedCompetition();
 
-    this.stat();
-    setTimeout(() => {
-      if(!this.spinner4 && !this.total_complaint_spinner)
-      this.treated_complaints =  this.complaints_count - this.complaint_untreated_count;
-      this.spinner1= false ;
-
-      console.log(this.complaints_count,this.complaint_untreated_count);
-    }, 10000);
-  
- }
-    
 
 }

@@ -272,6 +272,9 @@ SOFTWARE.
 ng2-pdf-viewer
 MIT
 
+ngx-quill
+MIT
+
 pdfjs-dist
 Apache-2.0
 

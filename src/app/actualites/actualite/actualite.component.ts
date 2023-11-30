@@ -9,6 +9,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {Actualite} from '../../models/Actualite';
 import {environment} from '../../../environments/environment';
+import {ThemePalette} from '@angular/material/core';
 
 @Component({
     selector: 'app-regulations',
@@ -19,12 +20,16 @@ export class ActualiteComponent implements OnInit {
     constructor(private actualiteService: ActualiteService, private router: Router,
                 private activeRoute: ActivatedRoute) { }
 
+    color: ThemePalette = 'accent';
+    checked = false;
+    disabled = false;
 
     listActivite: Array<Actualite> = [];
     listArticle: Array<Actualite> = [];
     listAgenda: Array<Actualite> = [];
     listJournee: Array<Actualite> = [];
-    url: string = environment.base_url_backend
+    listlistActivitePoint: Array<Actualite> = [];
+    url: string = environment.accet_url
 
     typeNotificationForm: string;
     messageNotificationForm: string;
@@ -59,8 +64,30 @@ export class ActualiteComponent implements OnInit {
         this.getListArticle();
         this.getListAgenda();
         this.getListJourne();
+        this.getListListlistActivitePoint();
     }
 
+
+
+    checkCheckBoxvalue(event,id){
+        console.log(event.checked)
+        this.spinner = true;
+        this.actualiteService.updateIsVedete({
+            'id':id,
+            'isvedette':event.checked
+        }).subscribe((data: any) => {
+                // this.listActivite = data['data'];
+            console.log(data)
+            this.getListActivite();
+            this.getListArticle();
+            this.getListAgenda();
+            this.getListJourne();
+                this.spinner = false;
+            }, (error: HttpErrorResponse) => {
+                console.log("Error while retrieving data");
+            }
+        )
+    }
 
     getListActivite(): void {
         this.actualiteService.getByType("ACTIVITE-PHARE").subscribe((data: Array<Actualite>) => {
@@ -109,6 +136,16 @@ export class ActualiteComponent implements OnInit {
 
     getListJourne(): void {
         this.actualiteService.getByType("JOURNEE-SCIENTIFIQUE").subscribe((data: Array<Actualite>) => {
+                this.listJournee = data['data'];
+                this.spinner = false;
+            }, (error: HttpErrorResponse) => {
+                console.log("Error while retrieving data");
+            }
+        )
+    }
+
+    getListListlistActivitePoint() : void {
+        this.actualiteService.getByType("ACTIVITE-POINTS-FOCAUX").subscribe((data: Array<Actualite>) => {
                 this.listJournee = data['data'];
                 this.spinner = false;
             }, (error: HttpErrorResponse) => {
@@ -228,8 +265,8 @@ export class ActualiteComponent implements OnInit {
     }
 
     ngAfterViewInit() {
-         this.dataSourceActivite.paginator = this.paginator;
-        this.dataSourceActivite.sort = this.sort;
+        //  this.dataSourceActivite.paginator = this.paginator;
+        // this.dataSourceActivite.sort = this.sort;
     }
     
     applyFilter(filterValue: string) {
