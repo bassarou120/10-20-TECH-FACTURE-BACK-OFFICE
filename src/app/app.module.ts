@@ -14,10 +14,9 @@ import {BrowserModule} from '@angular/platform-browser';
 import {JwtInterceptor} from './utils/JwtInterceptor';
 import {ErrorInterceptor} from './utils/ErrorInterceptor';
 import {CreateAdminComponent} from './create-admin/create-admint.component';
-import { QuillModule } from 'ngx-quill';
-import { NgxQuillModule } from '@dimpu/ngx-quill';
+
 import {AuthLayoutComponent} from './layouts/auth-layout';
-import {SsocallbackComponent} from './sso-callback/ssocallback.component';
+
 // import { MatInputModule } from '@angular/material/input/input-module';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTableModule } from '@angular/material/table';
@@ -47,14 +46,14 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     FormsModule,
     MatFormFieldModule,
     ReactiveFormsModule,
-    NgxQuillModule,
+
     MatPaginatorModule,
     MatTableModule,
     MatSortModule,
     MatSlideToggleModule,
     MatSelectModule,
       MatOptionModule,
-    QuillModule.forRoot()
+
 
     
 ],
@@ -73,7 +72,7 @@ import {HashLocationStrategy, LocationStrategy} from '@angular/common';
     AuthLayoutComponent,
     LoginComponent,
     CreateAdminComponent,
-    SsocallbackComponent
+
   ],
 
 

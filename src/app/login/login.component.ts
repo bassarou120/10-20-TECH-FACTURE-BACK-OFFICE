@@ -106,6 +106,8 @@ export class LoginComponent implements OnInit {
                                 "danger",
                                 "Erreur système. Veuillez réessayer ultérieurement !"
                             );
+
+                            $('#spinner').addClass('d-none');
                         }
                     }
                 );
