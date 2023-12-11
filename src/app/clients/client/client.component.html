@@ -1,0 +1,142 @@
+<!-- @format -->
+
+<style>
+  mat-cell {
+    /* text-align: center !important; */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 2px;
+  }
+  ng-container {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  mat-cell,
+  mat-header-cell,
+  mat-footer-cell {
+    flex: 1;
+    display: block !important;
+    text-align: start !important;
+  }
+
+  .action {
+    margin: 10px !important;
+    width: 10px !important;
+  }
+</style>
+<div class=".regulations main-content">
+  <div
+    class="card"
+    style="
+      border-radius: 0px;
+      height: 60px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 35px;
+      padding-top: 20px;
+    "
+  >
+   MES CLIENTS
+  </div>
+  <div class="containe">
+
+    <div class="d-flex justify-content-end">
+      <a
+              [routerLink]="['/add-client', 'CLIENT']"
+              mat-raised-button=""
+              class="btn mat-raised-button mat-button-base"
+      >
+            <span class=""
+            ><span class=""> <i class="material-icons">add</i></span> ajouter
+              un client
+            </span>
+        <div matripple="" class="mat-ripple mat-button-ripple"></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+    </div>
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h3 class="card-title">Clients</h3>
+        <p class="card-category">
+          Ce panel vous permets de gérer les clients
+        </p>
+      </div>
+      <div class="card-body">
+        <div class="m-3 d-flex justify-content-between">
+          <div class="">
+            <input
+                    class="form-control"
+                    type="text"
+                    (keyup)="applyFilter($event.target.value)"
+                    placeholder="Rechercher"
+            />
+          </div>
+        </div>
+        <div class="row table-responsible">
+          <div class="d-flex justify-content-center">
+            <div
+                    class="spinner-border text-success text-center"
+                    role="status"
+                    *ngIf="spinner"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div class="m-2" *ngIf="!spinner">
+            <table class="table table-responsive table-striped">
+              <tr class="card-header card-header-danger">
+                <th>N0</th>
+                <th>Nom</th>
+                <th>Prénom</th>
+                <th>téléphone</th>
+                <th>Email</th>
+                <th>adresse</th>
+
+                <th>Action</th>
+              </tr>
+
+              <tbody>
+              <tr *ngFor="let a of listClient; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ a.nom }}</td>
+                <td>{{ a.prenom }}</td>
+                <td>{{ a.telephone }}</td>
+                <td>{{ a.email }}</td>
+
+                <td>{{ a.adresse }}</td>
+<!--                <td>{{ a.created_at }}</td>-->
+
+                <td>
+                  <a
+                          [routerLink]="['/edit-client', a.id]"
+                          rel="tooltip"
+                          class="action"
+                  >
+                    <i class="material-icons text-info">info</i>
+                  </a>
+                  <button
+                          type="button"
+                          rel="tooltip"
+                          class="btn btn-link btn-sm btn-danger"
+                          (click)="deleteElement(a.id)"
+                  >
+                    <i class="material-icons">close</i>
+                  </button>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+      </div>
+    </div>
+
+  </div>
+</div>

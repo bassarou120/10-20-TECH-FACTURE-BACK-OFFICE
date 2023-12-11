@@ -1,0 +1,353 @@
+<!-- @format -->
+
+<style>
+  .ql-snow .ql-picker.ql-size .ql-picker-label[data-value]::before,
+  .ql-snow .ql-picker.ql-size .ql-picker-item[data-value]::before {
+    content: attr(data-value) !important;
+  }
+
+  /*for font-family*/
+
+  .ql-snow .ql-picker.ql-font .ql-picker-label[data-value]::before,
+  .ql-snow .ql-picker.ql-font .ql-picker-item[data-value]::before {
+    content: attr(data-value) !important;
+  }
+
+  .ql-snow .ql-picker.ql-font {
+    width: 150px !important;
+    white-space: nowrap;
+  }
+</style>
+<div class=".add-regulations main-content">
+  <div class="container-fluid">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-rose card-header-text">
+          <div class="card-text">
+            <h4 class="card-title">{{ card_header_title }}</h4>
+          </div>
+        </div>
+        <!-- Alert with rounded corner -->
+        <div
+          class="alert {{ 'alert-' + typeNotificationForm }} alert-rounded"
+          *ngIf="isNotificationForm == true"
+        >
+          <i class="ti-info-alt"></i> {{ messageNotificationForm }}
+          <button type="button" class="close" (click)="closeNotificationForm()">
+            <span>×</span>
+          </button>
+        </div>
+
+        <hr />
+        <div class="row" *ngIf="isNotificationForm == true">
+          <div class="col col-md-3">
+            <button
+              type="button"
+              rel="tooltip"
+              class="btn btn-link btn-sm"
+              (click)="afficheFacture('open', curentFactureId)"
+            >
+              <i class="material-icons"> info</i> Afficher la fature
+            </button>
+          </div>
+
+          <div class="col col-md-3">
+            <button
+              type="button"
+              rel="tooltip"
+              class="btn btn-link btn-sm"
+              (click)="afficheFacture('download', curentFactureId)"
+            >
+              <i class="material-icons">download</i> Telecharger la fature
+            </button>
+          </div>
+          <div class="col col-md-3">
+            <button
+              type="button"
+              rel="tooltip"
+              class="btn btn-link btn-sm"
+              (click)="afficheFacture('print', curentFactureId)"
+            >
+              <i class="material-icons">print</i> Imprimer la fature
+            </button>
+          </div>
+        </div>
+        <form
+          class="ng-untouched ng-pristine ng-valid"
+          id="add_regultion_form"
+          [formGroup]="factureForm"
+          (ngSubmit)="onClickSubmit()"
+          novalidate
+        >
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <mat-form-field>
+                  <mat-label style="font-size: 20px">Client : </mat-label>
+                  <mat-select
+                    placeholder="choisir un Client"
+                    name="id_actualite"
+                    id=""
+                    ngClass="btn btn-default btn-link simple"
+                    formControlName="client_id"
+                  >
+                    <mat-option
+                      *ngFor="let client of listClient"
+                      [value]="client.id"
+                    >
+                      {{ client.nom }} {{ client.prenom }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="errors"></div>
+              </div>
+              <div class="col-md-6">
+                <mat-label style="font-size: 20px">Date : </mat-label>
+                <mat-form-field class="example-full-width">
+                  <input matInput type="date" formControlName="date" />
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <!--                                <mat-form-field>-->
+                <!--                                    <mat-label style="font-size: 20px">Produit : </mat-label>-->
+                <!--                                    <mat-select placeholder="choisir un Client" name="id_actualite" id="" ngClass="btn btn-default btn-link simple" formControlName="client"  >-->
+                <!--                                        <mat-option *ngFor="let client of listClient" [value]="client.id">-->
+                <!--                                            {{ client.nom }} {{ client.prenom}}-->
+                <!--                                        </mat-option>-->
+                <!--                                    </mat-select>-->
+                <!--                                </mat-form-field>-->
+                <!--                                <div class="errors">-->
+                <!--                                </div>-->
+              </div>
+
+              <div class="col-md-4">
+                <!--                                <mat-label style="font-size: 20px">Date : </mat-label>-->
+                <!--                                <mat-form-field class="example-full-width">-->
+                <!--                                    <input matInput   type="number"    >-->
+                <!--                                </mat-form-field>-->
+              </div>
+
+              <div class="col-md-4">
+                <mat-label style="font-size: 20px">. </mat-label>
+                <button
+                  class="btn btn-social"
+                  type="button"
+                  (click)="openModal(1, 'ajoute-article')"
+                >
+                  ajouter l'article
+                </button>
+              </div>
+            </div>
+            <br />
+            <hr />
+
+            <div class="row">
+              <div class="col col-md-3">
+                <b> Montant HT : </b> {{ montantHt }} FCFA
+              </div>
+              <div class="col col-md-1">||</div>
+              <div class="col col-md-3">
+                <b> Montant TTC : </b> {{ montantTTC }} FCFA
+              </div>
+            </div>
+
+            <hr />
+
+            <div class="row">
+              <table class="table table-bordered" border="2">
+                <tr>
+                  <th>N0</th>
+                  <th>Désignation</th>
+                  <th>P.U</th>
+                  <th>Qté</th>
+                  <th>Motant</th>
+                  <th>Action</th>
+                </tr>
+
+                <tbody>
+                  <tr *ngFor="let p of panier; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ p.produit.designation }}</td>
+                    <td>{{ p.produit.prix }}</td>
+                    <td>{{ p.qte }}</td>
+                    <td>{{ p.montant }}</td>
+                    <td>
+                      <button
+                        type="button"
+                        rel="tooltip"
+                        class="btn btn-link btn-sm btn-danger"
+                        (click)="deleteArticle(i)"
+                      >
+                        <i class="material-icons">close</i>
+                      </button>
+                    </td>
+                  </tr>
+                  <!--                                <tr>-->
+                  <!--                                    <td>1</td>-->
+                  <!--                                    <td>Bic rouge</td>-->
+                  <!--                                    <td>100</td>-->
+                  <!--                                    <td>2</td>-->
+                  <!--                                    <td>200</td>-->
+                  <!--                                    <td></td>-->
+                  <!--                                </tr>-->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card-footer d-flex justify-content-end">
+            <div class="row" *ngIf="isNotificationForm == true">
+              <div class="col col-md-3">
+                <button
+                  type="button"
+                  rel="tooltip"
+                  class="btn btn-link btn-sm"
+                  (click)="afficheFacture('open', curentFactureId)"
+                >
+                  <i class="material-icons"> info</i> Afficher
+                </button>
+              </div>
+
+              <div class="col col-md-3">
+                <button
+                  type="button"
+                  rel="tooltip"
+                  class="btn btn-link btn-sm"
+                  (click)="afficheFacture('download', curentFactureId)"
+                >
+                  <i class="material-icons">download</i> Telecharger
+                </button>
+              </div>
+              <div class="col col-md-3">
+                <button
+                  type="button"
+                  rel="tooltip"
+                  class="btn btn-link btn-sm"
+                  (click)="afficheFacture('print', curentFactureId)"
+                >
+                  <i class="material-icons">print</i> Imprimer
+                </button>
+              </div>
+            </div>
+            <!-- <div class="row">
+              <button
+                type="button"
+                rel="tooltip"
+                class="btn btn-link btn-sm"
+                (click)="afficheFacture('open', curentFactureId)"
+              >
+                <i class="material-icons"> info</i> Afficher
+              </button>
+              <button
+                type="button"
+                rel="tooltip"
+                class="btn btn-link btn-sm"
+                (click)="afficheFacture('download', curentFactureId)"
+              >
+                <i class="material-icons">download</i> Telecharger
+              </button>
+              <button
+                type="button"
+                rel="tooltip"
+                class="btn btn-link btn-sm"
+                (click)="afficheFacture('print', curentFactureId)"
+              >
+                <i class="material-icons">print</i> Imprimer
+              </button>
+            </div> -->
+
+            <div>
+              <a
+                [routerLink]="['/facture']"
+                mat-raised-button=""
+                class="btn btn-fill btn-default mat-raised-button mat-button-base"
+              >
+                <span class="mat-button-wrapper">Fermer</span>
+                <div matripple=" " class="mat-ripple mat-button-ripple"></div>
+                <div class="mat-button-focus-overlay"></div>
+              </a>
+            </div>
+
+            <div>
+              <button
+                mat-raised-button=""
+                type="submit"
+                id="sbt_btn"
+                class="btn btn-fill btn-rose mat-raised-button mat-button-base"
+              >
+                <span class="fa fa-spinner fa-spin d-none" id="spinner"></span>
+                <span class="mat-button-wrapper">Enregistrer</span>
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <div
+        class="modal"
+        tabindex="-1 "
+        role="dialog "
+        [ngStyle]="{ display: display3 }"
+      >
+        <div class="modal-dialog" role="document ">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal_titl ">{{ titre_modal }}</h4>
+              <button
+                type="button "
+                class="close"
+                aria-label="Close "
+                (click)="onCloseHandled()"
+              >
+                <span aria-hidden="true ">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <form action="" [formGroup]="articleForm">
+                <div class="row">
+                  <div class="col col-md-4">
+                    <label> Produit/service</label>
+                    <select
+                      name="produit"
+                      id="produit"
+                      formControlName="produit"
+                      class="form-control"
+                    >
+                      <option
+                        value=""
+                        *ngFor="let p of listProduit"
+                        [ngValue]="p"
+                      >
+                        {{ p.designation }} ( {{ p.prix }} CFA)
+                      </option>
+                    </select>
+                  </div>
+                  <div class="col col-md-4">
+                    <label> Quantité</label>
+                    <input
+                      type="text"
+                      id="qte"
+                      formControlName="qte"
+                      name="qte"
+                      placeholder="Qté"
+                      class="form-control"
+                    />
+                  </div>
+                  <div class="col col-md-4">
+                    <br />
+                    <button class="btn btn-success" (click)="ajouteArticle()">
+                      Ajouter
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

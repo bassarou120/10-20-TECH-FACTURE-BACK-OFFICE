@@ -1,0 +1,144 @@
+<!-- @format -->
+
+<style>
+  mat-cell {
+    /* text-align: center !important; */
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    padding: 2px;
+  }
+  ng-container {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  mat-cell,
+  mat-header-cell,
+  mat-footer-cell {
+    flex: 1;
+    display: block !important;
+    text-align: start !important;
+  }
+
+  .action {
+    margin: 10px !important;
+    width: 10px !important;
+  }
+</style>
+<div class=".regulations main-content">
+  <div
+    class="card"
+    style="
+      border-radius: 0px;
+      height: 60px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 35px;
+      padding-top: 20px;
+    "
+  >
+    LISTE DES VENTES / FACTURATIONS
+  </div>
+  <div class="containe">
+    <div class="d-flex justify-content-end">
+      <a
+        [routerLink]="['/add-facture', 'FACTURE']"
+        mat-raised-button=""
+        class="btn mat-raised-button mat-button-base"
+      >
+        <span class=""
+          ><span class=""> <i class="material-icons">add</i></span> ajouter une
+          vente
+        </span>
+        <div matripple="" class="mat-ripple mat-button-ripple"></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+    </div>
+    <div class="card">
+      <div class="card-header card-header-danger">
+        <h3 class="card-title">VENTES / FACTURATIONS</h3>
+        <p class="card-category">Ce panel vous permets de gérer les factures</p>
+      </div>
+      <div class="card-body">
+        <div class="m-3 d-flex justify-content-between">
+          <div class="">
+            <input
+              class="form-control"
+              type="text"
+              (keyup)="applyFilter($event.target.value)"
+              placeholder="Rechercher"
+            />
+          </div>
+        </div>
+        <div class="row table-responsible">
+          <div class="d-flex justify-content-center">
+            <div
+              class="spinner-border text-success text-center"
+              role="status"
+              *ngIf="spinner"
+            >
+              <span class="sr-only">Loading...</span>
+            </div>
+          </div>
+
+          <div class="m-2" *ngIf="!spinner">
+            <table class="table table-responsive table-striped">
+              <tr class="card-header card-header-danger">
+                <th>Numero facture</th>
+                <th>Client</th>
+                <th>Telephone</th>
+                <th>Montant HT</th>
+                <th>Montant TTC</th>
+                <th>Date</th>
+
+                <th>Action</th>
+              </tr>
+              <tbody>
+                <tr *ngFor="let a of listFacture; let i = index">
+                  <td>000{{ a.id }}</td>
+                  <td>{{ a.nom }} {{ a.prenom }}</td>
+                  <td>{{ a.telephone }}</td>
+                  <td>{{ a.montant }}</td>
+                  <td>{{ a.montant + a.montant * 0.18 }}</td>
+                  <td>{{ a.date }}</td>
+
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('open', a.id)"
+                    >
+                      <i class="material-icons"> info</i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('download', a.id)"
+                    >
+                      <i class="material-icons">download</i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('print', a.id)"
+                    >
+                      <i class="material-icons">print</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">
+        <!-- <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" [pageSize]="5" [length]="actu.length"></mat-paginator>-->
+      </div>
+    </div>
+  </div>
+</div>

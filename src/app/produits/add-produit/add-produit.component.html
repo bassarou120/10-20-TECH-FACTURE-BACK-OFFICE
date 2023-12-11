@@ -1,0 +1,116 @@
+<style>
+
+
+    .ql-snow .ql-picker.ql-size .ql-picker-label[data-value]::before,
+    .ql-snow .ql-picker.ql-size .ql-picker-item[data-value]::before {
+        content: attr(data-value) !important;
+    }
+
+
+    /*for font-family*/
+
+    .ql-snow .ql-picker.ql-font .ql-picker-label[data-value]::before,
+    .ql-snow .ql-picker.ql-font .ql-picker-item[data-value]::before {
+        content: attr(data-value) !important;
+    }
+
+    .ql-snow .ql-picker.ql-font {
+        width: 150px !important;
+        white-space: nowrap;
+    }
+
+
+
+
+</style>
+<div class=".add-regulations main-content">
+    <div class="container-fluid">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header card-header-rose card-header-text">
+                    <div class="card-text">
+                        <h4 class="card-title">{{ card_header_title}}</h4>
+                    </div>
+                </div>
+                <!-- Alert with rounded corner -->
+                <div class="alert {{'alert-'+typeNotificationForm}} alert-rounded" *ngIf="isNotificationForm == true">
+                    <i class="ti-info-alt"></i> {{messageNotificationForm}}
+                    <button type="button" class="close" (click)="closeNotificationForm()">
+                         <span>×</span></button>
+                </div>
+                <form class="ng-untouched ng-pristine ng-valid" id="add_regultion_form" [formGroup]="produitForm" (ngSubmit)="onClickSubmit()" novalidate>
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Désignation" type="text" id="designation" formControlName="designation">
+                                </mat-form-field>
+                                <div class="errors">
+                                    <span *ngIf="designation && designation.invalid && designation.touched && produitForm.get('designation').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <!-- <span *ngIf="titre && titre.invalid && titre.touched && produitForm.get('titre').errors.minlength" [ngClass]="'error'"> Au moins {{ produitForm.get('question').errors.minlength.requiredLength }} caractères </span> -->
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Prix unitaire" type="text" id="prix" formControlName="prix">
+                                </mat-form-field>
+                                <div class="errors">
+                                    <span *ngIf="prix && prix.invalid && prix.touched && produitForm.get('prix').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <!-- <span *ngIf="titre && titre.invalid && titre.touched && produitForm.get('titre').errors.minlength" [ngClass]="'error'"> Au moins {{ produitForm.get('question').errors.minlength.requiredLength }} caractères </span> -->
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <mat-form-field class="example-full-width">
+                                    <input matInput placeholder="Observation" type="text" id="observation" formControlName="observation">
+                                </mat-form-field>
+                                <div class="errors">
+                                    <span *ngIf="observation && observation.invalid && observation.touched && produitForm.get('observation').errors.required" [ngClass]="'error'">Renseignez ce champs svp</span>
+                                    <!-- <span *ngIf="titre && titre.invalid && titre.touched && produitForm.get('titre').errors.minlength" [ngClass]="'error'"> Au moins {{ produitForm.get('question').errors.minlength.requiredLength }} caractères </span> -->
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+
+
+
+
+
+                    </div>
+                    <div class="card-footer d-flex justify-content-end ">
+                        <div>
+                            <a  [routerLink]="['/produit']"  mat-raised-button=""
+                               class="btn btn-fill btn-default mat-raised-button mat-button-base ">
+                                <span class="mat-button-wrapper ">Annuler</span>
+                                <div matripple=" " class="mat-ripple mat-button-ripple ">
+                                </div>
+                                <div class="mat-button-focus-overlay "></div>
+                            </a>
+                        </div>
+
+
+
+                        <div>
+                            <button mat-raised-button=""
+                                    type="submit" id="sbt_btn"
+                                    class="btn btn-fill btn-rose mat-raised-button mat-button-base ">
+                                <span class="fa fa-spinner fa-spin d-none" id="spinner"></span>
+                                <span class="mat-button-wrapper ">Enregistrer</span>
+                             </button>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

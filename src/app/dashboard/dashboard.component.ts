@@ -1,110 +1,223 @@
-import { Component, OnInit } from '@angular/core';
-import * as Chartist from 'chartist';
-import { CompetitionService } from 'app/services/competition.service';
-import { ComplaintsService } from 'app/services/complaints.service';
-import { ActualiteService } from 'app/services/actualite.service';
-import { Regulation } from 'app/models/regulation';
-import { HttpErrorResponse } from '@angular/common/http';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Complaints } from 'app/models/complaints';
-import {ParamettreImageService} from '../services/paramettre-image.service';
-import {AdherantService} from '../services/adherant.service';
+/** @format */
+
+import { Component, OnInit } from "@angular/core";
+
+import { HttpErrorResponse } from "@angular/common/http";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Complaints } from "app/models/complaints";
+import { FactureService } from "app/services/facture.service";
+
+import * as pdfMake from "pdfmake/build/pdfmake";
+import * as pdfFonts from "pdfmake/build/vfs_fonts";
+
+(<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.css']
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.css"],
 })
 export class DashboardComponent implements OnInit {
+  constructor(private factureService: FactureService) {}
 
-  constructor(private  paramettreImageService:ParamettreImageService,
-             private adherantService:AdherantService) { }
-
-   
-  regulations_count: number;  
- 
-  competitions_count: number;  
-  competitions_passed_count: number;  
-  
-  complaints_count: number;
-  complaint_untreated_count: number; 
-  reclamation_count: number; 
-  reclamation_untreated_count: number;
-  competitions_passed: number;
-  treated_complaints:number;
-  spinner1= true;
-  spinner2= true;
-  spinner3= true;
-  spinner4= true;
-  spinner5= true;
-  spinner6= true;
-  spinner7= true;
-  loading= true;
+  spinner1 = true;
+  spinner2 = true;
+  spinner3 = true;
+  spinner4 = true;
+  spinner5 = true;
+  spinner6 = true;
+  spinner7 = true;
+  loading = true;
   total_complaint_spinner = true;
   total_reclamation_spinner = true;
-  stat_data=[];
+  stat_data;
   complaints: Array<Complaints> = [];
 
-  listCotisation
-  listAdherant
+  curentFacture;
+  top10;
+
+  listCotisation;
+  listAdherant;
   ngOnInit() {
-
     this.stat();
-    this.getCotisation()
-    this.getAdherant()
+
     setTimeout(() => {
-      if(!this.spinner4 && !this.total_complaint_spinner)
-        this.treated_complaints =  this.complaints_count - this.complaint_untreated_count;
-      this.spinner1= false ;
-
-      console.log(this.complaints_count,this.complaint_untreated_count);
+      if (!this.spinner4 && !this.total_complaint_spinner)
+        this.spinner1 = false;
     }, 10000);
-
   }
 
-  stat(): void {
-      this.paramettreImageService.getStat().subscribe((data: Array<any>) => {
-        this.stat_data= data['data'];
+  stat() {
+    this.factureService.getStat().subscribe(
+      (data: any) => {
+        this.stat_data = data["data"];
+        // alert(JSON.stringify(this.stat_data["top10_fature"]));
+        this.top10 = this.stat_data["top10_facture"].data;
+        this.loading = false;
 
-        // alert(JSON.stringify(this.stat_data))
-        this.loading= false;        
-      }, (error: HttpErrorResponse) => {
+        // this.spinner = false;
+      },
+      (error: HttpErrorResponse) => {
         console.log("Error while retrieving data");
       }
-      )
+    );
   }
 
-  getCotisation(): void {
-    this.paramettreImageService.getCotisation().subscribe((data: Array<any>) => {
-          this.listCotisation= data['data'];
+  afficheFacture(action: string, id: number) {
+    // alert(action);
 
-          // alert(JSON.stringify(this.stat_data))
-          this.loading= false;
-        }, (error: HttpErrorResponse) => {
-          console.log("Error while retrieving data");
-        }
-    )
-  }
-  getAdherant(): void {
-    this.adherantService.getAdherantlite().subscribe((data: Array<any>) => {
-          this.listAdherant= data['data'].data;
+    this.factureService.getFactureEtDetailById(id).subscribe(
+      (data: any) => {
+        this.curentFacture = data["data"];
 
-          // alert(JSON.stringify(this.stat_data))
-          this.loading= false;
-        }, (error: HttpErrorResponse) => {
-          console.log("Error while retrieving data");
-        }
-    )
+        // alert(JSON.stringify(this.curentFacture["detailFacture"]));
+        this.generatePDF(action);
+      },
+      (error: HttpErrorResponse) => {
+        console.log("Error while retrieving data");
+      }
+    );
   }
 
+  generatePDF(action = "open") {
+    let docDefinition = {
+      content: [
+        {
+          text: "10-20-TECH-FATURE",
+          fontSize: 16,
+          alignment: "center",
+          color: "#047886",
+        },
+        {
+          text: "FACTURE",
+          fontSize: 20,
+          bold: true,
+          alignment: "center",
+          decoration: "underline",
+          color: "skyblue",
+        },
+        {
+          text: "Client",
+          style: "sectionHeader",
+        },
 
+        {
+          columns: [
+            [
+              {
+                text: `${this.curentFacture["facture"][0].nom} ${this.curentFacture["facture"][0].prenom}`,
+                bold: true,
+              },
+              { text: `${this.curentFacture["facture"][0].adresse}` },
+              { text: `${this.curentFacture["facture"][0].email}` },
+              { text: `${this.curentFacture["facture"][0].telephone}` },
+            ],
+            [
+              {
+                text: `Date: ${new Date().toLocaleString()}`,
+                alignment: "right",
+              },
+              {
+                text: `No facture :000 ${this.curentFacture["facture"][0].id} `,
+                alignment: "right",
+              },
+            ],
+          ],
+        },
 
+        {
+          text: "Details",
+          style: "sectionHeader",
+        },
 
-  formatDate(date:string){
+        {
+          table: {
+            headerRows: 1,
+            widths: ["auto", "*", "auto", "auto", "auto"],
+            body: [
+              ["No", "Désignation", "P.U", "Qte", "Montant"],
+              ...this.curentFacture["detailFacture"].map((p, index) => [
+                index + 1,
+                p.designation,
+                p.prix,
+                p.qte,
+                (p.prix * p.qte).toFixed(2),
+              ]),
+            ],
+          },
+        },
+
+        ,
+        {
+          text: "TOTAL",
+          style: "sectionHeader",
+        },
+        {
+          ul: [
+            `TOTAL HT :  ${this.curentFacture["facture"][0].montant} FCFA `,
+            `TVA (18%) :  ${this.curentFacture["facture"][0].montant * 0.18} `,
+            `TTC :  ${
+              this.curentFacture["facture"][0].montant +
+              this.curentFacture["facture"][0].montant * 0.18
+            } FCFA`,
+          ],
+        },
+
+        {
+          text: " ",
+          style: "sectionHeader",
+        },
+
+        {
+          text: "",
+          margin: [0, 0, 0, 15],
+        },
+
+        {
+          columns: [
+            [
+              {
+                qr: `10-20-tech-facture ${new Date().toLocaleString()}`,
+                fit: "50",
+              },
+            ],
+            [{ text: "Signature", alignment: "right", italics: true }],
+          ],
+        },
+
+        // {
+        //   text: "Terms and Conditions",
+        //   style: "sectionHeader",
+        // },
+        // {
+        //   ul: [
+        //     "Order can be return in max 10 days.",
+        //     "Warrenty of the product will be subject to the manufacturer terms and conditions.",
+        //     "This is system generated invoice.",
+        //   ],
+        // },
+      ],
+      styles: {
+        sectionHeader: {
+          bold: true,
+          decoration: "underline",
+          fontSize: 14,
+          margin: [0, 15, 0, 15],
+        },
+      },
+    };
+
+    if (action === "download") {
+      pdfMake.createPdf(docDefinition).download();
+    } else if (action === "print") {
+      pdfMake.createPdf(docDefinition).print();
+    } else {
+      pdfMake.createPdf(docDefinition).open();
+    }
+  }
+
+  formatDate(date: string) {
     const d = date.split("T");
-    return d[0]+' '+d[1].substr(0, 8);
+    return d[0] + " " + d[1].substr(0, 8);
   }
-
-
-
 }

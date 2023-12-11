@@ -134,7 +134,6 @@ export class AdminLayoutComponent implements OnInit {
     //   script.src = "./assets/js/init_datatables.js";
      
     //   this._renderer2.appendChild(this._document.body, script);
-
   }
   ngAfterViewInit() {
       this.runOnRouteChange();

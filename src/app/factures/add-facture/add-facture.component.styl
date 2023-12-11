@@ -1,0 +1,26 @@
+.add-regulation {
+
+}
+
+.ql-picker {
+  &.ql-size {
+    .ql-picker-options {
+      height: 150px;
+      overflow: auto;
+
+      .ql-picker-item {
+        &:not(&:first-child) {
+          &::before {
+            content: attr(data-value);
+          }
+        }
+      }
+    }
+
+    .ql-picker-label[data-value] {
+      &::before {
+        content: attr(data-value);
+      }
+    }
+  }
+}

@@ -1,3 +1,5 @@
+/** @format */
+
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
@@ -6,20 +8,18 @@
 export const environment = {
   production: true,
   //
-  // backend: "http://api.reshaoc.org/api",
-  // base_url_backend: "http://api.reshaoc.org",
-  // accet_url: "http://api.reshaoc.org/storage/app/public",
-
-  backend: "http://127.0.0.1:8000/api",
-  base_url_backend: "http://127.0.0.1:8000",
-  accet_url: "http://127.0.0.1:8000/storage",
-
-
+  backend: "http://api-facture.reshaoc.org/api",
+  base_url_backend: "http://api-facture.reshaoc.org",
+  accet_url: "http://api-facture.reshaoc.org/storage/app/public",
+  // //
+  // backend: "http://127.0.0.1:8000/api",
+  // base_url_backend: "http://127.0.0.1:8000",
+  // accet_url: "http://127.0.0.1:8000/storage",
 
   // backend: "https://reshaoc.africanschoolofeconomics.com/api",
   // base_url_backend: "https://reshaoc.africanschoolofeconomics.com",
 
   ssoUrlCallback: "https://tourisme-app.star-labs.bj/admin/sso_callback",
   // ssoUrl: "https://pprodofficial.service-public.bj/official/login?client_id=mtcalicence&redirect_uri=http://tourisme-app.star-labs.bj/admin/sso_callback&response_type=code&scope=openid&authError=true",
-  expirationTime: 0
+  expirationTime: 0,
 };

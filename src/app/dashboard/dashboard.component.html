@@ -1,147 +1,137 @@
+<!-- @format -->
+
 <div class="main-content">
-    <div class="container-fluid">
-
-        <h1>Tableau de bord</h1>
-        <div class="row">
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-success card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">notifications</i>
-                        </div>
-                        <p class="card-category">TOTAL MEMBRES</p>
-                        <h3 class="card-title">
-                            <div class="spinner-border text-success" role="status" *ngIf="loading;else i">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #i>{{ stat_data['nbr_adherant']}}</ng-template>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-
-                    </div>
-                </div>
+  <div class="container-fluid">
+    <h1>Tableau de bord</h1>
+    <div class="row">
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-success card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">notifications</i>
             </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-warning card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">notifications</i>
-                        </div>
-                        <p class="card-category">TOTAL EVERNEMNTS</p>
-                        <h3 class="card-title ">
-                            <div class="spinner-border text-success" role="status" *ngIf="loading;else elseBlock">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #elseBlock>{{ stat_data['nbr_event']}}</ng-template>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6 col-sm-6">
-                <div class="card card-stats">
-                    <div class="card-header card-header-info card-header-icon">
-                        <div class="card-icon">
-                            <i class="material-icons">folder</i>
-                        </div>
-                        <p class="card-category">TOTAL FORMATIONS</p>
-                        <h3 class="card-title">
-                            <div class="spinner-border text-success" role="status" *ngIf="loading;else e">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <ng-template #e>{{ stat_data['nbr_formation']}}</ng-template>
-                        </h3>
-                    </div>
-                    <div class="card-footer">
-
-                    </div>
-                </div>
-            </div>
-
+            <p class="card-category">TOTAL FACTURES</p>
+            <h3 class="card-title">
+              <div
+                class="spinner-border text-success"
+                role="status"
+                *ngIf="loading; else i"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+              <ng-template #i>{{ stat_data["nbr_facture"] }}</ng-template>
+            </h3>
+          </div>
+          <div class="card-footer"></div>
         </div>
-
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Liste des Cotisations</h4>
-                        <p class="card-category">Toutes les Cotisations enregister cette année</p>
-                    </div>
-                    <div class="card-body table-responsive ">
-<!--                        width:1% !important-->
-                        <table class="table table-hover" style="width:100% !important ">
-                            <thead class=" text-warning ">
-                                <th style=" ">N</th>
-                                <th style="">Adhérant</th>
-                                <th style=" ">Montant </th>
-                                <th style="">Date</th>
-                                <th style="">Observation</th>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let c of listCotisation ; index as i;">
-                                    <td>  {{ i+1 }} </td>
-                                    <td>{{c.raison_sociale}}</td>
-                                    <td>{{c.montant}}</td>
-
-                                    <td>{{c.created_at}}</td>
-                                    <td>{{c.observation}}</td>
-
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-warning card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">notifications</i>
             </div>
+            <p class="card-category">TOTAL CLIENTS</p>
+            <h3 class="card-title">
+              <div
+                class="spinner-border text-success"
+                role="status"
+                *ngIf="loading; else elseBlock"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+              <ng-template #elseBlock>{{
+                stat_data["nbr_client"]
+              }}</ng-template>
+            </h3>
+          </div>
+          <div class="card-footer"></div>
         </div>
-
-        <div class="row">
-            <div class="col-lg-12 col-md-12">
-                <div class="card">
-                    <div class="card-header card-header-danger">
-                        <h4 class="card-title">Liste des Membres de du RESHAOC</h4>
-                        <p class="card-category">Le adherants </p>
-                    </div>
-                    <div class="card-body table-responsive ">
-<!--                        width:1% !important-->
-                        <table class="table table-hover" style="width:100% !important ">
-                            <thead class=" text-warning ">
-                                <th style=" ">N</th>
-                                <th style="">Raison sociale</th>
-                                <th style=" ">Categorie </th>
-                                <th style="">Email</th>
-                                <th style="">Telephone</th>
-                                <th style="">Pays</th>
-                            </thead>
-                            <tbody>
-
-<!--                            {{listAdherant|json}}-->
-                                <tr *ngFor="let c of listAdherant ; index as i;">
-                                    <td>  {{ i+1 }} </td>
-                                    <td>{{c.raison_sociale}}</td>
-                                    <td>{{c.categorie}}</td>
-                                    <td>{{c.email}}</td>
-                                    <td>{{c.telephone}}</td>
-                                    <td>{{c.pays}}</td>
-
-<!--                                    <td>{{c.created_at}}</td>-->
-<!--                                    <td>{{c.observation}}</td>-->
-
-
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      </div>
+      <div class="col-lg-4 col-md-6 col-sm-6">
+        <div class="card card-stats">
+          <div class="card-header card-header-info card-header-icon">
+            <div class="card-icon">
+              <i class="material-icons">folder</i>
             </div>
+            <p class="card-category">PRODUITS/SERVEICES</p>
+            <h3 class="card-title">
+              <div
+                class="spinner-border text-success"
+                role="status"
+                *ngIf="loading; else e"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+              <ng-template #e>{{ stat_data["nbr_produit"] }}</ng-template>
+            </h3>
+          </div>
+          <div class="card-footer"></div>
         </div>
-
-
+      </div>
     </div>
+
+    <div class="row">
+      <div class="col-lg-12 col-md-12">
+        <div class="card">
+          <div class="card-header card-header-danger">
+            <h4 class="card-title">Liste des 10 dernières factures</h4>
+            <p class="card-category">Liste des 10 dernières factures</p>
+          </div>
+          <div class="card-body table-responsive">
+            <!--                        width:1% !important-->
+            <table class="table table-hover" style="width: 100% !important">
+              <thead class="text-warning">
+                <th>Numero facture</th>
+                <th>Client</th>
+                <th>Telephone</th>
+                <th>Montant HT</th>
+                <th>Montant TTC</th>
+                <th>Date</th>
+
+                <th>Action</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let a of top10; index as i">
+                  <td>000{{ a.id }}</td>
+                  <td>{{ a.nom }} {{ a.prenom }}</td>
+                  <td>{{ a.telephone }}</td>
+                  <td>{{ a.montant }}</td>
+                  <td>{{ a.montant + a.montant * 0.18 }}</td>
+                  <td>{{ a.date }}</td>
+
+                  <td>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('open', a.id)"
+                    >
+                      <i class="material-icons"> info</i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('download', a.id)"
+                    >
+                      <i class="material-icons">download</i>
+                    </button>
+                    <button
+                      type="button"
+                      rel="tooltip"
+                      class="btn btn-link btn-sm"
+                      (click)="afficheFacture('print', a.id)"
+                    >
+                      <i class="material-icons">print</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
